@@ -311,11 +311,10 @@ model User {
   ConnectionRequestsSent    ConnectionRequest[] @relation("RequestSender")
   ConnectionRequestsReceive ConnectionRequest[] @relation("RequestReceiver")
 
-  BannedUntil         DateTime?
-  ReasonOfBanned      String?
-  isDeactivated       Boolean   @default(false)
-  ScheduledOfDeletion DateTime?
-  isVerified          Boolean   @default(false)
+  BannedUntil    DateTime?
+  ReasonOfBanned String?
+  isDeactivated  Boolean   @default(false)
+  isVerified     Boolean   @default(false)
 
   Comments Comment[]
 
