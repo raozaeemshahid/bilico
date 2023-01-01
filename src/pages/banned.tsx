@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar";
 import PagesLinks from "../lib/PagesLink";
 import { trpc } from "../utils/trpc";
 import { getCallbackUrlFromRouter } from "../lib/helperFunctions";
-
+import Head from "next/head";
 const Banned: NextPage = ({}) => {
   const { data: userSession, status } = useSession();
   const router = useRouter();
@@ -50,7 +50,15 @@ const Banned: NextPage = ({}) => {
     ChangeEligibility(false);
   };
   return (
-    <div>
+    <>
+      <Head>
+        <title>Bilico</title>
+        <meta
+          name="description"
+          content="Let's Connect, Learn and Grow Together"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Navbar />
       <div className="container mx-auto px-5 py-24 lg:w-2/3">
         <div className="mb-12 flex w-full flex-col">
@@ -89,7 +97,7 @@ const Banned: NextPage = ({}) => {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import Loading from "../components/loading";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { getCallbackUrlFromRouter } from "../lib/helperFunctions";
+import Head from "next/head";
 
 const SignIn: NextPage = () => {
   const router = useRouter();
@@ -16,6 +17,14 @@ const SignIn: NextPage = () => {
   }, [router.isReady, status]);
   return (
     <>
+      <Head>
+        <title>Bilico</title>
+        <meta
+          name="description"
+          content="Let's Connect, Learn and Grow Together"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <section className="body-font flex h-screen ">
         <div className="container mx-auto flex flex-wrap items-center px-5 py-24">
           <div className="pr-0 md:w-1/2 md:pr-16 lg:w-3/5 lg:pr-0">

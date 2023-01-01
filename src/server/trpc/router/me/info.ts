@@ -23,6 +23,7 @@ export const info = protectedProcedure.query(async ({ ctx }) => {
       emailVerified: true,
       isDeactivated: true,
       BannedUntil: true,
+      name: true,
     },
   });
 
@@ -40,5 +41,6 @@ export const info = protectedProcedure.query(async ({ ctx }) => {
     newNotifications: user._count.Notifications,
     newMessages: user._count.MessagesReceive,
     newRequests: user._count.ConnectionRequestsReceive,
+    name: user.name,
   };
 });

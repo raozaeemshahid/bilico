@@ -6,6 +6,7 @@ import PagesLinks from "../lib/PagesLink";
 import { LoadingFullScreen } from "../components/loading";
 import { trpc } from "../utils/trpc";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 
 const Register = dynamic(() => import("../components/Register/Register"), {
   loading: () => <LoadingFullScreen />,
@@ -35,7 +36,19 @@ const RegisterPage: NextPage = () => {
   if (!userInfo.data.notRegistered)
     return <LoadingFullScreen text="Getting Things Ready" />;
 
-  return <Register />;
+  return (
+    <>
+      <Head>
+        <title>Bilico</title>
+        <meta
+          name="description"
+          content="Let's Connect, Learn and Grow Together"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Register />
+    </>
+  );
 };
 
 export default RegisterPage;

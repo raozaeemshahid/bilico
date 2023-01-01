@@ -3,10 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { LoadingFullScreen } from "../../components/loading";
 import PagesLinks from "../../lib/PagesLink";
-
-export const getServerSideProps = () => {
-  return {}
-}
+import Head from "next/head";
 
 const Profile: NextPage = () => {
   const router = useRouter();
@@ -16,7 +13,19 @@ const Profile: NextPage = () => {
     router.push(PagesLinks.ME);
   }, [router.isReady]);
 
-  return <LoadingFullScreen />;
+  return (
+    <>
+      <Head>
+        <title>Bilico</title>
+        <meta
+          name="description"
+          content="Let's Connect, Learn and Grow Together"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <LoadingFullScreen />
+    </>
+  );
 };
 
 export default Profile;

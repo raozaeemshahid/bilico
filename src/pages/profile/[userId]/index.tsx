@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { LoadingFullScreen } from "../../../components/loading";
 import { useRouter } from "next/router";
 import PagesLinks from "../../../lib/PagesLink";
-
+import Head from "next/head";
 const Profile: NextPage = () => {
   const { data: userSession, status } = useSession();
   const router = useRouter();
@@ -30,6 +30,14 @@ const Profile: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Bilico</title>
+        <meta
+          name="description"
+          content="Let's Connect, Learn and Grow Together"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Navbar links={[NavbarLinkCreator.HomeLink()]} />
     </>
   );
