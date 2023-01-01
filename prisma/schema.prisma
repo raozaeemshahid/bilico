@@ -283,6 +283,7 @@ model User {
   createdAt     DateTime  @default(now())
   DateOfBirth   String?
   Gender        Gender?
+  Country       String?
 
   Interests Interest[]
   Skills    Skill[]
