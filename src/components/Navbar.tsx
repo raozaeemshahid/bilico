@@ -85,7 +85,7 @@ const Navbar: React.FC<{
   signedOut?: boolean;
 }> = ({ btns, links, signedOut = false }) => {
   return (
-    <header className="body-font bg-gray-700">
+    <header className="body-font bg-gray-800">
       <div className="container mx-auto flex flex-col flex-wrap items-center p-4 md:flex-row">
         <Link
           href={PagesLinks.HOME_Link}

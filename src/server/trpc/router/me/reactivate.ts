@@ -1,7 +1,4 @@
 import { protectedProcedure } from "../../trpc";
-import { prisma } from "../../../db/client";
-import { z } from "zod";
-import { zodName } from "../../../../lib/zod";
 
 export const ReactivateAccount = protectedProcedure.mutation(
   async ({ ctx }) => {

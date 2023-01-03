@@ -3,7 +3,8 @@ import { amIBanned } from "./amIBanned";
 import { confirmRegistration } from "./confirmRegistration";
 import { info } from "./info";
 import { deleteMyAccount } from "./delete";
-import { ReactivateAccount } from "./Reactivate";
+import { ReactivateAccount } from "./reactivate";
+import { DeactivateAccount } from "./deativate";
 
 export const me = router({
   amIBanned,
@@ -11,4 +12,5 @@ export const me = router({
   info,
   deleteMyAccount,
   ReactivateAccount,
+  DeactivateAccount,
 });

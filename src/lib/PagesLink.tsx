@@ -10,17 +10,6 @@ const PagesLinks = {
   getProfileLink: (userId: string) => {
     return `/profile/${userId}`;
   },
-  getPublicProfileLink: (userId: string | string[] | undefined) => {
-    if (!userId) return PagesLinks.NOT_FOUND_LINK;
-    return `/profile/${Array.isArray(userId) ? userId[0] : userId}/public`;
-  },
-  getPublicProfileLinkFromRouter: (router: NextRouter) => {
-    const userId = router.query.userId;
-    if (!userId) return PagesLinks.NOT_FOUND_LINK;
-    return `/profile/${
-      Array.isArray(userId) ? userId[0] || PagesLinks.NOT_FOUND_LINK : userId
-    }/public`;
-  },
   ME: `/me`,
   NOT_FOUND_LINK: "/404",
   getBannedLink: (router?: NextRouter) => {
