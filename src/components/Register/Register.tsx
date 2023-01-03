@@ -1,6 +1,6 @@
 import { signOut, useSession } from "next-auth/react";
 import { trpc } from "../../utils/trpc";
-import { LoadingFullScreen } from "../loading";
+import Loading, { LoadingFullScreen } from "../loading";
 import Image from "next/image";
 import { GrEdit, GrTroubleshoot } from "react-icons/gr";
 import { IoMdDoneAll } from "react-icons/io";
@@ -20,13 +20,32 @@ import CountryComponent from "./Country";
 
 const Register: React.FC = () => {
   const { data: userSession, status } = useSession();
-  const RegisterMe = trpc.me.confirmRegistration.useMutation();
+  const RegisterMe = trpc.me.confirmRegistration.useMutation({
+    onSuccess(data) {
+      if (data.success) {
+        router.push(PagesLinks.HOME_Link);
+        return;
+      }
+      if (data.alreadyRegistered) {
+        changeErrors(["You've already registered"]);
+        return;
+      }
+      if (data.userNotFound) {
+        signOut();
+        router.push(PagesLinks.getLoginLink(router));
+      }
+    },
+  });
   const [isNameEditing, changeIsNameEditing] = useState(false);
   const [userName, changeUserName] = useState<string>();
   const [gender, changeGender] = useState<"Male" | "Female" | "Other">();
 
   const [isDateOfBithEditing, changeIsDateOfBirthEditing] = useState(true);
-  const [dateOfBirth, changeDateOfBirth] = useState<Moment>(moment.utc());
+  const [dateOfBirth, changeDateOfBirth] = useState<Moment>(
+    moment.utc(
+      Date.UTC(moment.utc().year(), moment.utc().month(), moment.utc().date())
+    )
+  );
 
   const [country, changeCountry] = useState<string>();
   const [errors, changeErrors] = useState<string[]>([]);
@@ -82,29 +101,18 @@ const Register: React.FC = () => {
       dateOfBirth: dateOfBirth.toDate().toISOString(),
     };
   };
-
+  console.log("isLoading: ", RegisterMe.isLoading);
   const FnCompleteRegistratoin = async () => {
     if (!router.isReady) return;
     const info = validateInfo();
     if (!info) return;
-    const registered = await RegisterMe.mutateAsync({
+
+    RegisterMe.mutate({
       name: info.name,
       gender: info.gender,
       country: info.country,
       dateOfBirth: info.dateOfBirth,
     });
-    if (registered.success) {
-      router.push(PagesLinks.HOME_Link);
-      return;
-    }
-    if (registered.alreadyRegistered) {
-      changeErrors(["You've already registered"]);
-      return;
-    }
-    if (registered.userNotFound) {
-      signOut();
-      router.push(PagesLinks.getLoginLink(router));
-    }
   };
 
   if (!userSession || !userSession.user) return <LoadingFullScreen />;
@@ -146,8 +154,11 @@ const Register: React.FC = () => {
                 />
               </div>
             </div>
-            {errors.length > 0 && <ErrorsComponent errors={errors} />}
-            {errors.length == 0 && (
+            {errors.length !== 0 ? (
+              <ErrorsComponent errors={errors} />
+            ) : RegisterMe.isLoading ? (
+              <Loading />
+            ) : (
               <ProceedComponent
                 FnCompleteRegistratoin={FnCompleteRegistratoin}
                 isInfoEditing={

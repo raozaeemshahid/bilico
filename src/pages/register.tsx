@@ -9,7 +9,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 
 const Register = dynamic(() => import("../components/Register/Register"), {
-  loading: () => <LoadingFullScreen />,
+  loading: () => <LoadingFullScreen text="Getting Things Ready" />,
 });
 
 const RegisterPage: NextPage = () => {

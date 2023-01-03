@@ -36,7 +36,6 @@ const DateOfBirthComponent: React.FC<{
 }) => {
   const { data: userSession } = useSession();
   if (!userSession || !userSession.user) return <></>;
-  console.log(dateOfBirth.toDate().toDateString());
   return (
     <>
       <div>

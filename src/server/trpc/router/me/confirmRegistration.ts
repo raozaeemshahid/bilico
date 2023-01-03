@@ -4,6 +4,8 @@ import { z } from "zod";
 import { zodName } from "../../../../lib/zod";
 import { countries } from "countries-list";
 import { TRPCError } from "@trpc/server";
+import moment from "moment";
+import { MINIMUM_AGE_REQUIREMENT } from "../../../../components/Register/DateOfBirth";
 
 export const countriesNamesList = Object.values(countries)
   .map((country) => country.name)
@@ -36,6 +38,16 @@ export const confirmRegistration = protectedProcedure
     );
     if (!country)
       throw new TRPCError({ code: "BAD_REQUEST", message: "Invalid Country" });
+    if (
+      moment.utc().diff(moment(input.dateOfBirth), "year", false) <
+      MINIMUM_AGE_REQUIREMENT
+    ) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: `You have to be atleast ${MINIMUM_AGE_REQUIREMENT} years old`,
+      });
+    }
+
     await prisma.user.update({
       where: {
         id: ctx.session.user.id,
