@@ -1,49 +1,82 @@
 import { Session } from "next-auth";
-import { Link } from "../components/Navbar";
 import PagesLinks from "./PagesLink";
+import { IconType } from "react-icons";
 
-const NavbarLinkText = {
-  HOME: "Home",
-  USER_NAME: (session: Session) => {
-    if (session.user && session.user.name) {
-      const Name = session.user.name.split(" ");
-      return Name[0] + (Name[1] ? " " + Name[1] : "");
-    } else return "Profile";
-  },
-  QUESTIONS: "Questions",
-  STORIES: "Stories",
-  BLOGS: "Blogs",
-};
+import { VscAccount } from "react-icons/vsc";
+import { MdForum, MdNotifications } from "react-icons/md";
+import { TbWriting, TbMessage } from "react-icons/tb";
+import { ImBlog } from "react-icons/im";
+import { FaHome } from "react-icons/fa";
+import { IoIosPeople } from "react-icons/io";
+
+export interface LinkType {
+  Text: string;
+  href: string;
+  icon: IconType;
+}
 
 export const NavbarLinkCreator = {
-  profileLink: (session: Session): Link => {
+  profileLink: (userName: string): LinkType => {
     return {
-      Text: NavbarLinkText.USER_NAME(session),
+      Text: userName,
       href: PagesLinks.ME,
+      icon: VscAccount,
     };
   },
-  questionLink: (): Link => {
+  accountLink: (): LinkType => {
     return {
-      Text: NavbarLinkText.QUESTIONS,
+      Text: "Account",
+      href: PagesLinks.ME,
+      icon: VscAccount,
+    };
+  },
+  questionLink: (): LinkType => {
+    return {
+      Text: "Q/Answers",
       href: PagesLinks.getQuestionLink(),
+      icon: MdForum,
     };
   },
-  storyLink: (): Link => {
+  storyLink: (): LinkType => {
     return {
-      Text: NavbarLinkText.STORIES,
+      Text: "Stories",
       href: PagesLinks.getStoryLink(),
+      icon: TbWriting,
     };
   },
-  BlogLink: (): Link => {
+  BlogLink: (): LinkType => {
     return {
-      Text: NavbarLinkText.BLOGS,
+      Text: "Blogs",
       href: PagesLinks.getBlogLink(),
+      icon: ImBlog,
     };
   },
-  HomeLink: (): Link => {
+  HomeLink: (): LinkType => {
     return {
-      Text: NavbarLinkText.HOME,
+      Text: "Home",
       href: PagesLinks.HOME_Link,
+      icon: FaHome,
+    };
+  },
+  NotificationLink: (): LinkType => {
+    return {
+      Text: "Notification",
+      href: PagesLinks.getNotificationLink(),
+      icon: MdNotifications,
+    };
+  },
+  MessageLink: (): LinkType => {
+    return {
+      Text: "Message",
+      href: PagesLinks.getNotificationLink(),
+      icon: TbMessage,
+    };
+  },
+  ConnectionLink: (): LinkType => {
+    return {
+      Text: "Connection",
+      href: PagesLinks.getConnectionLink(),
+      icon: IoIosPeople,
     };
   },
 };

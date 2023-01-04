@@ -1,18 +1,9 @@
 import { signIn, signOut } from "next-auth/react";
+import { type LinkType } from "../lib/NavbarLinkProvider";
 import Link from "next/link";
 import PagesLinks from "../lib/PagesLink";
 
-interface Btn {
-  Text: string;
-  onClick: () => void;
-}
-
-export interface Link {
-  Text: string;
-  href: string;
-}
-
-const NavbarLinks: React.FC<{ links?: Link[] }> = ({ links }) => {
+const NavbarLinks: React.FC<{ links?: LinkType[] }> = ({ links }) => {
   return (
     <nav className="flex flex-wrap items-center justify-center text-base md:ml-auto">
       {!!links &&
@@ -51,39 +42,10 @@ const SignBtn: React.FC<{ signedOut?: boolean }> = ({ signedOut = false }) => {
   );
 };
 
-const NavbarBtns: React.FC<{ btns?: Btn[] }> = ({ btns }) => {
-  return (
-    <>
-      {!!btns &&
-        btns.map((btn) => (
-          <button
-            key={btn.Text}
-            onClick={btn.onClick}
-            className="mt-4 inline-flex items-center rounded border-0 bg-gray-800 py-1 px-3 text-base hover:bg-gray-700 focus:outline-none md:mt-0"
-          >
-            {btn.Text}
-            <svg
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="ml-1 h-4 w-4"
-              viewBox="0 0 24 24"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7"></path>
-            </svg>
-          </button>
-        ))}
-    </>
-  );
-};
-
 const Navbar: React.FC<{
-  btns?: Btn[];
-  links?: Link[];
+  links?: LinkType[];
   signedOut?: boolean;
-}> = ({ btns, links, signedOut = false }) => {
+}> = ({ links, signedOut = false }) => {
   return (
     <header className="body-font bg-gray-800">
       <div className="container mx-auto flex flex-col flex-wrap items-center p-4 md:flex-row">
@@ -95,7 +57,6 @@ const Navbar: React.FC<{
         </Link>
         <NavbarLinks links={links} />
         <SignBtn signedOut={signedOut} />
-        <NavbarBtns btns={btns} />
       </div>
     </header>
   );

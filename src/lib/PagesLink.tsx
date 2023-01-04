@@ -16,15 +16,18 @@ const PagesLinks = {
     if (!router) return `/banned`;
     return `/banned?${callbackUrl}=${router.route}`;
   },
-  getQuestionLink: (id?: string) => `/question${id && `/${id}`}`,
-  getBlogLink: (id?: string) => `/blog${id && `/${id}`}`,
-  getStoryLink: (id?: string) => `/story${id && `/${id}`}`,
-  getCommentLink: (id?: string) => `/comment${id && `/${id}`}`,
-  getAnswerLink: (id?: string) => `/answer${id && `/${id}`}`,
-  getReplyLink: (id?: string) => `/reply${id && `/${id}`}`,
+  getQuestionLink: (id?: string) => `/question${id ? `/${id}` : ""}`,
+  getBlogLink: (id?: string) => `/blog${id ? `/${id}` : ""}`,
+  getStoryLink: (id?: string) => `/story${id ? `/${id}` : ""}`,
+  getCommentLink: (id?: string) => `/comment${id ? `/${id}` : ""}`,
+  getAnswerLink: (id?: string) => `/answer${id ? `/${id}` : ""}`,
+  getReplyLink: (id?: string) => `/reply${id ? `/${id}` : ""}`,
+  getMessageLink: (id?: string) => `/message${id ? `/${id}` : ""}`,
+  getConnectionLink: (id?: string) => `/connection${id ? `/${id}` : ""}`,
   getScheduledOfDeletionLink: () => "/scheduledOfDeletion",
   getRegisterLink: () => "/register",
   getDeativatedLink: () => "/deactivated",
+  getNotificationLink: () => "/notification",
 };
 
 export default PagesLinks;

@@ -1,6 +1,11 @@
 import { motion, useDragControls } from "framer-motion";
+import Link from "next/link";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { GrDrag } from "react-icons/gr";
+import PagesLinks from "../../lib/PagesLink";
+import { NavbarLinkCreator } from "../../lib/NavbarLinkProvider";
+import { VscAccount } from "react-icons/vsc";
+import SidebarLink from "./sidebarLink";
 
 let isDragging = false;
 
@@ -9,22 +14,32 @@ const Sidebar: React.FC<{
   changeIsOpen: Dispatch<SetStateAction<boolean>>;
   isOtherOpen: boolean;
   isWindowLargerEnough: boolean;
-}> = ({ isOpen, changeIsOpen, isOtherOpen, isWindowLargerEnough }) => {
+  userInfo: {
+    name: string;
+    newMessages: number;
+    newNotifications: number;
+    newRequests: number;
+  };
+}> = ({
+  isOpen,
+  changeIsOpen,
+  isOtherOpen,
+  isWindowLargerEnough,
+  userInfo,
+}) => {
   const [sideNavbarWidth, changeSideBarNavbarWidth] = useState(0);
   const [isSideBarReady, changeIsSideBarReady] = useState(false);
-
   const SideBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!SideBarRef.current) return;
     changeSideBarNavbarWidth(SideBarRef.current.clientWidth);
   }, [isSideBarReady]);
-
   return (
     <>
       {isOpen && !isWindowLargerEnough && (
         <motion.div
-          className="absolute top-0 left-0 z-20 h-screen w-screen opacity-0"
+          className="absolute top-0 left-0 z-20 w-screen opacity-0"
           onClick={() => changeIsOpen(false)}
           animate={{ width: "100vw" }}
         ></motion.div>
@@ -32,7 +47,7 @@ const Sidebar: React.FC<{
       <div
         className={`absolute z-[3] md:static ${!isOtherOpen && `z-[6]`} ${
           isOpen ? `z-30` : ""
-        } left-0 flex h-screen overflow-x-hidden md:overflow-x-visible`}
+        } left-0 flex overflow-x-hidden md:overflow-x-visible`}
       >
         <motion.div
           className="flex rounded-md bg-gray-800"
@@ -46,7 +61,27 @@ const Sidebar: React.FC<{
             width: "12rem",
           }}
           ref={SideBarRef}
-        ></motion.div>
+        >
+          <div className="flex w-full flex-col  p-3">
+            <SidebarLink link={NavbarLinkCreator.HomeLink()} />
+            <SidebarLink
+              count={userInfo.newMessages}
+              link={NavbarLinkCreator.MessageLink()}
+            />
+            <SidebarLink
+              count={userInfo.newRequests}
+              link={NavbarLinkCreator.ConnectionLink()}
+            />
+            <SidebarLink
+              count={userInfo.newNotifications}
+              link={NavbarLinkCreator.NotificationLink()}
+            />
+            <SidebarLink link={NavbarLinkCreator.BlogLink()} />
+            <SidebarLink link={NavbarLinkCreator.questionLink()} />
+            <SidebarLink link={NavbarLinkCreator.storyLink()} />
+            <SidebarLink link={NavbarLinkCreator.accountLink()} />
+          </div>
+        </motion.div>
         {!isWindowLargerEnough && (
           <motion.button
             className="bg-gray-600 p-[0.1]"
