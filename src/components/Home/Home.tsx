@@ -1,6 +1,4 @@
 import { type NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
 
 import { motion } from "framer-motion";
 import LeftSideBar from "./leftSidebar";
@@ -8,9 +6,8 @@ import RightSideBar from "./rightSidebar";
 
 import { useEffect, useState } from "react";
 import Navbar from "../Navbar";
-import { NavbarLinkCreator } from "../../lib/NavbarLinkProvider";
 import { trpc } from "../../utils/trpc";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { LoadingFullScreen } from "../loading";
 const Home: NextPage = () => {
   const { data: userSession, status } = useSession();
@@ -21,7 +18,7 @@ const Home: NextPage = () => {
   const [isWindowLargerEnough, changeIsWindowLargerThanEnough] =
     useState(false);
 
-  const deleteMe = trpc.me.deleteMyAccount.useMutation();
+  // const deleteMe = trpc.me.deleteMyAccount.useMutation();
   const userInfo = trpc.me.info.useQuery(undefined, {
     enabled: status === "authenticated",
   });

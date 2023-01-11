@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import { IoMdDoneAll } from "react-icons/io";
 import { GrEdit } from "react-icons/gr";
 import moment, { type Moment } from "moment";
@@ -14,7 +14,7 @@ export const getDateList = (m: Moment) => {
   for (let i = 1; i <= lastDate; i++) dates.push(i);
   return dates;
 };
-export const getYearsList = (m: Moment) => {
+export const getYearsList = () => {
   const years: number[] = [];
   const LastYear = moment().year();
   for (let i = LastYear - 100; i <= LastYear; i++) years.push(i);
@@ -59,7 +59,7 @@ const DateOfBirthComponent: React.FC<{
                   value={{ label: dateOfBirth.date() }}
                 />
                 <Select
-                  options={MonthsList.map((month, index) => ({ label: month }))}
+                  options={MonthsList.map((month) => ({ label: month }))}
                   placeholder="Month"
                   components={{ IndicatorSeparator: null }}
                   value={{ label: MonthsList[dateOfBirth.month()] }}
@@ -77,7 +77,7 @@ const DateOfBirthComponent: React.FC<{
                   }}
                 />
                 <Select
-                  options={getYearsList(dateOfBirth).map((year) => ({
+                  options={getYearsList().map((year) => ({
                     label: year,
                   }))}
                   components={{

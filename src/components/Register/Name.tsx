@@ -1,6 +1,5 @@
 import { useSession } from "next-auth/react";
-import type { Session } from "next-auth";
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import { zodName } from "../../lib/zod";
 import { IoMdDoneAll } from "react-icons/io";
 import { GrEdit } from "react-icons/gr";

@@ -1,10 +1,7 @@
 import { signOut, useSession } from "next-auth/react";
 import { trpc } from "../../utils/trpc";
 import Loading, { LoadingFullScreen } from "../loading";
-import Image from "next/image";
-import { GrEdit, GrTroubleshoot } from "react-icons/gr";
-import { IoMdDoneAll } from "react-icons/io";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { zodName } from "../../lib/zod";
 import PagesLinks from "../../lib/PagesLink";
 import { useRouter } from "next/router";
@@ -64,9 +61,14 @@ const Register: React.FC = () => {
   ]);
 
   useEffect(() => {
-    if (!userSession || !userSession.user) return;
-    changeUserName(userSession.user.name ? userSession.user.name : "");
-  }, [status]);
+    if (
+      status !== "authenticated" ||
+      !userSession.user ||
+      !userSession.user.name
+    )
+      return;
+    changeUserName(userSession.user.name);
+  }, [status, userSession]);
 
   const validateInfo = () => {
     if (!userName) return;
@@ -135,12 +137,7 @@ const Register: React.FC = () => {
                   userName={userName}
                 />
                 <EmailComponent />
-                <GenderComponent
-                  changeGender={changeGender}
-                  gender={gender}
-                  changeErrors={changeErrors}
-                  errors={errors}
-                />
+                <GenderComponent changeGender={changeGender} gender={gender} />
                 <DateOfBirthComponent
                   dateOfBirth={dateOfBirth}
                   changeDateOfBirth={changeDateOfBirth}

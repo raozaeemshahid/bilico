@@ -1,4 +1,4 @@
-import { getProviders, signIn, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 import type { NextPage } from "next";
 import Loading from "../components/loading";
@@ -14,7 +14,7 @@ const SignIn: NextPage = () => {
     if (!router.isReady) return;
     if (status == "authenticated")
       router.push(getCallbackUrlFromRouter(router));
-  }, [router.isReady, status]);
+  }, [router, router.isReady, status]);
   return (
     <>
       <Head>

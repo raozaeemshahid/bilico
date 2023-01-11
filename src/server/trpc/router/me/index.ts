@@ -4,7 +4,7 @@ import { confirmRegistration } from "./confirmRegistration";
 import { info } from "./info";
 import { deleteMyAccount } from "./delete";
 import { ReactivateAccount } from "./reactivate";
-import { DeactivateAccount } from "./deativate";
+import { DeactivateAccount } from "./deactivate";
 
 export const me = router({
   amIBanned,

@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Navbar from "../../../components/Navbar";
 import { NavbarLinkCreator } from "../../../lib/NavbarLinkProvider";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { LoadingFullScreen } from "../../../components/loading";
 import { useRouter } from "next/router";
 import PagesLinks from "../../../lib/PagesLink";
@@ -11,7 +11,7 @@ const Profile: NextPage = () => {
   const { data: userSession, status } = useSession();
   const router = useRouter();
 
-  const [userId, changeUserId] = useState<string>();
+  // const [userId, changeUserId] = useState<string>();
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -23,7 +23,7 @@ const Profile: NextPage = () => {
     if (status == "unauthenticated") {
       router.push(PagesLinks.getLoginLink(router));
     }
-  }, [router.isReady, status]);
+  }, [router, router.isReady, status]);
 
   if (status == "loading" || !userSession || !userSession.user)
     return <LoadingFullScreen text="Signing You In" />;

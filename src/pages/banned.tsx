@@ -9,7 +9,7 @@ import { trpc } from "../utils/trpc";
 import { getCallbackUrlFromRouter } from "../lib/helperFunctions";
 import Head from "next/head";
 const Banned: NextPage = ({}) => {
-  const { data: userSession, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const reportToAdmin = trpc.reportToAdmin.requestToUnban.useMutation();
   const [IsEligibleToApply, ChangeEligibility] = useState(false);
@@ -35,7 +35,7 @@ const Banned: NextPage = ({}) => {
       router.push(PagesLinks.getLoginLink(router));
     if (amIBanned.isSuccess && amIBanned.data && !amIBanned.data.isBanned)
       router.push(getCallbackUrlFromRouter(router));
-  }, [router.isReady, status, amIBanned.isSuccess]);
+  }, [router, router.isReady, status, amIBanned.isSuccess, amIBanned.data]);
 
   if (status === "loading") return <LoadingFullScreen text="Signing You In" />;
   if (amIBanned.isLoading || !amIBanned.data || !amIBanned.data.isBanned)

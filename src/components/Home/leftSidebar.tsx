@@ -1,10 +1,13 @@
-import { motion, useDragControls } from "framer-motion";
-import Link from "next/link";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import {
+  type Dispatch,
+  type SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { GrDrag } from "react-icons/gr";
-import PagesLinks from "../../lib/PagesLink";
 import { NavbarLinkCreator } from "../../lib/NavbarLinkProvider";
-import { VscAccount } from "react-icons/vsc";
 import SidebarLink from "./sidebarLink";
 
 let isDragging = false;
@@ -89,7 +92,7 @@ const Sidebar: React.FC<{
             animate={{
               x: isOpen ? 0 : -sideNavbarWidth,
             }}
-            onClick={(e) => {
+            onClick={() => {
               if (isDragging) return;
               changeIsOpen(!isOpen);
             }}

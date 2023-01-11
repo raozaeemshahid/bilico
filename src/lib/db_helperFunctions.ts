@@ -18,7 +18,6 @@ const {
   seriesOfPost,
   session,
   user,
-  verificationToken,
 } = prisma;
 
 export const deleteUserPermanently = async (id: string) => {
@@ -40,7 +39,12 @@ export const deleteUserPermanently = async (id: string) => {
     where: { Posts: { every: { userId: id } } },
   });
   await session.deleteMany({ where: { userId: id } });
-  await user.delete({ where: { id } });
+  await user.update({
+    where: { id },
+    data: {
+      emailVerified: undefined,
+    },
+  });
 };
 
 export const unbanUser = async (id: string) => {

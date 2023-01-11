@@ -1,15 +1,12 @@
 import type { Dispatch, SetStateAction } from "react";
 import { GrEdit } from "react-icons/gr";
-import { GenderError } from "./Errors";
 
 const GenderComponent: React.FC<{
   gender: "Male" | "Female" | "Other" | undefined;
   changeGender: Dispatch<
     SetStateAction<"Male" | "Female" | "Other" | undefined>
   >;
-  changeErrors: Dispatch<SetStateAction<string[]>>;
-  errors: string[];
-}> = ({ changeGender, gender, changeErrors, errors }) => {
+}> = ({ changeGender, gender }) => {
   const SelectGender = (gen: "Male" | "Female" | "Other") => {
     changeGender(gen);
   };

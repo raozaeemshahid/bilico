@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import { GrEdit } from "react-icons/gr";
 import Select from "react-select";
 import { countries } from "countries-list";

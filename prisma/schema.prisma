@@ -292,7 +292,7 @@ model User {
   Notifications Notification[] @relation("Notification For")
 
   ConnectedTo   User[] @relation("Connect")
-  ConnectedWIth User[] @relation("Connect")
+  ConnectedWith User[] @relation("Connect")
 
   Trust     User[] @relation("Trust")
   TrustedBy User[] @relation("Trust")

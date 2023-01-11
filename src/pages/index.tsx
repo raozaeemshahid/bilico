@@ -2,8 +2,6 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { signOut, useSession } from "next-auth/react";
 
-import Navbar from "../components/Navbar";
-import { NavbarLinkCreator } from "../lib/NavbarLinkProvider";
 import { LoadingFullScreen } from "../components/loading";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -22,9 +20,11 @@ const Home: NextPage = () => {
   const userInfo = trpc.me.info.useQuery(undefined, {
     enabled: router.isReady && status === "authenticated",
     onSuccess(user) {
-      if (user.banned) return router.push(PagesLinks.getBannedLink());
-      if (user.deactivated) return router.push(PagesLinks.getDeativatedLink());
-      if (user.notRegistered) return router.push(PagesLinks.getRegisterLink());
+      if (user.banned) return router.push(PagesLinks.BANNED_LINK);
+      if (user.deactivated) return router.push(PagesLinks.DEATIVATED_LINK);
+      if (user.notRegistered) return router.push(PagesLinks.REGISTER_LINK);
+      if (user.incompleteProfile)
+        return router.push(PagesLinks.EDIT_ACCOUNT_LINK);
       if (user.notFound) {
         signOut();
         router.push(PagesLinks.getLoginLink());

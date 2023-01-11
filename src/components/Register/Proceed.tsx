@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
-
 const ProceedComponent: React.FC<{
   FnCompleteRegistratoin: () => Promise<void>;
   isInfoEditing: boolean;

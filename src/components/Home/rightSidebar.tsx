@@ -1,5 +1,11 @@
-import { motion, useDragControls } from "framer-motion";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import {
+  type Dispatch,
+  type SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { GrDrag } from "react-icons/gr";
 
 let isDragging = false;
@@ -38,7 +44,7 @@ const Sidebar: React.FC<{
             animate={{
               x: isOpen ? 0 : sideNavbarWidth,
             }}
-            onClick={(e) => {
+            onClick={() => {
               if (isDragging) return;
               changeIsOpen(!isOpen);
             }}

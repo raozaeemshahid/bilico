@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { type NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { LoadingFullScreen } from "../../components/loading";
@@ -11,7 +11,7 @@ const Profile: NextPage = () => {
   useEffect(() => {
     if (!router.isReady) return;
     router.push(PagesLinks.ME);
-  }, [router.isReady]);
+  }, [router, router.isReady]);
 
   return (
     <>

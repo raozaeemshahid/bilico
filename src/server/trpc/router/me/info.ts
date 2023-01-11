@@ -18,6 +18,7 @@ export const info = protectedProcedure.query(async ({ ctx }) => {
           },
           MessagesReceive: { where: { isSeen: { equals: false } } },
           Notifications: { where: { isSeen: { equals: false } } },
+          Interests: true,
         },
       },
       emailVerified: true,
@@ -35,6 +36,7 @@ export const info = protectedProcedure.query(async ({ ctx }) => {
   }
   if (user.isDeactivated) return { deactivated: true };
   if (!user.emailVerified) return { notRegistered: true };
+  if (user._count.Interests === 0) return { incompleteProfile: true };
 
   return {
     success: true,

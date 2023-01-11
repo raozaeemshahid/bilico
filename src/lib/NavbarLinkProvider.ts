@@ -1,6 +1,5 @@
-import { Session } from "next-auth";
 import PagesLinks from "./PagesLink";
-import { IconType } from "react-icons";
+import { type IconType } from "react-icons";
 
 import { VscAccount } from "react-icons/vsc";
 import { MdForum, MdNotifications } from "react-icons/md";
@@ -61,14 +60,14 @@ export const NavbarLinkCreator = {
   NotificationLink: (): LinkType => {
     return {
       Text: "Notification",
-      href: PagesLinks.getNotificationLink(),
+      href: PagesLinks.NOTIFICATION_LINK,
       icon: MdNotifications,
     };
   },
   MessageLink: (): LinkType => {
     return {
       Text: "Message",
-      href: PagesLinks.getNotificationLink(),
+      href: PagesLinks.NOTIFICATION_LINK,
       icon: TbMessage,
     };
   },

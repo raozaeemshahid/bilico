@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Navbar from "../components/Navbar";
 import { NavbarLinkCreator } from "../lib/NavbarLinkProvider";
@@ -6,7 +6,14 @@ import { LoadingFullScreen } from "../components/loading";
 import Head from "next/head";
 const NotFound: NextPage = () => {
   const { data: userSession, status } = useSession();
-  if (status == "loading") return <LoadingFullScreen />;
+  if (
+    status == "loading" ||
+    !userSession ||
+    !userSession.user ||
+    !userSession.user.name
+  )
+    return <LoadingFullScreen text="Signing You In" />;
+
   return (
     <>
       <Head>
@@ -25,7 +32,7 @@ const NotFound: NextPage = () => {
               NavbarLinkCreator.questionLink(),
               NavbarLinkCreator.storyLink(),
               NavbarLinkCreator.HomeLink(),
-              NavbarLinkCreator.profileLink(userSession),
+              NavbarLinkCreator.profileLink(userSession.user.name),
             ]}
           />
         ) : (

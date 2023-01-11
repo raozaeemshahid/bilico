@@ -1,9 +1,4 @@
 import { useSession } from "next-auth/react";
-import type { Session } from "next-auth";
-import { Dispatch, SetStateAction } from "react";
-import { zodName } from "../../lib/zod";
-import { IoMdDoneAll } from "react-icons/io";
-import { GrEdit } from "react-icons/gr";
 import Image from "next/image";
 
 const ImageComponent: React.FC = () => {
