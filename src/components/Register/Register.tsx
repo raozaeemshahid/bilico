@@ -1,5 +1,5 @@
 import { signOut, useSession } from "next-auth/react";
-import { trpc } from "../../utils/trpc";
+import { api } from "../../utils/api";
 import Loading, { LoadingFullScreen } from "../loading";
 import { useEffect, useState } from "react";
 import { zodName } from "../../lib/zod";
@@ -17,7 +17,7 @@ import CountryComponent from "./Country";
 
 const Register: React.FC = () => {
   const { data: userSession, status } = useSession();
-  const RegisterMe = trpc.me.confirmRegistration.useMutation({
+  const RegisterMe = api.me.confirmRegistration.useMutation({
     onSuccess(data) {
       if (data.success) {
         router.push(PagesLinks.HOME_Link);

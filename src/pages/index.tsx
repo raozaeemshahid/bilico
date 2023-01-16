@@ -6,7 +6,7 @@ import { LoadingFullScreen } from "../components/loading";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import PagesLinks from "../lib/PagesLink";
-import { trpc } from "../utils/trpc";
+import { api } from "../utils/api";
 import dynamic from "next/dynamic";
 
 const HomePage = dynamic(() => import("../components/Home/Home"), {
@@ -17,14 +17,14 @@ const Home: NextPage = () => {
   const { data: userSession, status } = useSession();
   const router = useRouter();
 
-  const userInfo = trpc.me.info.useQuery(undefined, {
+  const userInfo = api.me.info.useQuery(undefined, {
     enabled: router.isReady && status === "authenticated",
     onSuccess(user) {
       if (user.banned) return router.push(PagesLinks.BANNED_LINK);
       if (user.deactivated) return router.push(PagesLinks.DEATIVATED_LINK);
       if (user.notRegistered) return router.push(PagesLinks.REGISTER_LINK);
-      if (user.incompleteProfile)
-        return router.push(PagesLinks.EDIT_ACCOUNT_LINK);
+      // if (user.incompleteProfile)
+      //   return router.push(PagesLinks.EDIT_ACCOUNT_LINK);
       if (user.notFound) {
         signOut();
         router.push(PagesLinks.getLoginLink());

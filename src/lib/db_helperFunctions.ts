@@ -1,5 +1,4 @@
-import { prisma } from "../server/db/client";
-
+import { prisma } from "../server/db";
 const {
   account,
   answer,

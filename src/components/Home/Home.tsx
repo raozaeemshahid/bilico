@@ -6,7 +6,7 @@ import RightSideBar from "./rightSidebar";
 
 import { useEffect, useState } from "react";
 import Navbar from "../Navbar";
-import { trpc } from "../../utils/trpc";
+import { api } from "../../utils/api";
 import { useSession } from "next-auth/react";
 import { LoadingFullScreen } from "../loading";
 const Home: NextPage = () => {
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
     useState(false);
 
   // const deleteMe = trpc.me.deleteMyAccount.useMutation();
-  const userInfo = trpc.me.info.useQuery(undefined, {
+  const userInfo = api.me.info.useQuery(undefined, {
     enabled: status === "authenticated",
   });
 

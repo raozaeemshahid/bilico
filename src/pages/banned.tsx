@@ -5,17 +5,17 @@ import { useEffect, useRef, useState } from "react";
 import { LoadingFullScreen } from "../components/loading";
 import Navbar from "../components/Navbar";
 import PagesLinks from "../lib/PagesLink";
-import { trpc } from "../utils/trpc";
+import { api } from "../utils/api";
 import { getCallbackUrlFromRouter } from "../lib/helperFunctions";
 import Head from "next/head";
 const Banned: NextPage = ({}) => {
   const { status } = useSession();
   const router = useRouter();
-  const reportToAdmin = trpc.reportToAdmin.requestToUnban.useMutation();
+  const reportToAdmin = api.reportToAdmin.requestToUnban.useMutation();
   const [IsEligibleToApply, ChangeEligibility] = useState(false);
   const messageInputRef = useRef<HTMLInputElement>(null);
 
-  const amIBanned = trpc.me.amIBanned.useQuery(undefined, {
+  const amIBanned = api.me.amIBanned.useQuery(undefined, {
     enabled: status === "authenticated" && router.isReady,
     retry: false,
     onSuccess(data) {

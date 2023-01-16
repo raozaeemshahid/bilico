@@ -1,5 +1,5 @@
 import { protectedProcedure } from "../../trpc";
-import { prisma } from "../../../db/client";
+import { prisma } from "../../../db";
 import { z } from "zod";
 import { zodName } from "../../../../lib/zod";
 import { countries } from "countries-list";

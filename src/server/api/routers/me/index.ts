@@ -1,4 +1,4 @@
-import { router } from "../../trpc";
+import { createTRPCRouter } from "../../trpc";
 import { amIBanned } from "./amIBanned";
 import { confirmRegistration } from "./confirmRegistration";
 import { info } from "./info";
@@ -6,7 +6,7 @@ import { deleteMyAccount } from "./delete";
 import { ReactivateAccount } from "./reactivate";
 import { DeactivateAccount } from "./deactivate";
 
-export const me = router({
+export const me = createTRPCRouter({
   amIBanned,
   confirmRegistration,
   info,

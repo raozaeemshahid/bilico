@@ -36,7 +36,7 @@ export const info = protectedProcedure.query(async ({ ctx }) => {
   }
   if (user.isDeactivated) return { deactivated: true };
   if (!user.emailVerified) return { notRegistered: true };
-  if (user._count.Interests === 0) return { incompleteProfile: true };
+  // if (user._count.Interests === 0) return { incompleteProfile: true };
 
   return {
     success: true,

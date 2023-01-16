@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import PagesLinks from "../lib/PagesLink";
 import { LoadingFullScreen } from "../components/loading";
-import { trpc } from "../utils/trpc";
+import { api } from "../utils/api";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 
@@ -15,7 +15,7 @@ const Register = dynamic(() => import("../components/Register/Register"), {
 const RegisterPage: NextPage = () => {
   const { data: userSession, status } = useSession();
   const router = useRouter();
-  const userInfo = trpc.me.info.useQuery(undefined, {
+  const userInfo = api.me.info.useQuery(undefined, {
     enabled: status === "authenticated" && router.isReady,
     onSuccess(user) {
       if (user.notRegistered) return;

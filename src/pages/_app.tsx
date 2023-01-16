@@ -2,7 +2,7 @@ import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 
-import { trpc } from "../utils/trpc";
+import { api } from "../utils/api";
 
 import "../styles/globals.css";
 
@@ -11,14 +11,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <SessionProvider
-      session={session}
-      refetchOnWindowFocus={true}
-      refetchWhenOffline={false}
-    >
+    <SessionProvider session={session}>
       <Component {...pageProps} />
     </SessionProvider>
   );
 };
 
-export default trpc.withTRPC(MyApp);
+export default api.withTRPC(MyApp);
