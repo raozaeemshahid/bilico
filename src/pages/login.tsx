@@ -3,14 +3,16 @@ import { signIn, useSession } from "next-auth/react";
 import type { NextPage } from "next";
 import Loading from "../components/loading";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCallbackUrlFromRouter } from "../lib/helperFunctions";
 import Head from "next/head";
 
 const SignIn: NextPage = () => {
   const router = useRouter();
   const { status } = useSession();
+  const [isSigningIn, changeIsSigningIn] = useState(false);
   useEffect(() => {
+    changeIsSigningIn(false);
     if (!router.isReady) return;
     if (status == "authenticated")
       router.push(getCallbackUrlFromRouter(router));
@@ -38,13 +40,16 @@ const SignIn: NextPage = () => {
             </p>
           </div>
           <div className="mt-10 flex w-full flex-col rounded-lg bg-gray-800 bg-opacity-50 p-8 md:ml-auto md:mt-0 md:w-1/2 lg:w-2/6">
-            {status == "unauthenticated" ? (
+            {status == "unauthenticated" && !isSigningIn ? (
               <>
                 <h2 className="title-font mb-5 text-2xl font-medium text-white">
                   Login
                 </h2>
                 <button
-                  onClick={() => signIn("google")}
+                  onClick={() => {
+                    changeIsSigningIn(true);
+                    signIn("google");
+                  }}
                   className="rounded border-0 bg-blue-500 py-2 px-8 text-lg text-white hover:bg-blue-600 focus:outline-none"
                 >
                   Continue with Google
