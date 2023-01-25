@@ -45,14 +45,12 @@ const Home: NextPage = () => {
   if (!userInfo.data) return <LoadingFullScreen text="Loading Data" />;
   if (!userInfo.data.success)
     return <LoadingFullScreen text="Getting Things Ready" />;
+  if (userInfo.data.name !== userSession.user.name) signOut();
   return (
     <>
       <Head>
         <title>Bilico</title>
-        <meta
-          name="description"
-          content="Let's Connect, Learn and Grow Together"
-        />
+        <meta name="description" content="A Social Media For Professionals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HomePage />

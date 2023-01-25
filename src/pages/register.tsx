@@ -40,10 +40,7 @@ const RegisterPage: NextPage = () => {
     <>
       <Head>
         <title>Bilico</title>
-        <meta
-          name="description"
-          content="Let's Connect, Learn and Grow Together"
-        />
+        <meta name="description" content="A Social Media For Professionals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Register />
