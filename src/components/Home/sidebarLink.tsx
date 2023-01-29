@@ -7,7 +7,7 @@ const SidebarLink: React.FC<{ link: LinkType; count?: number }> = ({
 }) => {
   return (
     <Link
-      className="text-md mt-4 flex items-center rounded-lg p-2 pl-2 hover:bg-gray-700"
+      className="mt-4 flex items-center rounded-lg p-1 pl-2 text-lg hover:bg-gray-700"
       href={link.href}
     >
       <link.icon />

@@ -50,6 +50,7 @@ const Register: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
+    if (errors.length == 0) return;
     changeErrors([]);
   }, [
     isNameEditing,

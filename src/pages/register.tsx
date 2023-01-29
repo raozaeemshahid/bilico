@@ -13,8 +13,15 @@ const Register = dynamic(() => import("../components/Register/Register"), {
 });
 
 const RegisterPage: NextPage = () => {
-  const { data: userSession, status } = useSession();
   const router = useRouter();
+
+  const { data: userSession, status } = useSession({
+    required: true,
+    onUnauthenticated: () => {
+      router.push(PagesLinks.getLoginLink(router));
+    },
+  });
+
   const userInfo = api.me.info.useQuery(undefined, {
     enabled: status === "authenticated" && router.isReady,
     onSuccess(user) {
@@ -23,15 +30,8 @@ const RegisterPage: NextPage = () => {
     },
   });
 
-  useEffect(() => {
-    if (!router.isReady) return;
-    if (status == "unauthenticated")
-      router.push(PagesLinks.getLoginLink(router));
-  }, [router, router.isReady, status]);
-
   if (status == "loading" || !userSession || !userSession.user)
     return <LoadingFullScreen text="Signing You In" />;
-
   if (!userInfo.data) return <LoadingFullScreen text="Loading Data" />;
   if (!userInfo.data.notRegistered)
     return <LoadingFullScreen text="Getting Things Ready" />;

@@ -27,6 +27,13 @@ const Home: NextPage = () => {
     const setToggler = () => {
       const isWindowLarger = window.innerWidth >= 768;
       changeIsWindowLargerThanEnough(isWindowLarger);
+      if (isWindowLarger) {
+        changeIsLeftBarOpen(true);
+        changeIsRightBarOpen(true);
+      } else {
+        changeIsLeftBarOpen(false);
+        changeIsRightBarOpen(false);
+      }
     };
     setToggler();
     window.addEventListener("resize", setToggler);
@@ -48,10 +55,20 @@ const Home: NextPage = () => {
     return <LoadingFullScreen text="Getting Things Ready" />;
   return (
     <>
-      <div className="overflow-hidden bg-gray-700">
+      <div className="h-screen overflow-hidden bg-gray-700">
         <Navbar />
 
-        <div className="mt-1 flex">
+        <div className="relative mt-2 flex h-full w-full">
+          {(isLeftBarOpen || isRightBarOpen) && !isWindowLargerEnough && (
+            <motion.div
+              className="absolute top-0 left-0 z-30 h-screen w-screen opacity-0"
+              onClick={() => {
+                changeIsLeftBarOpen(false);
+                changeIsRightBarOpen(false);
+              }}
+              animate={{ width: "100vw" }}
+            ></motion.div>
+          )}
           <LeftSideBar
             isOpen={isLeftBarOpen}
             changeIsOpen={changeIsLeftBarOpen}
@@ -65,7 +82,7 @@ const Home: NextPage = () => {
             }}
           />
           <motion.div
-            className={`m-10 w-full rounded-xl bg-gray-800 p-5 text-gray-100`}
+            className={`absolute left-0 right-0 z-[18] m-6 rounded-xl bg-gray-800 p-5 text-gray-100 md:static md:w-full`}
           >
             Lorem
           </motion.div>

@@ -25,7 +25,7 @@ const SignBtn: React.FC<{ signedOut?: boolean }> = ({ signedOut = false }) => {
   return (
     <button
       onClick={() => (signedOut ? signIn("google") : signOut())}
-      className="mt-4 inline-flex items-center rounded border-0 bg-gray-900 py-1 px-3 text-base hover:bg-gray-700 focus:outline-none md:mt-0"
+      className="inline-flex items-center rounded border-0 bg-gray-900 py-1 px-3 text-base hover:bg-gray-700 focus:outline-none md:mt-0"
     >
       {signedOut ? "Sign In (via Google)" : "Sign Out"}
       <svg
@@ -51,16 +51,16 @@ const Navbar: React.FC<{
 
   return (
     <header className="body-font bg-gray-800">
-      <div className="container mx-auto flex flex-col flex-wrap items-center p-4 md:flex-row">
+      <div className="container mx-auto flex flex-row flex-wrap items-center justify-between p-4">
         <Link
           href={PagesLinks.HOME_Link}
-          className="title-font mb-4 flex flex-wrap items-center justify-center text-base font-medium  md:mb-0"
+          className="title-font mx-1 flex flex-wrap items-center justify-center text-base  font-medium"
         >
-          <span className="text-xl">Bilico</span>
+          <span className="text-2xl font-bold">Bilico</span>
         </Link>
         <NavbarLinks links={links} />
         <SignBtn signedOut={signedOut} />
-        {process.env.NODE_ENV == "development" && (
+        {/* {process.env.NODE_ENV == "development" && (
           <button
             onClick={() => {
               deleteMe.mutate();
@@ -70,7 +70,7 @@ const Navbar: React.FC<{
           >
             Delete
           </button>
-        )}
+        )} */}
       </div>
     </header>
   );

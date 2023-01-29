@@ -39,79 +39,70 @@ const Sidebar: React.FC<{
     changeSideBarNavbarWidth(SideBarRef.current.clientWidth);
   }, [isSideBarReady]);
   return (
-    <>
-      {isOpen && !isWindowLargerEnough && (
-        <motion.div
-          className="absolute top-0 left-0 z-20 w-screen opacity-0"
-          onClick={() => changeIsOpen(false)}
-          animate={{ width: "100vw" }}
-        ></motion.div>
-      )}
-      <div
-        className={`absolute z-[3] md:static ${!isOtherOpen && `z-[6]`} ${
-          isOpen ? `z-30` : ""
-        } left-0 flex overflow-x-hidden md:overflow-x-visible`}
+    <div
+      className={` relative z-[3] md:static ${!isOtherOpen && `z-[6]`} ${
+        isOpen && `z-30`
+      } left-0 flex md:overflow-x-visible`}
+    >
+      <motion.div
+        className="flex rounded-md bg-gray-800"
+        initial={{ x: isOpen ? 0 : -sideNavbarWidth, width: 0 }}
+        onAnimationComplete={() => {
+          if (sideNavbarWidth === SideBarRef.current?.clientWidth) return;
+          changeIsSideBarReady(true);
+        }}
+        animate={{
+          x: isOpen ? 0 : -sideNavbarWidth,
+          width: "12rem",
+        }}
+        ref={SideBarRef}
       >
-        <motion.div
-          className="flex rounded-md bg-gray-800"
-          initial={{ x: isOpen ? 0 : -sideNavbarWidth, width: 0 }}
-          onAnimationComplete={() => {
-            if (sideNavbarWidth === SideBarRef.current?.clientWidth) return;
-            changeIsSideBarReady(true);
-          }}
+        <div className="flex w-full flex-col  p-3 py-5">
+          <SidebarLink link={NavbarLinkCreator.HomeLink()} />
+          <SidebarLink
+            count={userInfo.newMessages}
+            link={NavbarLinkCreator.MessageLink()}
+          />
+          <SidebarLink
+            count={userInfo.newRequests}
+            link={NavbarLinkCreator.ConnectionLink()}
+          />
+          <SidebarLink
+            count={userInfo.newNotifications}
+            link={NavbarLinkCreator.NotificationLink()}
+          />
+          <SidebarLink link={NavbarLinkCreator.BlogLink()} />
+          <SidebarLink link={NavbarLinkCreator.questionLink()} />
+          <SidebarLink link={NavbarLinkCreator.storyLink()} />
+          <SidebarLink link={NavbarLinkCreator.accountLink()} />
+        </div>
+      </motion.div>
+      {!isWindowLargerEnough && (
+        <motion.button
+          className="bg-gray-600 p-[0.1]"
+          initial={{ x: isOpen ? 0 : -sideNavbarWidth }}
           animate={{
             x: isOpen ? 0 : -sideNavbarWidth,
-            width: "12rem",
           }}
-          ref={SideBarRef}
+          onClick={() => {
+            if (isDragging) return;
+            changeIsOpen(!isOpen);
+          }}
+          onPanStart={() => (isDragging = true)}
+          onPanEnd={() =>
+            setTimeout(() => {
+              isDragging = false;
+            }, 10)
+          }
+          onPan={(e, info) => {
+            if (info.offset.x < -50 && isOpen) changeIsOpen(false);
+            if (info.offset.x > 50 && !isOpen) changeIsOpen(true);
+          }}
         >
-          <div className="flex w-full flex-col  p-3">
-            <SidebarLink link={NavbarLinkCreator.HomeLink()} />
-            <SidebarLink
-              count={userInfo.newMessages}
-              link={NavbarLinkCreator.MessageLink()}
-            />
-            <SidebarLink
-              count={userInfo.newRequests}
-              link={NavbarLinkCreator.ConnectionLink()}
-            />
-            <SidebarLink
-              count={userInfo.newNotifications}
-              link={NavbarLinkCreator.NotificationLink()}
-            />
-            <SidebarLink link={NavbarLinkCreator.BlogLink()} />
-            <SidebarLink link={NavbarLinkCreator.questionLink()} />
-            <SidebarLink link={NavbarLinkCreator.storyLink()} />
-            <SidebarLink link={NavbarLinkCreator.accountLink()} />
-          </div>
-        </motion.div>
-        {!isWindowLargerEnough && (
-          <motion.button
-            className="bg-gray-600 p-[0.1]"
-            initial={{ x: isOpen ? 0 : -sideNavbarWidth }}
-            animate={{
-              x: isOpen ? 0 : -sideNavbarWidth,
-            }}
-            onClick={() => {
-              if (isDragging) return;
-              changeIsOpen(!isOpen);
-            }}
-            onPanStart={() => (isDragging = true)}
-            onPanEnd={() =>
-              setTimeout(() => {
-                isDragging = false;
-              }, 10)
-            }
-            onPan={(e, info) => {
-              if (info.offset.x < -50 && isOpen) changeIsOpen(false);
-              if (info.offset.x > 50 && !isOpen) changeIsOpen(true);
-            }}
-          >
-            <GrDrag />
-          </motion.button>
-        )}
-      </div>
-    </>
+          <GrDrag />
+        </motion.button>
+      )}
+    </div>
   );
 };
 

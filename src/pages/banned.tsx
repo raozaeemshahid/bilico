@@ -9,8 +9,13 @@ import { api } from "../utils/api";
 import { getCallbackUrlFromRouter } from "../lib/helperFunctions";
 import Head from "next/head";
 const Banned: NextPage = ({}) => {
-  const { status } = useSession();
   const router = useRouter();
+  const { data: userSession, status } = useSession({
+    required: true,
+    onUnauthenticated: () => {
+      router.push(PagesLinks.getLoginLink(router));
+    },
+  });
   const reportToAdmin = api.reportToAdmin.requestToUnban.useMutation();
   const [IsEligibleToApply, ChangeEligibility] = useState(false);
   const messageInputRef = useRef<HTMLInputElement>(null);
@@ -29,14 +34,6 @@ const Banned: NextPage = ({}) => {
     },
   });
 
-  useEffect(() => {
-    if (!router.isReady) return;
-    if (status == "unauthenticated")
-      router.push(PagesLinks.getLoginLink(router));
-    if (amIBanned.isSuccess && amIBanned.data && !amIBanned.data.isBanned)
-      router.push(getCallbackUrlFromRouter(router));
-  }, [router, router.isReady, status, amIBanned.isSuccess, amIBanned.data]);
-
   if (status === "loading") return <LoadingFullScreen text="Signing You In" />;
   if (amIBanned.isLoading || !amIBanned.data || !amIBanned.data.isBanned)
     return <LoadingFullScreen text="Loading Data" />;
@@ -53,10 +50,7 @@ const Banned: NextPage = ({}) => {
     <>
       <Head>
         <title>Bilico</title>
-        <meta
-          name="description"
-          content="A Social Media For Professionals"
-        />
+        <meta name="description" content="A Social Media For Professionals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />

@@ -59,21 +59,21 @@ export const NavbarLinkCreator = {
   },
   NotificationLink: (): LinkType => {
     return {
-      Text: "Notification",
+      Text: "Notifications",
       href: PagesLinks.NOTIFICATION_LINK,
       icon: MdNotifications,
     };
   },
   MessageLink: (): LinkType => {
     return {
-      Text: "Message",
+      Text: "Messages",
       href: PagesLinks.NOTIFICATION_LINK,
       icon: TbMessage,
     };
   },
   ConnectionLink: (): LinkType => {
     return {
-      Text: "Connection",
+      Text: "Connections",
       href: PagesLinks.getConnectionLink(),
       icon: IoIosPeople,
     };

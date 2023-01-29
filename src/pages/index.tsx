@@ -14,8 +14,13 @@ const HomePage = dynamic(() => import("../components/Home/Home"), {
 });
 
 const Home: NextPage = () => {
-  const { data: userSession, status } = useSession();
   const router = useRouter();
+  const { data: userSession, status } = useSession({
+    required: true,
+    onUnauthenticated: () => {
+      router.push(PagesLinks.getLoginLink(router));
+    },
+  });
 
   const userInfo = api.me.info.useQuery(undefined, {
     enabled: router.isReady && status === "authenticated",
@@ -23,8 +28,6 @@ const Home: NextPage = () => {
       if (user.banned) return router.push(PagesLinks.BANNED_LINK);
       if (user.deactivated) return router.push(PagesLinks.DEATIVATED_LINK);
       if (user.notRegistered) return router.push(PagesLinks.REGISTER_LINK);
-      // if (user.incompleteProfile)
-      //   return router.push(PagesLinks.EDIT_ACCOUNT_LINK);
       if (user.notFound) {
         signOut();
         router.push(PagesLinks.getLoginLink());
@@ -33,19 +36,16 @@ const Home: NextPage = () => {
     },
   });
 
-  useEffect(() => {
-    if (!router.isReady) return;
-    if (status == "unauthenticated")
-      router.push(PagesLinks.getLoginLink(router));
-  }, [router, router.isReady, status]);
-
   if (status == "loading" || !userSession || !userSession.user)
     return <LoadingFullScreen text="Signing You In" />;
 
   if (!userInfo.data) return <LoadingFullScreen text="Loading Data" />;
   if (!userInfo.data.success)
     return <LoadingFullScreen text="Getting Things Ready" />;
-  if (userInfo.data.name !== userSession.user.name) signOut();
+  if (userInfo.data.name !== userSession.user.name) {
+    signOut();
+    router.push(PagesLinks.getLoginLink());
+  }
   return (
     <>
       <Head>
