@@ -45,7 +45,7 @@ const ProfileHead: React.FC<{
                 className="focus:shadow-outline w-full appearance-none rounded bg-gray-700 py-[1.5] px-3 text-sm leading-tight text-white  shadow focus:outline-none"
                 type="text"
                 value={bio}
-                placeholder="Edit Your Bio"
+                placeholder="Edit Your Bio..."
                 onChange={(el) => changeBio(el.target.value)}
               />
               <button
@@ -60,6 +60,10 @@ const ProfileHead: React.FC<{
               </button>
             </div>
           </form>
+        ) : updateBio.isLoading ? (
+          <div className="flex items-center gap-1 p-1 text-gray-300">
+            Saving...
+          </div>
         ) : (
           <div className="flex items-center gap-1 p-1 text-gray-300">
             {bio}
