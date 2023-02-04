@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import PagesLinks from "../../lib/PagesLink";
-import { LoadingFullScreen } from "../../components/loading";
+import { LoadingFullScreen } from "../../components/Loading";
 
 const Account = () => {
   const router = useRouter();

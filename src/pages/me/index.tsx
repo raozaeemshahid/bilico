@@ -6,7 +6,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import PagesLinks from "../../lib/PagesLink";
-import { LoadingFullScreen } from "../../components/loading";
+import { LoadingFullScreen } from "../../components/Loading";
 import dynamic from "next/dynamic";
 import { api } from "../../utils/api";
 

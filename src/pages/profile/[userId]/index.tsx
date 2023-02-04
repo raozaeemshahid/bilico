@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import Navbar from "../../../components/Navbar";
 import { NavbarLinkCreator } from "../../../lib/NavbarLinkProvider";
 import { useEffect } from "react";
-import { LoadingFullScreen } from "../../../components/loading";
+import { LoadingFullScreen } from "../../../components/Loading";
 import { useRouter } from "next/router";
 import PagesLinks from "../../../lib/PagesLink";
 import Head from "next/head";

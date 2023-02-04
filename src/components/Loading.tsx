@@ -1,13 +1,15 @@
 import { type NextPage } from "next";
 
-const Loading: React.FC = () => {
+const Loading: React.FC<{
+  text?: "Signing You In" | "Loading Data" | "Getting Things Ready";
+}> = ({ text }) => {
   return (
     <>
-      <div className="flex h-full w-full items-center justify-center">
+      <div className="flex h-full w-full flex-col items-center justify-center">
         <div role="status">
           <svg
             aria-hidden="true"
-            className="mr-2 h-12 w-12 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
+            className="mb-2 h-12 w-12 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -21,8 +23,8 @@ const Loading: React.FC = () => {
               fill="currentFill"
             />
           </svg>
-          <span className="sr-only">Loading...</span>
         </div>
+        {!!text && <h1 className="text-xl text-gray-400">{text}</h1>}
       </div>
     </>
   );

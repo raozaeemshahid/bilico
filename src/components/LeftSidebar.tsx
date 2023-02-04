@@ -7,8 +7,9 @@ import {
   useState,
 } from "react";
 import { GrDrag } from "react-icons/gr";
-import { NavbarLinkCreator } from "../../lib/NavbarLinkProvider";
-import SidebarLink from "./sidebarLink";
+import { NavbarLinkCreator } from "../lib/NavbarLinkProvider";
+import SidebarLink from "./SidebarLink";
+import { UserInfo } from "./HomeLayout";
 
 let isDragging = false;
 
@@ -17,12 +18,7 @@ const Sidebar: React.FC<{
   changeIsOpen: Dispatch<SetStateAction<boolean>>;
   isOtherOpen: boolean;
   isWindowLargerEnough: boolean;
-  userInfo: {
-    name: string;
-    newMessages: number;
-    newNotifications: number;
-    newRequests: number;
-  };
+  userInfo: UserInfo;
 }> = ({
   isOpen,
   changeIsOpen,

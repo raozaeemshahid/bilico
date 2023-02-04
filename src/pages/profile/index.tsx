@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { LoadingFullScreen } from "../../components/loading";
+import { LoadingFullScreen } from "../../components/Loading";
 import PagesLinks from "../../lib/PagesLink";
 import Head from "next/head";
 
