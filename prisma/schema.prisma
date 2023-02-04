@@ -284,6 +284,7 @@ model User {
   DateOfBirth   String?
   Gender        Gender?
   Country       String?
+  Bio           String?
 
   Interests Interest[]
   Skills    Skill[]

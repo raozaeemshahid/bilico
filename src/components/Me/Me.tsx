@@ -1,14 +1,14 @@
 import { type NextPage } from "next";
 
-import { useEffect, useState } from "react";
 import Navbar from "../Navbar";
 import { api } from "../../utils/api";
-import { signOut, useSession } from "next-auth/react";
-import { LoadingFullScreen } from "../loading";
+import { useSession } from "next-auth/react";
+import { LoadingFullScreen } from "../Loading";
 import { useRouter } from "next/router";
 import PagesLinks from "../../lib/PagesLink";
 import { NavbarLinkCreator } from "../../lib/NavbarLinkProvider";
-import { Session } from "next-auth";
+import HomeLayout from "../HomeLayout";
+import Profile from "./Profile";
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -22,6 +22,12 @@ const Home: React.FC = () => {
   const userInfo = api.me.info.useQuery(undefined, {
     enabled: status === "authenticated" && router.isReady,
   });
+  const userData = api.me.data.useQuery(undefined, {
+    enabled: userInfo.data?.success,
+    onSuccess(data) {
+      console.log(data);
+    },
+  });
 
   if (!userSession || !userSession.user)
     return <LoadingFullScreen text="Signing You In" />;
@@ -29,7 +35,16 @@ const Home: React.FC = () => {
     return <LoadingFullScreen text="Getting Things Ready" />;
   return (
     <>
-      <Navbar links={[NavbarLinkCreator.HomeLink()]} />
+      <HomeLayout
+        userInfo={{
+          name: userInfo.data.name,
+          newMessages: userInfo.data.newMessages,
+          newNotifications: userInfo.data.newNotifications,
+          newRequests: userInfo.data.newRequests,
+        }}
+      >
+        <Profile />
+      </HomeLayout>
     </>
   );
 };

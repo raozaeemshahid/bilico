@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import { LoadingFullScreen } from "../components/loading";
+import { LoadingFullScreen } from "../components/Loading";
 import Navbar from "../components/Navbar";
 import PagesLinks from "../lib/PagesLink";
 import { api } from "../utils/api";
