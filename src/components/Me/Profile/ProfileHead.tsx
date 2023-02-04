@@ -3,12 +3,14 @@ import { useState } from "react";
 import { FiEdit3 } from "react-icons/fi";
 import { IoMdDoneAll } from "react-icons/io";
 import { api } from "../../../utils/api";
+import { MdVerified } from "react-icons/md";
 
 const ProfileHead: React.FC<{
   img: string | null;
   name: string;
   _bio: string | null;
-}> = ({ name, img, _bio }) => {
+  isVerified: boolean;
+}> = ({ name, img, _bio, isVerified }) => {
   const [bio, changeBio] = useState(_bio || "");
   const [isBioEditing, changeIsBioEditing] = useState(
     !_bio || _bio.length == 0
@@ -28,7 +30,10 @@ const ProfileHead: React.FC<{
         />
       )}
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl text-gray-200">{name}</h1>
+        <div className="flex items-center gap-2 text-2xl">
+          <h1 className=" text-gray-200">{name}</h1>
+          {isVerified && <MdVerified />}
+        </div>
         {isBioEditing ? (
           <form
             onSubmit={(e) => {

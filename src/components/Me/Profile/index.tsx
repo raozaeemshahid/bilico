@@ -25,6 +25,7 @@ const Profile: React.FC = () => {
           name={userData.data.name}
           _bio={userData.data.Bio}
           img={userData.data.image}
+          isVerified={userData.data.isVerified}
         />
       </div>
     </>
