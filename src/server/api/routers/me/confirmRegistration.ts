@@ -55,11 +55,7 @@ export const confirmRegistration = protectedProcedure
       data: {
         emailVerified: new Date(),
         name: input.name,
-        Gender:
-          (input.gender == "Male" ? "MALE" : undefined) ||
-          (input.gender == "Female" ? "FEMALE" : undefined) ||
-          (input.gender === "Other" ? "OTHER" : undefined) ||
-          "RATHER_NOT_TO_SAY",
+        Gender: input.gender,
         Country: input.country,
         DateOfBirth: input.dateOfBirth,
       },

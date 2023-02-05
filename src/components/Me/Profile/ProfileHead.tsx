@@ -25,7 +25,7 @@ const ProfileHead: React.FC<{
   }, [isBioEditing, bio]);
 
   return (
-    <div className="flex items-center justify-center gap-4 rounded-lg  p-2">
+    <div className="flex flex-wrap items-center justify-center gap-4 rounded-lg p-2  sm:flex-nowrap">
       {!!img && (
         <Image
           alt="Profile Pic"
@@ -35,7 +35,7 @@ const ProfileHead: React.FC<{
           className="rounded-full border-2 border-gray-200 bg-white"
         />
       )}
-      <div className="flex w-full flex-col gap-1">
+      <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2 text-2xl">
           <h1 className=" text-gray-200">{name}</h1>
           {isVerified && <MdVerified />}

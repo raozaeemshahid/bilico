@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import Loading from "../../Loading";
 import Image from "next/image";
 import ProfileHead from "./ProfileHead";
+import BioData from "./BioData";
 
 const Profile: React.FC = () => {
   const router = useRouter();
@@ -26,6 +27,7 @@ const Profile: React.FC = () => {
           img={userData.data.image}
           isVerified={userData.data.isVerified}
         />
+        <BioData />
       </div>
     </>
   );

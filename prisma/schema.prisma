@@ -360,10 +360,9 @@ enum ReportType {
 }
 
 enum Gender {
-  MALE
-  FEMALE
-  OTHER
-  RATHER_NOT_TO_SAY
+  Male
+  Female
+  Other
 }
 
 enum PostType {

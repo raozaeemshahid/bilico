@@ -38,9 +38,7 @@ const GenderComponent: React.FC<{
         </div>
       ) : (
         <div className="flex content-between items-center p-1">
-          {`${
-            gender !== "Male" && gender !== "Female" ? "Gender: " : ""
-          } ${gender}`}
+          {`${gender == "Other" ? "Gender: " : ""} ${gender}`}
           <button
             onClick={() => {
               changeGender(undefined);
