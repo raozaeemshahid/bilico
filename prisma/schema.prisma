@@ -284,7 +284,7 @@ model User {
   DateOfBirth   String?
   Gender        Gender?
   Country       String?
-  Bio           String?
+  Bio           String?   @db.Text
 
   Interests Interest[]
   Skills    Skill[]

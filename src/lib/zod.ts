@@ -15,3 +15,9 @@ export const zodName = z
       .min(1, { message: "Name can't be empty" })
   )
   .transform((name) => name.join(" "));
+
+export const zodBio = z
+  .string()
+  .trim()
+  .min(3, { message: "Your bio can't be so short" })
+  .max(1000, { message: "Your bio can't be so long" });

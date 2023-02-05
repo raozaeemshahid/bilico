@@ -16,7 +16,6 @@ const Profile: React.FC = () => {
   });
   if (!userData.data || !userData.data.success)
     return <Loading text="Loading Data" />;
-  console.log(userData.data);
 
   return (
     <>

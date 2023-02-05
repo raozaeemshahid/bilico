@@ -1,9 +1,10 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiEdit3 } from "react-icons/fi";
 import { IoMdDoneAll } from "react-icons/io";
 import { api } from "../../../utils/api";
 import { MdVerified } from "react-icons/md";
+import { zodBio } from "../../../lib/zod";
 
 const ProfileHead: React.FC<{
   img: string | null;
@@ -15,8 +16,13 @@ const ProfileHead: React.FC<{
   const [isBioEditing, changeIsBioEditing] = useState(
     !_bio || _bio.length == 0
   );
+  const [errors, changeError] = useState<string[]>([]);
 
   const updateBio = api.me.updateBio.useMutation();
+
+  useEffect(() => {
+    changeError([]);
+  }, [isBioEditing, bio]);
 
   return (
     <div className="flex items-center justify-center gap-4 rounded-lg  p-2">
@@ -29,15 +35,28 @@ const ProfileHead: React.FC<{
           className="rounded-full border-2 border-gray-200 bg-white"
         />
       )}
-      <div className="flex flex-col gap-1">
+      <div className="flex w-full flex-col gap-1">
         <div className="flex items-center gap-2 text-2xl">
           <h1 className=" text-gray-200">{name}</h1>
           {isVerified && <MdVerified />}
         </div>
+        {errors.length > 0 &&
+          errors.map((err) => (
+            <p className="text-sm text-red-400" key={err}>
+              {err}
+            </p>
+          ))}
         {isBioEditing ? (
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              const parsedBio = zodBio.safeParse(bio);
+              if (parsedBio.success) {
+                updateBio.mutate({ bio });
+                changeIsBioEditing(false);
+              } else {
+                changeError(parsedBio.error.errors.map((err) => err.message));
+              }
             }}
           >
             <div className="flex">
@@ -48,14 +67,7 @@ const ProfileHead: React.FC<{
                 placeholder="Edit Your Bio..."
                 onChange={(el) => changeBio(el.target.value)}
               />
-              <button
-                className="rounded bg-gray-900 p-2"
-                onClick={() => {
-                  if (bio.length == 0) return;
-                  updateBio.mutate({ bio: bio });
-                  changeIsBioEditing(false);
-                }}
-              >
+              <button className="rounded bg-gray-900 p-2" type="submit">
                 <IoMdDoneAll className=" hover:scale-110 active:scale-90" />
               </button>
             </div>
