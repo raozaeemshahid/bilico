@@ -20,8 +20,14 @@ const HomeLayout: React.FC<{
   const [isLeftBarOpen, changeIsLeftBarOpen] = useState(false);
   const [isRightBarOpen, changeIsRightBarOpen] = useState(false);
 
+  const [isAllClosed, changeIsAllClosed] = useState(false);
+
   const [isWindowLargerEnough, changeIsWindowLargerThanEnough] =
     useState(false);
+
+  useEffect(() => {
+    console.log("Closed: ", isAllClosed);
+  }, [isAllClosed]);
 
   useEffect(() => {
     const setToggler = () => {
@@ -58,12 +64,14 @@ const HomeLayout: React.FC<{
           <LeftSideBar
             isOpen={isLeftBarOpen}
             changeIsOpen={changeIsLeftBarOpen}
-            isOtherOpen={isRightBarOpen}
             isWindowLargerEnough={isWindowLargerEnough}
             userInfo={userInfo}
+            changeIsAllClosed={changeIsAllClosed}
           />
           <motion.div
-            className={`absolute left-0 right-0 z-[21] m-6 rounded-xl bg-gray-800 p-5 text-gray-100 md:static md:w-full`}
+            className={`absolute left-0 right-0 ${
+              isAllClosed ? "z-[21]" : "z-10"
+            } m-6 rounded-xl bg-gray-800 p-5 text-gray-100 md:static md:w-full`}
           >
             {children}
           </motion.div>
@@ -73,6 +81,7 @@ const HomeLayout: React.FC<{
               isOpen={isRightBarOpen}
               changeIsOpen={changeIsRightBarOpen}
               isWindowLargerEnough={isWindowLargerEnough}
+              changeIsAllClosed={changeIsAllClosed}
             />
           )}
         </div>

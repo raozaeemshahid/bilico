@@ -16,10 +16,16 @@ let isDragging = false;
 const Sidebar: React.FC<{
   isOpen: boolean;
   changeIsOpen: Dispatch<SetStateAction<boolean>>;
-  isOtherOpen: boolean;
+  changeIsAllClosed: Dispatch<SetStateAction<boolean>>;
   isWindowLargerEnough: boolean;
   userInfo: UserInfo;
-}> = ({ isOpen, changeIsOpen, isWindowLargerEnough, userInfo }) => {
+}> = ({
+  isOpen,
+  changeIsOpen,
+  isWindowLargerEnough,
+  userInfo,
+  changeIsAllClosed,
+}) => {
   const [sideNavbarWidth, changeSideBarNavbarWidth] = useState(0);
   const [isSideBarReady, changeIsSideBarReady] = useState(false);
   const SideBarRef = useRef<HTMLDivElement>(null);
@@ -38,9 +44,11 @@ const Sidebar: React.FC<{
         className="flex rounded-md  bg-gray-800"
         initial={{ x: isOpen ? 0 : -sideNavbarWidth, width: 0 }}
         onAnimationComplete={() => {
+          if (!isOpen) changeIsAllClosed(true);
           if (sideNavbarWidth === SideBarRef.current?.clientWidth) return;
           changeIsSideBarReady(true);
         }}
+        onAnimationStart={() => changeIsAllClosed(false)}
         animate={{
           x: isOpen ? 0 : -sideNavbarWidth,
           width: "12rem",
