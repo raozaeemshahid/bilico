@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { LoadingFullScreen } from "../components/Loading";
 import Navbar from "../components/Navbar";
 import PagesLinks from "../lib/PagesLink";
@@ -10,10 +10,10 @@ import { getCallbackUrlFromRouter } from "../lib/helperFunctions";
 import Head from "next/head";
 const Banned: NextPage = ({}) => {
   const router = useRouter();
-  const { data: userSession, status } = useSession({
+  const { status } = useSession({
     required: true,
     onUnauthenticated: () => {
-      router.push(PagesLinks.getLoginLink(router));
+      void router.push(PagesLinks.getLoginLink(router));
     },
   });
   const reportToAdmin = api.reportToAdmin.requestToUnban.useMutation();
@@ -25,11 +25,11 @@ const Banned: NextPage = ({}) => {
     retry: false,
     onSuccess(data) {
       if (data.userNotFound) {
-        signOut();
-        return router.push(PagesLinks.HOME_Link);
+        void signOut();
+        return void router.push(PagesLinks.HOME_Link);
       }
       if (!data.isBanned || data.notBanned)
-        return router.push(getCallbackUrlFromRouter(router));
+        return void router.push(getCallbackUrlFromRouter(router));
       ChangeEligibility(data.eligibleToApply);
     },
   });
@@ -38,7 +38,7 @@ const Banned: NextPage = ({}) => {
   if (amIBanned.isLoading || !amIBanned.data || !amIBanned.data.isBanned)
     return <LoadingFullScreen text="Loading Data" />;
 
-  const SendRequest = async () => {
+  const SendRequest = () => {
     if (!messageInputRef || !messageInputRef.current || !IsEligibleToApply)
       return;
     reportToAdmin.mutate({

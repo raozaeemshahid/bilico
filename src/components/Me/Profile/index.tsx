@@ -2,9 +2,9 @@ import { useRouter } from "next/router";
 import { api } from "../../../utils/api";
 import { useSession } from "next-auth/react";
 import Loading from "../../Loading";
-import Image from "next/image";
 import ProfileHead from "./ProfileHead";
 import BioData from "./BioData";
+import { useEffect } from "react";
 
 const Profile: React.FC = () => {
   const router = useRouter();
@@ -13,20 +13,16 @@ const Profile: React.FC = () => {
     enabled: status === "authenticated" && router.isReady,
   });
   const userData = api.me.data.useQuery(undefined, {
-    enabled: userInfo.data?.success,
+    enabled: userInfo.data && userInfo.data.success,
   });
+
   if (!userData.data || !userData.data.success)
     return <Loading text="Loading Data" />;
 
   return (
     <>
       <div className="flex flex-col">
-        <ProfileHead
-          name={userData.data.name}
-          _bio={userData.data.Bio}
-          img={userData.data.image}
-          isVerified={userData.data.isVerified}
-        />
+        <ProfileHead />
         <BioData />
       </div>
     </>

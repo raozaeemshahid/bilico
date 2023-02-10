@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 
 import LeftSideBar from "./LeftSidebar";
 import RightSideBar from "./RightSidebar";
-import { useSession } from "next-auth/react";
-import { api } from "../utils/api";
 
 export interface UserInfo {
   name: string;

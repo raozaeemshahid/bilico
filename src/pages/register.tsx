@@ -1,7 +1,6 @@
 import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import PagesLinks from "../lib/PagesLink";
 import { LoadingFullScreen } from "../components/Loading";
 import { api } from "../utils/api";
@@ -18,7 +17,7 @@ const RegisterPage: NextPage = () => {
   const { data: userSession, status } = useSession({
     required: true,
     onUnauthenticated: () => {
-      router.push(PagesLinks.getLoginLink(router));
+      void router.push(PagesLinks.getLoginLink(router));
     },
   });
 
@@ -26,7 +25,7 @@ const RegisterPage: NextPage = () => {
     enabled: status === "authenticated" && router.isReady,
     onSuccess(user) {
       if (user.notRegistered) return;
-      router.push(PagesLinks.HOME_Link);
+      void router.push(PagesLinks.HOME_Link);
     },
   });
 

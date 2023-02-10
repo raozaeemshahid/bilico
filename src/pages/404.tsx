@@ -6,7 +6,7 @@ import { LoadingFullScreen } from "../components/Loading";
 import Head from "next/head";
 
 const NotFound: NextPage = () => {
-  const { data: userSession, status } = useSession();
+  const { status } = useSession();
   if (status == "loading") return <LoadingFullScreen text="Signing You In" />;
 
   return (

@@ -1,10 +1,7 @@
 import type { NextPage } from "next";
-import Navbar from "../../components/Navbar";
-import { NavbarLinkCreator } from "../../lib/NavbarLinkProvider";
 import Head from "next/head";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import PagesLinks from "../../lib/PagesLink";
 import { LoadingFullScreen } from "../../components/Loading";
 import dynamic from "next/dynamic";
@@ -20,20 +17,20 @@ const MyProfile: NextPage = () => {
   const { data: userSession, status } = useSession({
     required: true,
     onUnauthenticated: () => {
-      router.push(PagesLinks.getLoginLink(router));
+      void router.push(PagesLinks.getLoginLink(router));
     },
   });
 
   const userInfo = api.me.info.useQuery(undefined, {
     enabled: status === "authenticated" && router.isReady,
     onSuccess(data) {
-      if (data.banned) return router.push(PagesLinks.BANNED_LINK);
-      if (data.deactivated) return router.push(PagesLinks.DEATIVATED_LINK);
+      if (data.banned) return void router.push(PagesLinks.BANNED_LINK);
+      if (data.deactivated) return void router.push(PagesLinks.DEATIVATED_LINK);
       if (data.notFound) {
-        signOut();
-        return router.push(PagesLinks.getLoginLink());
+        void signOut();
+        return void router.push(PagesLinks.getLoginLink());
       }
-      if (data.notRegistered) return router.push(PagesLinks.REGISTER_LINK);
+      if (data.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
     },
   });
 

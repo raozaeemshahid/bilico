@@ -1,5 +1,5 @@
 const ProceedComponent: React.FC<{
-  FnCompleteRegistratoin: () => Promise<void>;
+  FnCompleteRegistratoin: () => void;
   isInfoEditing: boolean;
   changeIsInfoEditing: () => void;
 }> = ({ FnCompleteRegistratoin, changeIsInfoEditing, isInfoEditing }) => {

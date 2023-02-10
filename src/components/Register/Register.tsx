@@ -20,7 +20,7 @@ const Register: React.FC = () => {
   const RegisterMe = api.me.confirmRegistration.useMutation({
     onSuccess(data) {
       if (data.success) {
-        router.push(PagesLinks.HOME_Link);
+        void router.push(PagesLinks.HOME_Link);
         return;
       }
       if (data.alreadyRegistered) {
@@ -28,8 +28,8 @@ const Register: React.FC = () => {
         return;
       }
       if (data.userNotFound) {
-        signOut();
-        router.push(PagesLinks.getLoginLink(router));
+        void signOut();
+        void router.push(PagesLinks.getLoginLink(router));
       }
     },
   });
@@ -105,7 +105,7 @@ const Register: React.FC = () => {
     };
   };
   console.log("isLoading: ", RegisterMe.isLoading);
-  const FnCompleteRegistratoin = async () => {
+  const FnCompleteRegistratoin = () => {
     if (!router.isReady) return;
     const info = validateInfo();
     if (!info) return;

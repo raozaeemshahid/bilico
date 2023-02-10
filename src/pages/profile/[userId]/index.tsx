@@ -17,11 +17,11 @@ const Profile: NextPage = () => {
     if (!router.isReady) return;
 
     if (!router.query.userId) {
-      router.push(PagesLinks.NOT_FOUND_LINK);
+      void router.push(PagesLinks.NOT_FOUND_LINK);
       return;
     }
     if (status == "unauthenticated") {
-      router.push(PagesLinks.getLoginLink(router));
+      void router.push(PagesLinks.getLoginLink(router));
     }
   }, [router, router.isReady, status]);
 

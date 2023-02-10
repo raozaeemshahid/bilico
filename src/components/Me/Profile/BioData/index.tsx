@@ -6,6 +6,7 @@ import moment from "moment";
 import Gender from "./Gender";
 import { AiOutlineUser } from "react-icons/ai";
 import { FaBirthdayCake } from "react-icons/fa";
+import { useEffect } from "react";
 
 const BioData: React.FC = () => {
   const router = useRouter();
@@ -14,8 +15,9 @@ const BioData: React.FC = () => {
     enabled: status === "authenticated" && router.isReady,
   });
   const userData = api.me.data.useQuery(undefined, {
-    enabled: userInfo.data?.success,
+    enabled: userInfo.data && userInfo.data.success,
   });
+
   if (!userData.data || !userData.data.success)
     return <Loading text="Loading Data" />;
   console.log(userData.data);

@@ -10,7 +10,7 @@ const Profile: NextPage = () => {
 
   useEffect(() => {
     if (!router.isReady) return;
-    router.push(PagesLinks.ME);
+    void router.push(PagesLinks.ME);
   }, [router, router.isReady]);
 
   return (

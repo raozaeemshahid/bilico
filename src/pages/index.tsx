@@ -3,7 +3,7 @@ import Head from "next/head";
 import { signOut, useSession } from "next-auth/react";
 
 import { LoadingFullScreen } from "../components/Loading";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useRouter } from "next/router";
 import PagesLinks from "../lib/PagesLink";
 import { api } from "../utils/api";
@@ -18,19 +18,19 @@ const Home: NextPage = () => {
   const { data: userSession, status } = useSession({
     required: true,
     onUnauthenticated: () => {
-      router.push(PagesLinks.getLoginLink(router));
+      void router.push(PagesLinks.getLoginLink(router));
     },
   });
 
   const userInfo = api.me.info.useQuery(undefined, {
     enabled: router.isReady && status === "authenticated",
     onSuccess(user) {
-      if (user.banned) return router.push(PagesLinks.BANNED_LINK);
-      if (user.deactivated) return router.push(PagesLinks.DEATIVATED_LINK);
-      if (user.notRegistered) return router.push(PagesLinks.REGISTER_LINK);
+      if (user.banned) return void router.push(PagesLinks.BANNED_LINK);
+      if (user.deactivated) return void router.push(PagesLinks.DEATIVATED_LINK);
+      if (user.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
       if (user.notFound) {
-        signOut();
-        router.push(PagesLinks.getLoginLink());
+        void signOut();
+        void router.push(PagesLinks.getLoginLink());
         return;
       }
     },
@@ -43,8 +43,9 @@ const Home: NextPage = () => {
   if (!userInfo.data.success)
     return <LoadingFullScreen text="Getting Things Ready" />;
   if (userInfo.data.name !== userSession.user.name) {
-    signOut();
-    router.push(PagesLinks.getLoginLink());
+    void signOut();
+    void router.push(PagesLinks.getLoginLink());
+    return <LoadingFullScreen />;
   }
   return (
     <>

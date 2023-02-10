@@ -5,40 +5,53 @@ import { IoMdDoneAll } from "react-icons/io";
 import { api } from "../../../utils/api";
 import { MdVerified } from "react-icons/md";
 import { zodBio } from "../../../lib/zod";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import Loading from "../../Loading";
 
-const ProfileHead: React.FC<{
-  img: string | null;
-  name: string;
-  _bio: string | null;
-  isVerified: boolean;
-}> = ({ name, img, _bio, isVerified }) => {
-  const [bio, changeBio] = useState(_bio || "");
-  const [isBioEditing, changeIsBioEditing] = useState(
-    !_bio || _bio.length == 0
-  );
-  const [errors, changeError] = useState<string[]>([]);
-
+const ProfileHead: React.FC<{}> = () => {
+  const router = useRouter();
+  const { status } = useSession();
+  const userInfo = api.me.info.useQuery(undefined, {
+    enabled: status === "authenticated" && router.isReady,
+  });
+  const userData = api.me.data.useQuery(undefined, {
+    enabled: userInfo.data && userInfo.data.success,
+    onSuccess(data) {
+      if (data.Bio) changeBio(data.Bio);
+      else changeIsBioEditing(true);
+    },
+  });
   const updateBio = api.me.updateBio.useMutation();
+
+  const [Bio, changeBio] = useState<string>("");
+  const [isBioEditing, changeIsBioEditing] = useState(false);
+
+  const [errors, changeError] = useState<string[]>([]);
 
   useEffect(() => {
     changeError([]);
-  }, [isBioEditing, bio]);
+  }, [Bio, isBioEditing]);
+
+  if (!userData.data || !userData.data.success)
+    return <Loading text="Loading Data" />;
+  const data = userData.data;
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-4 rounded-lg p-2  sm:flex-nowrap">
-      {!!img && (
+      {!!data.image && (
         <Image
           alt="Profile Pic"
           width={72}
           height={72}
-          src={img}
+          src={data.image}
           className="rounded-full border-2 border-gray-200 bg-white"
         />
       )}
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2 text-2xl">
-          <h1 className=" text-gray-200">{name}</h1>
-          {isVerified && <MdVerified />}
+          <h1 className=" text-gray-200">{data.name}</h1>
+          {data.isVerified && <MdVerified />}
         </div>
         {errors.length > 0 &&
           errors.map((err) => (
@@ -50,9 +63,9 @@ const ProfileHead: React.FC<{
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              const parsedBio = zodBio.safeParse(bio);
+              const parsedBio = zodBio.safeParse(Bio);
               if (parsedBio.success) {
-                updateBio.mutate({ bio });
+                updateBio.mutate({ bio: Bio });
                 changeIsBioEditing(false);
               } else {
                 changeError(parsedBio.error.errors.map((err) => err.message));
@@ -63,7 +76,7 @@ const ProfileHead: React.FC<{
               <input
                 className="focus:shadow-outline w-full appearance-none rounded bg-gray-700 py-[1.5] px-3 text-sm leading-tight text-white  shadow focus:outline-none"
                 type="text"
-                value={bio}
+                value={Bio}
                 placeholder="Edit Your Bio..."
                 onChange={(el) => changeBio(el.target.value)}
               />
@@ -78,7 +91,7 @@ const ProfileHead: React.FC<{
           </div>
         ) : (
           <div className="flex items-center gap-1 p-1 text-gray-300">
-            {bio}
+            {Bio}
             <button
               onClick={() => {
                 changeIsBioEditing(true);

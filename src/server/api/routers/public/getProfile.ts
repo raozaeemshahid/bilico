@@ -34,7 +34,6 @@ export const getProfile = publicProcedure
             title: true,
           },
         },
-        ScheduledOfDeletion: true,
         BannedUntil: true,
       },
     });

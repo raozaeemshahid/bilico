@@ -15,7 +15,7 @@ const SignIn: NextPage = () => {
     changeIsSigningIn(false);
     if (!router.isReady) return;
     if (status == "authenticated")
-      router.push(getCallbackUrlFromRouter(router));
+      void router.push(getCallbackUrlFromRouter(router));
   }, [router, router.isReady, status]);
   return (
     <>
@@ -45,7 +45,7 @@ const SignIn: NextPage = () => {
                 <button
                   onClick={() => {
                     changeIsSigningIn(true);
-                    signIn("google");
+                    void signIn("google");
                   }}
                   className="rounded border-0 bg-blue-500 py-2 px-8 text-lg text-white hover:bg-blue-600 focus:outline-none"
                 >
