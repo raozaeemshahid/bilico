@@ -6,7 +6,6 @@ import moment from "moment";
 import Gender from "./Gender";
 import { AiOutlineUser } from "react-icons/ai";
 import { FaBirthdayCake } from "react-icons/fa";
-import { useEffect } from "react";
 
 const BioData: React.FC = () => {
   const router = useRouter();

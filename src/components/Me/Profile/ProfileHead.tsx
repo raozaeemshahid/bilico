@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Loading from "../../Loading";
 
-const ProfileHead: React.FC<{}> = () => {
+const ProfileHead: React.FC = () => {
   const router = useRouter();
   const { status } = useSession();
   const userInfo = api.me.info.useQuery(undefined, {

@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 import Loading from "../../Loading";
 import ProfileHead from "./ProfileHead";
 import BioData from "./BioData";
-import { useEffect } from "react";
 
 const Profile: React.FC = () => {
   const router = useRouter();

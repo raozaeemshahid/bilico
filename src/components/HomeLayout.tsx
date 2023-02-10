@@ -26,10 +26,6 @@ const HomeLayout: React.FC<{
     useState(false);
 
   useEffect(() => {
-    console.log("Closed: ", isAllClosed);
-  }, [isAllClosed]);
-
-  useEffect(() => {
     const setToggler = () => {
       const isWindowLarger = window.innerWidth >= 768;
       changeIsWindowLargerThanEnough(isWindowLarger);
