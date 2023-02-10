@@ -20,6 +20,10 @@ const Register: React.FC = () => {
   const RegisterMe = api.me.confirmRegistration.useMutation({
     onSuccess(data) {
       if (data.success) {
+        if (data.name !== userSession?.user?.name) {
+          void signOut();
+          void router.push(PagesLinks.getLoginLink());
+        }
         void router.push(PagesLinks.HOME_Link);
         return;
       }

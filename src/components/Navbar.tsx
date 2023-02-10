@@ -61,17 +61,17 @@ const Navbar: React.FC<{
         <NavbarLinks links={links} />
         <div>
           <SignBtn signedOut={signedOut} />
-          {process.env.NODE_ENV == "development" && (
-            <button
-              onClick={() => {
-                deleteMe.mutate();
-                void signOut();
-              }}
-              className="mx-2 mt-4 inline-flex items-center rounded border-0 bg-gray-900 py-1 px-3 text-base hover:bg-gray-700 focus:outline-none md:mt-0"
-            >
-              Delete
-            </button>
-          )}
+          {/* {process.env.NODE_ENV == "development" && ( */}
+          <button
+            onClick={() => {
+              deleteMe.mutate();
+              void signOut();
+            }}
+            className="mx-2 mt-4 inline-flex items-center rounded border-0 bg-gray-900 py-1 px-3 text-base hover:bg-gray-700 focus:outline-none md:mt-0"
+          >
+            Delete
+          </button>
+          {/* )} */}
         </div>
       </div>
     </header>

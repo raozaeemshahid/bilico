@@ -17,11 +17,8 @@ export const deleteUserPermanently = async (id: string) => {
   await prisma.seriesOfPost.deleteMany({
     where: { Posts: { every: { userId: id } } },
   });
-  await prisma.user.update({
+  await prisma.user.delete({
     where: { id },
-    data: {
-      emailVerified: null,
-    },
   });
 };
 

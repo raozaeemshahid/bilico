@@ -48,7 +48,7 @@ export const confirmRegistration = protectedProcedure
       });
     }
 
-    await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: {
         id: ctx.session.user.id,
       },
@@ -60,5 +60,6 @@ export const confirmRegistration = protectedProcedure
         DateOfBirth: input.dateOfBirth,
       },
     });
-    return { success: true };
+
+    return { success: true, name: updatedUser.name };
   });
