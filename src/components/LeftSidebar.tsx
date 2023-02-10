@@ -9,7 +9,7 @@ import {
 import { GrDrag } from "react-icons/gr";
 import { NavbarLinkCreator } from "../lib/NavbarLinkProvider";
 import SidebarLink from "./SidebarLink";
-import { UserInfo } from "./HomeLayout";
+import { type UserInfo } from "./HomeLayout";
 
 let isDragging = false;
 
@@ -19,13 +19,7 @@ const Sidebar: React.FC<{
   isOtherOpen: boolean;
   isWindowLargerEnough: boolean;
   userInfo: UserInfo;
-}> = ({
-  isOpen,
-  changeIsOpen,
-  isOtherOpen,
-  isWindowLargerEnough,
-  userInfo,
-}) => {
+}> = ({ isOpen, changeIsOpen, isWindowLargerEnough, userInfo }) => {
   const [sideNavbarWidth, changeSideBarNavbarWidth] = useState(0);
   const [isSideBarReady, changeIsSideBarReady] = useState(false);
   const SideBarRef = useRef<HTMLDivElement>(null);
@@ -36,12 +30,12 @@ const Sidebar: React.FC<{
   }, [isSideBarReady]);
   return (
     <div
-      className={` relative z-[3] md:static ${!isOtherOpen && `z-[6]`} ${
-        isOpen && `z-30`
-      } left-0 flex md:overflow-x-visible`}
+      className={` absolute left-0 z-10 flex ${
+        isOpen ? `z-30` : "z-20"
+      } overflow-x-hidden md:static md:overflow-x-visible`}
     >
       <motion.div
-        className="flex rounded-md bg-gray-800"
+        className="flex rounded-md  bg-gray-800"
         initial={{ x: isOpen ? 0 : -sideNavbarWidth, width: 0 }}
         onAnimationComplete={() => {
           if (sideNavbarWidth === SideBarRef.current?.clientWidth) return;
@@ -53,7 +47,7 @@ const Sidebar: React.FC<{
         }}
         ref={SideBarRef}
       >
-        <div className="flex w-full flex-col  p-3 py-5">
+        <div className="flex h-screen w-full flex-col  p-3 py-5">
           <SidebarLink link={NavbarLinkCreator.HomeLink()} />
           <SidebarLink
             count={userInfo.newMessages}

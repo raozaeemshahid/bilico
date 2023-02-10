@@ -47,7 +47,7 @@ const HomeLayout: React.FC<{
         <div className="relative mt-2 flex h-full w-full">
           {(isLeftBarOpen || isRightBarOpen) && !isWindowLargerEnough && (
             <motion.div
-              className="absolute top-0 left-0 z-30 h-screen w-screen opacity-0"
+              className="absolute top-0 left-0 z-[25] h-screen w-screen opacity-0"
               onClick={() => {
                 changeIsLeftBarOpen(false);
                 changeIsRightBarOpen(false);
@@ -63,7 +63,7 @@ const HomeLayout: React.FC<{
             userInfo={userInfo}
           />
           <motion.div
-            className={`absolute left-0 right-0 z-[18] m-6 rounded-xl bg-gray-800 p-5 text-gray-100 md:static md:w-full`}
+            className={`absolute left-0 right-0 z-[21] m-6 rounded-xl bg-gray-800 p-5 text-gray-100 md:static md:w-full`}
           >
             {children}
           </motion.div>
