@@ -108,7 +108,6 @@ const Register: React.FC = () => {
       dateOfBirth: dateOfBirth.toDate().toISOString(),
     };
   };
-  console.log("isLoading: ", RegisterMe.isLoading);
   const FnCompleteRegistratoin = () => {
     if (!router.isReady) return;
     const info = validateInfo();

@@ -17,8 +17,8 @@ const HomeLayout: React.FC<{
   userInfo: UserInfo;
   children: string | JSX.Element;
 }> = ({ includeRightBar = false, userInfo, children }) => {
-  const [isLeftBarOpen, changeIsLeftBarOpen] = useState(false);
-  const [isRightBarOpen, changeIsRightBarOpen] = useState(false);
+  const [isLeftBarOpen, changeIsLeftBarOpen] = useState(true);
+  const [isRightBarOpen, changeIsRightBarOpen] = useState(true);
 
   const [isAllClosed, changeIsAllClosed] = useState(false);
 
@@ -40,7 +40,6 @@ const HomeLayout: React.FC<{
     setToggler();
     window.addEventListener("resize", setToggler);
   }, []);
-  console.log("isAllClosed: ", isAllClosed);
   return (
     <>
       <div className="h-screen overflow-hidden bg-gray-700">

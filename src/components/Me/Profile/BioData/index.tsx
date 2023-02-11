@@ -5,7 +5,8 @@ import Loading from "../../../Loading";
 import moment from "moment";
 import Gender from "./Gender";
 import { AiOutlineUser } from "react-icons/ai";
-import { FaBirthdayCake } from "react-icons/fa";
+import { RiCakeLine } from "react-icons/ri";
+// import {MdOutlinePlace} from 'react-icons/md'
 
 const BioData: React.FC = () => {
   const router = useRouter();
@@ -30,9 +31,9 @@ const BioData: React.FC = () => {
           </h3>
           <Gender gender={userData.data.Gender} />
           <h3 className="flex items-center gap-2">
-            <FaBirthdayCake />{" "}
+            <RiCakeLine />{" "}
             {moment().diff(moment(userData.data.DateOfBirth), "years")} Years
-            Old
+            old
           </h3>
         </div>
         <div className="roudned m-2 w-full rounded-lg bg-gray-600 p-3">
