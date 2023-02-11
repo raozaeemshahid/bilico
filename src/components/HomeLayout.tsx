@@ -40,7 +40,7 @@ const HomeLayout: React.FC<{
     setToggler();
     window.addEventListener("resize", setToggler);
   }, []);
-
+  console.log("isAllClosed: ", isAllClosed);
   return (
     <>
       <div className="h-screen overflow-hidden bg-gray-700">
@@ -66,7 +66,7 @@ const HomeLayout: React.FC<{
           />
           <motion.div
             className={`absolute left-0 right-0 ${
-              isAllClosed ? "z-[21]" : "z-10"
+              isAllClosed && !isLeftBarOpen && !isRightBarOpen ? "z-30" : "z-10"
             } m-6 rounded-xl bg-gray-800 p-5 text-gray-100 md:static md:w-full`}
           >
             {children}

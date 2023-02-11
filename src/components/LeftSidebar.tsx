@@ -36,9 +36,9 @@ const Sidebar: React.FC<{
   }, [isSideBarReady]);
   return (
     <div
-      className={` absolute left-0 z-10 flex ${
-        isOpen ? `z-30` : "z-20"
-      } overflow-x-hidden md:static md:overflow-x-visible`}
+      className={` absolute left-0 ${
+        isOpen ? "z-[27]" : "z-20"
+      } flex overflow-x-hidden md:static md:overflow-x-visible`}
     >
       <motion.div
         className="flex rounded-md  bg-gray-800"

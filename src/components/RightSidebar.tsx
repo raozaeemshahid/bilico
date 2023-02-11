@@ -28,9 +28,9 @@ const Sidebar: React.FC<{
 
   return (
     <div
-      className={`absolute right-0  flex ${
-        isOpen ? `z-30` : "z-20"
-      } overflow-x-hidden md:static md:overflow-x-visible`}
+      className={`absolute right-0 flex ${
+        isOpen ? "z-[27]" : "z-20"
+      }  overflow-x-hidden md:static md:overflow-x-visible`}
     >
       {!isWindowLargerEnough && (
         <motion.button
