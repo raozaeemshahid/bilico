@@ -1,9 +1,15 @@
 import { useSession } from "next-auth/react";
 import { type Dispatch, type SetStateAction } from "react";
-import { IoMdDoneAll } from "react-icons/io";
-import { GrEdit } from "react-icons/gr";
 import moment, { type Moment } from "moment";
 import Select from "react-select";
+import dynamic from "next/dynamic";
+
+const IoMdDoneAll = dynamic(() =>
+  import("react-icons/io").then((icons) => icons.IoMdDoneAll)
+);
+const GrEdit = dynamic(() =>
+  import("react-icons/gr").then((icons) => icons.GrEdit)
+);
 
 export const MINIMUM_AGE_REQUIREMENT = 12;
 

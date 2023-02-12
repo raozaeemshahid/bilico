@@ -4,9 +4,15 @@ import { api } from "../../../../utils/api";
 import Loading from "../../../Loading";
 import moment from "moment";
 import Gender from "./Gender";
-import { AiOutlineUser } from "react-icons/ai";
-import { RiCakeLine } from "react-icons/ri";
+import dynamic from "next/dynamic";
 // import {MdOutlinePlace} from 'react-icons/md'
+
+const AiOutlineUser = dynamic(() =>
+  import("react-icons/ai").then((icons) => icons.AiOutlineUser)
+);
+const RiCakeLine = dynamic(() =>
+  import("react-icons/ri").then((icons) => icons.RiCakeLine)
+);
 
 const BioData: React.FC = () => {
   const router = useRouter();

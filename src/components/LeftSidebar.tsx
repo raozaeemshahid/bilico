@@ -6,7 +6,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { GrDrag } from "react-icons/gr";
+import dynamic from "next/dynamic";
+
+const GrDrag = dynamic(() =>
+  import("react-icons/gr").then((icons) => icons.GrDrag)
+);
+
 import { NavbarLinkCreator } from "../lib/NavbarLinkProvider";
 import SidebarLink from "./SidebarLink";
 import { type UserInfo } from "./HomeLayout";

@@ -1,17 +1,38 @@
 import PagesLinks from "./PagesLink";
-import { type IconType } from "react-icons";
+import { type IconBaseProps, type IconType } from "react-icons";
 
-import { VscAccount } from "react-icons/vsc";
-import { MdForum, MdNotifications } from "react-icons/md";
-import { TbWriting, TbMessage } from "react-icons/tb";
-import { ImBlog } from "react-icons/im";
-import { FaHome } from "react-icons/fa";
-import { IoIosPeople } from "react-icons/io";
+import dynamic from "next/dynamic";
+import { type ComponentType } from "react";
+
+const VscAccount = dynamic(() =>
+  import("react-icons/vsc").then((icons) => icons.VscAccount)
+);
+const MdForum = dynamic(() =>
+  import("react-icons/md").then((icons) => icons.MdForum)
+);
+const TbWriting = dynamic(() =>
+  import("react-icons/tb").then((icons) => icons.TbWriting)
+);
+const MdNotifications = dynamic(() =>
+  import("react-icons/md").then((icons) => icons.MdNotifications)
+);
+const TbMessage = dynamic(() =>
+  import("react-icons/tb").then((icons) => icons.TbMessage)
+);
+const ImBlog = dynamic(() =>
+  import("react-icons/im").then((icons) => icons.ImBlog)
+);
+const FaHome = dynamic(() =>
+  import("react-icons/fa").then((icons) => icons.FaHome)
+);
+const IoIosPeople = dynamic(() =>
+  import("react-icons/io").then((icons) => icons.IoIosPeople)
+);
 
 export interface LinkType {
   Text: string;
   href: string;
-  icon: IconType;
+  icon: ComponentType<IconBaseProps>;
 }
 
 export const NavbarLinkCreator = {

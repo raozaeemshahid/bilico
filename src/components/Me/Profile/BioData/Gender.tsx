@@ -1,7 +1,15 @@
 import { type Gender } from "@prisma/client";
+import dynamic from "next/dynamic";
 
-import { BsGenderMale, BsGenderFemale } from "react-icons/bs";
-import { FaGenderless } from "react-icons/fa";
+const BsGenderFemale = dynamic(() =>
+  import("react-icons/bs").then((icons) => icons.BsGenderFemale)
+);
+const BsGenderMale = dynamic(() =>
+  import("react-icons/bs").then((icons) => icons.BsGenderMale)
+);
+const FaGenderless = dynamic(() =>
+  import("react-icons/fa").then((icons) => icons.FaGenderless)
+);
 
 const GenderComponent: React.FC<{ gender: Gender | null }> = ({ gender }) => {
   if (!gender) return <></>;

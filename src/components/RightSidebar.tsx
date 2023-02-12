@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import {
   type Dispatch,
   type SetStateAction,
@@ -6,7 +7,10 @@ import {
   useRef,
   useState,
 } from "react";
-import { GrDrag } from "react-icons/gr";
+
+const GrDrag = dynamic(() =>
+  import("react-icons/gr").then((icons) => icons.GrDrag)
+);
 
 let isDragging = false;
 

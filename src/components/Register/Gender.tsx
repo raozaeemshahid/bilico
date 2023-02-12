@@ -1,5 +1,9 @@
+import dynamic from "next/dynamic";
 import type { Dispatch, SetStateAction } from "react";
-import { GrEdit } from "react-icons/gr";
+
+const GrEdit = dynamic(() =>
+  import("react-icons/gr").then((icons) => icons.GrEdit)
+);
 
 const GenderComponent: React.FC<{
   gender: "Male" | "Female" | "Other" | undefined;

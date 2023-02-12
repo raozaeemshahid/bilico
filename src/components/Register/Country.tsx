@@ -1,7 +1,11 @@
 import { type Dispatch, type SetStateAction } from "react";
-import { GrEdit } from "react-icons/gr";
 import Select from "react-select";
 import { countries } from "countries-list";
+import dynamic from "next/dynamic";
+
+const GrEdit = dynamic(() =>
+  import("react-icons/gr").then((icons) => icons.GrEdit)
+);
 
 export const countriesList = Object.values(countries)
   .map((country) => country.name)

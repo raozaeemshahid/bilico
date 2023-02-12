@@ -1,13 +1,21 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FiEdit3 } from "react-icons/fi";
-import { IoMdDoneAll } from "react-icons/io";
 import { api } from "../../../utils/api";
-import { MdVerified } from "react-icons/md";
 import { zodBio } from "../../../lib/zod";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Loading from "../../Loading";
+import dynamic from "next/dynamic";
+
+const FiEdit3 = dynamic(() =>
+  import("react-icons/fi").then((icons) => icons.FiEdit3)
+);
+const IoMdDoneAll = dynamic(() =>
+  import("react-icons/io").then((icons) => icons.IoMdDoneAll)
+);
+const MdVerified = dynamic(() =>
+  import("react-icons/md").then((icons) => icons.MdVerified)
+);
 
 const ProfileHead: React.FC = () => {
   const router = useRouter();
