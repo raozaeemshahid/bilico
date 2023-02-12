@@ -6,16 +6,19 @@ import moment from "moment";
 import Gender from "./Gender";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiCakeLine } from "react-icons/ri";
-// import {MdOutlinePlace} from 'react-icons/md'
+import { MdOutlinePlace } from "react-icons/md";
+import Link from "next/link";
+import PagesLinks from "../../../../lib/PagesLink";
+import { FiEdit3 } from "react-icons/fi";
 
 const BioData: React.FC = () => {
   const router = useRouter();
   const { status } = useSession();
-  const userInfo = api.me.info.useQuery(undefined, {
-    enabled: status === "authenticated" && router.isReady,
-  });
+  // const userInfo = api.me.info.useQuery(undefined, {
+  //   enabled: status === "authenticated" && router.isReady,
+  // });
   const userData = api.me.data.useQuery(undefined, {
-    enabled: userInfo.data && userInfo.data.success,
+    enabled: status === "authenticated",
   });
 
   if (!userData.data || !userData.data.success)
@@ -30,13 +33,26 @@ const BioData: React.FC = () => {
             <AiOutlineUser /> Joined {moment(userData.data.createdAt).fromNow()}
           </h3>
           <Gender gender={userData.data.Gender} />
-          <h3 className="flex items-center gap-2">
-            <RiCakeLine />{" "}
-            {moment().diff(moment(userData.data.DateOfBirth), "years")} Years
-            old
-          </h3>
+          {!!userData.data.DateOfBirth && (
+            <h3 className="flex items-center gap-2">
+              <RiCakeLine />
+              {moment().diff(moment(userData.data.DateOfBirth), "years")} Years
+              old
+            </h3>
+          )}
+          {!!userData.data.Country && (
+            <h3 className="flex items-center gap-2">
+              <MdOutlinePlace />
+              {userData.data.Country}
+            </h3>
+          )}
         </div>
-        <div className="roudned m-2 w-full rounded-lg bg-gray-600 p-3">
+        <div className="m-2 w-full rounded-lg bg-gray-600 p-3">
+          <div className="flex justify-end">
+            <Link href={PagesLinks.EDIT_ACCOUNT_LINK} className="">
+              <FiEdit3 className="text-sm hover:scale-110 active:scale-90" />
+            </Link>
+          </div>
           Interests
         </div>
       </div>

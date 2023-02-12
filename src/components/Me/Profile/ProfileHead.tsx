@@ -12,11 +12,11 @@ import Loading from "../../Loading";
 const ProfileHead: React.FC = () => {
   const router = useRouter();
   const { status } = useSession();
-  const userInfo = api.me.info.useQuery(undefined, {
-    enabled: status === "authenticated" && router.isReady,
-  });
+  // const userInfo = api.me.info.useQuery(undefined, {
+  //   enabled: status === "authenticated" && router.isReady,
+  // });
   const userData = api.me.data.useQuery(undefined, {
-    enabled: userInfo.data && userInfo.data.success,
+    enabled: status == "authenticated",
     onSuccess(data) {
       if (data.Bio) changeBio(data.Bio);
       else changeIsBioEditing(true);
