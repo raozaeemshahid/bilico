@@ -8,6 +8,7 @@ import { DeactivateAccount } from "./deactivate";
 import { data } from "./data";
 import { updateBio } from "./updateBio";
 import { getAllInterestsAndSkills } from "./getAllInterestsAndSkills";
+import { editAccount } from "./editAccount";
 
 export const me = createTRPCRouter({
   amIBanned,
@@ -19,4 +20,5 @@ export const me = createTRPCRouter({
   data,
   updateBio,
   getAllInterestsAndSkills,
+  editAccount
 });
