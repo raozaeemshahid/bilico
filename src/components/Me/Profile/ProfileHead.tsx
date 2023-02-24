@@ -20,6 +20,7 @@ const MdVerified = dynamic(() =>
 const ProfileHead: React.FC = () => {
   const router = useRouter();
   const { status } = useSession();
+
   // const userInfo = api.me.info.useQuery(undefined, {
   //   enabled: status === "authenticated" && router.isReady,
   // });

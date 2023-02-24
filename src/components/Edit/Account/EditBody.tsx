@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { api } from "../../../utils/api";
 import Loading from "../../Loading";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Interest, Skill } from "@prisma/client";
 import Select from "react-select";
 
@@ -10,10 +10,23 @@ const EditBody: React.FC = () => {
   const router = useRouter();
   const { status } = useSession();
 
-  const editMyAccount = api.me.editAccount.useMutation();
+  const utils = api.useContext();
+
+  const editMyAccount = api.me.editAccount.useMutation({
+    onSuccess: () => {
+      changeIsSaved(true);
+      utils.me.data.invalidate();
+    },
+  });
 
   const [selectedSkill, changeSelectedSkill] = useState<Skill[]>([]);
   const [selectedInterest, changeSelectedInterest] = useState<Interest[]>([]);
+
+  const [isSaved, changeIsSaved] = useState<boolean>(false);
+
+  useEffect(() => {
+    changeIsSaved(false);
+  }, [selectedSkill.length, selectedInterest.length]);
 
   const userInfo = api.me.info.useQuery(undefined, {
     enabled: status === "authenticated" && router.isReady,
@@ -87,7 +100,7 @@ const EditBody: React.FC = () => {
       removedSkills.length == 0
     )
       return;
-      
+
     editMyAccount.mutate({
       addedInterests,
       addedSkills,
@@ -202,13 +215,20 @@ const EditBody: React.FC = () => {
             }))}
         />
       </div>
-      <div className="flex justify-end">
-        <button
-          className="m-4 flex rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-          onClick={SaveNewChanges}
-        >
-          Save
-        </button>
+      <div className="flex items-center justify-end">
+        {isSaved && <h4 className="opacity-60">Saved</h4>}
+        <div>
+          {editMyAccount.isLoading ? (
+            <Loading />
+          ) : (
+            <button
+              className="m-4 flex rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+              onClick={SaveNewChanges}
+            >
+              Save
+            </button>
+          )}
+        </div>
       </div>
     </>
   );
