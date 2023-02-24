@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import PagesLinks from "../../lib/PagesLink";
 import { LoadingFullScreen } from "../../components/Loading";
 
+import EditAccount from "../../components/Edit/Account";
+
 const Account = () => {
   const router = useRouter();
   const { data: userSession, status } = useSession({
@@ -23,6 +25,7 @@ const Account = () => {
         <meta name="description" content="A Social Media For Professionals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <EditAccount />
     </>
   );
 };

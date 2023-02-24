@@ -8,11 +8,11 @@ import BioData from "./BioData";
 const Profile: React.FC = () => {
   const router = useRouter();
   const { status } = useSession();
-  const userInfo = api.me.info.useQuery(undefined, {
-    enabled: status === "authenticated" && router.isReady,
-  });
+  // const userInfo = api.me.info.useQuery(undefined, {
+  //   enabled: status === "authenticated" && router.isReady,
+  // });
   const userData = api.me.data.useQuery(undefined, {
-    enabled: userInfo.data && userInfo.data.success,
+    enabled: status === "authenticated",
   });
 
   if (!userData.data || !userData.data.success)
