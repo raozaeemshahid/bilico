@@ -76,7 +76,6 @@ const Sidebar: React.FC<{
           />
           <SidebarLink link={NavbarLinkCreator.BlogLink()} />
           <SidebarLink link={NavbarLinkCreator.questionLink()} />
-          <SidebarLink link={NavbarLinkCreator.storyLink()} />
           <SidebarLink link={NavbarLinkCreator.accountLink()} />
         </div>
       </motion.div>

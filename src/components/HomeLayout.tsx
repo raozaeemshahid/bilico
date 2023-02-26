@@ -15,7 +15,7 @@ export interface UserInfo {
 const HomeLayout: React.FC<{
   includeRightBar?: boolean;
   userInfo: UserInfo;
-  children: string | JSX.Element;
+  children: string | JSX.Element | JSX.Element[];
 }> = ({ includeRightBar = false, userInfo, children }) => {
   const [isLeftBarOpen, changeIsLeftBarOpen] = useState(true);
   const [isRightBarOpen, changeIsRightBarOpen] = useState(true);
@@ -42,7 +42,7 @@ const HomeLayout: React.FC<{
   }, []);
   return (
     <>
-      <div className="h-screen overflow-x-hidden bg-gray-700">
+      <div className="min-h-screen overflow-x-hidden bg-gray-700">
         <Navbar />
 
         <div className="relative mt-2 flex h-full w-full">

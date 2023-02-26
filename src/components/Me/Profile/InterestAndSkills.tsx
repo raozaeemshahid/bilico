@@ -17,7 +17,6 @@ const InterestAndSKill: React.FC = () => {
 
   if (!userData.data || !userData.data.success)
     return <Loading text="Loading Data" />;
-  console.log(userData.data);
 
   return (
     <>
@@ -33,7 +32,7 @@ const InterestAndSKill: React.FC = () => {
             <div className="ml-3 mt-1 flex flex-wrap gap-1">
               {userData.data.Interests.map((interest) => (
                 <h4
-                  className="rounded-md bg-green-600 p-1 px-3 text-sm font-semibold"
+                  className="rounded-md shadow-sm shadow-gray-800 bg-green-600 p-1 px-3 text-sm font-semibold"
                   key={interest.id}
                 >
                   {interest.title}
@@ -49,7 +48,7 @@ const InterestAndSKill: React.FC = () => {
             <div className="ml-3 mt-1 flex flex-wrap gap-1">
               {userData.data.Skills.map((skill) => (
                 <h4
-                  className="rounded-md bg-cyan-600 p-1  px-3 text-sm font-semibold"
+                  className="rounded-md bg-cyan-600 shadow-sm shadow-gray-800 p-1  px-3 text-sm font-semibold"
                   key={skill.id}
                 >
                   {skill.title}
