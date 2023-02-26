@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import PagesLinks from "../../lib/PagesLink";
 import HomeLayout from "../HomeLayout";
 import Profile from "./Profile";
+import Tabs from "./Tabs";
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -34,6 +35,7 @@ const Home: React.FC = () => {
         }}
       >
         <Profile />
+        <Tabs />
       </HomeLayout>
     </>
   );
