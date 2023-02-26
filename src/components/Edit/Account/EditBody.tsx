@@ -131,9 +131,10 @@ const EditBody: React.FC = () => {
             }),
             multiValue: (style) => ({
               ...style,
-              backgroundColor: "rgb(31, 41, 55)",
+              backgroundColor: "rgb(22, 163, 74)",
               fontSize: "18px",
               padding: "3px",
+              fontWeight: "700"
             }),
             multiValueLabel: (style) => ({
               ...style,
@@ -183,9 +184,10 @@ const EditBody: React.FC = () => {
             }),
             multiValue: (style) => ({
               ...style,
-              backgroundColor: "rgb(31, 41, 55)",
+              backgroundColor: "rgb(8, 125, 178)",
               fontSize: "18px",
               padding: "3px",
+              fontWeight: "700",
             }),
             multiValueLabel: (style) => ({
               ...style,

@@ -4,6 +4,8 @@ import { useSession } from "next-auth/react";
 import Loading from "../../Loading";
 import ProfileHead from "./ProfileHead";
 import BioData from "./BioData";
+import InterestAndSKill from "./InterestAndSkills";
+import Numbers from "./Numbers";
 
 const Profile: React.FC = () => {
   const router = useRouter();
@@ -22,7 +24,13 @@ const Profile: React.FC = () => {
     <>
       <div className="flex flex-col">
         <ProfileHead />
-        <BioData />
+        <div className="flex  flex-wrap sm:flex-nowrap">
+          <Numbers />
+          <BioData />
+        </div>
+        <div className="flex flex-wrap sm:flex-nowrap">
+          <InterestAndSKill />
+        </div>
       </div>
     </>
   );
