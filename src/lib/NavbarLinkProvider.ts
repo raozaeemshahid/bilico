@@ -57,20 +57,6 @@ export const NavbarLinkCreator = {
       icon: MdForum,
     };
   },
-  storyLink: (): LinkType => {
-    return {
-      Text: "Stories",
-      href: PagesLinks.getStoryLink(),
-      icon: TbWriting,
-    };
-  },
-  BlogLink: (): LinkType => {
-    return {
-      Text: "Blogs",
-      href: PagesLinks.getBlogLink(),
-      icon: ImBlog,
-    };
-  },
   HomeLink: (): LinkType => {
     return {
       Text: "Home",

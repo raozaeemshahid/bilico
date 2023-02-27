@@ -14,9 +14,6 @@ export const deleteUserPermanently = async (id: string) => {
   await prisma.reactPost.deleteMany({ where: { userId: id } });
   await prisma.reactReply.deleteMany({ where: { userId: id } });
   await prisma.reportToAdmin.deleteMany({ where: { reportedUserId: id } });
-  await prisma.seriesOfPost.deleteMany({
-    where: { Posts: { every: { userId: id } } },
-  });
   await prisma.user.delete({
     where: { id },
   });

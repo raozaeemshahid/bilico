@@ -74,7 +74,6 @@ const Sidebar: React.FC<{
             count={userInfo.newNotifications}
             link={NavbarLinkCreator.NotificationLink()}
           />
-          <SidebarLink link={NavbarLinkCreator.BlogLink()} />
           <SidebarLink link={NavbarLinkCreator.questionLink()} />
           <SidebarLink link={NavbarLinkCreator.accountLink()} />
         </div>

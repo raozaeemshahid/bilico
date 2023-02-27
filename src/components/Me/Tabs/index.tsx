@@ -22,10 +22,10 @@ const Tab: React.FC<{
 }> = ({ isActive = false, text, switchTab }) => {
   return (
     <>
-      <li className="mr-2">
+      <li className="mx-2 my-2 sm:my-0">
         {isActive ? (
           <span
-            className="active inline-block shadow-lg shadow-gray-700 rounded-t-lg border-4 border-y-0 border-gray-700 bg-gray-700 p-4 py-3 text-gray-300"
+            className="active inline-block shadow-lg shadow-gray-800 rounded-t-lg border-4 border-y-0 border-gray-800 bg-gray-800 p-4 py-3 text-gray-300"
             aria-current="page"
           >
             {text}
@@ -33,7 +33,7 @@ const Tab: React.FC<{
         ) : (
           <button
             onClick={() => switchTab(text)}
-            className="inline-block shadow-lg shadow-gray-700 rounded-t-lg border-4 border-y-0 border-gray-700 p-4 py-3 text-gray-100  hover:bg-gray-500 hover:text-gray-300"
+            className="inline-block shadow-lg shadow-gray-800 rounded-t-lg border-4 border-y-0 border-gray-800 p-4 py-3 text-gray-100  hover:bg-gray-500 hover:text-gray-300"
           >
             {text}
           </button>
@@ -49,8 +49,8 @@ const Tabs: React.FC = () => {
 
   return (
     <>
-      <div className="m-2 rounded-lg bg-gray-600 p-3">
-        <div className="rounded-lg border-b-4 border-gray-700 text-center text-sm font-bold  text-gray-400">
+      <div className="m-2 rounded-lg bg-gray-700 py-3 md:px-3">
+        <div className="rounded-lg border-b-4 border-gray-800 text-center text-sm font-bold  text-gray-400">
           <ul className="-mb-px flex flex-wrap justify-center">
             {tabList.map((tab) => (
               <Tab
@@ -62,7 +62,7 @@ const Tabs: React.FC = () => {
             ))}
           </ul>
         </div>
-        <div className="m-4">
+        <div className="my-4 md:mx-4">
           {currentTab === "Posts" && <Posts />}
           {currentTab === "Work" && <Work />}
           {currentTab === "Questions" && <Questions />}

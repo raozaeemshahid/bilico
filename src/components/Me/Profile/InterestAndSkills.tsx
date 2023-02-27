@@ -20,7 +20,7 @@ const InterestAndSKill: React.FC = () => {
 
   return (
     <>
-      <div className="m-2 w-full rounded-lg bg-gray-600 p-3">
+      <div className="m-2 w-full rounded-lg bg-gray-700 p-3">
         <div className="flex justify-end">
           <Link href={PagesLinks.EDIT_ACCOUNT_LINK} className="">
             <FiEdit3 className="text-sm hover:scale-110 active:scale-90" />

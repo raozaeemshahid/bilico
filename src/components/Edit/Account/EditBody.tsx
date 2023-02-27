@@ -15,7 +15,7 @@ const EditBody: React.FC = () => {
   const editMyAccount = api.me.editAccount.useMutation({
     onSuccess: () => {
       changeIsSaved(true);
-      utils.me.data.invalidate();
+      void utils.me.data.invalidate();
     },
   });
 
