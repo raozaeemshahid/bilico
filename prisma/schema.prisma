@@ -201,7 +201,6 @@ model Question {
 model Post {
   id             String          @id @default(uuid())
   Body           String          @db.Text
-  PostType       PostType
   Interests      Interest[]
   CreatedBy      User            @relation(fields: [userId], references: [id])
   userId         String
@@ -340,14 +339,6 @@ enum Gender {
   Male
   Female
   Other
-}
-
-enum PostType {
-  POST
-  STORY
-  BLOG
-  ARTICLE
-  UPDATE
 }
 
 enum NotificationType {
