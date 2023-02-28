@@ -11,7 +11,16 @@ import PublishPost from "./PublishPost";
 const PreviewNewPost: React.FC<{
   postBody: string;
   changeIsInPreview: Dispatch<SetStateAction<boolean>>;
-}> = ({ postBody, changeIsInPreview }) => {
+  interestsFoundInPost: Interest[];
+  changeInterestsFound: Dispatch<SetStateAction<Interest[]>>;
+  createPost: () => void;
+}> = ({
+  postBody,
+  changeIsInPreview,
+  changeInterestsFound,
+  interestsFoundInPost,
+  createPost,
+}) => {
   const userData = api.me.data.useQuery();
   if (!userData.data) return <Loading />;
   return (
@@ -44,8 +53,16 @@ const PreviewNewPost: React.FC<{
             {BadWordsFilter.clean(postBody)}
           </h4>
         </div>
-        <InterestFound postBody={postBody} />
-        <PublishPost changeIsInPreview={changeIsInPreview} postBody={postBody} /> 
+        <InterestFound
+          postBody={postBody}
+          changeInterestsFound={changeInterestsFound}
+          interestsFoundInPost={interestsFoundInPost}
+        />
+        <PublishPost
+          changeIsInPreview={changeIsInPreview}
+          postBody={postBody}
+          createPost={createPost}
+        />
       </div>
     </>
   );

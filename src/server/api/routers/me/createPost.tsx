@@ -1,8 +1,21 @@
-
 import { protectedProcedure } from "../../trpc";
-import { deleteUserPermanently } from "../../../../lib/db_helperFunctions";
+import { z } from "zod";
 
-export const deleteMyAccount = protectedProcedure.mutation(async ({ ctx }) => {
-  await deleteUserPermanently(ctx.session.user.id);
-  return { success: true };
-});
+export const createPost = protectedProcedure
+  .input(z.object({ interests: z.array(z.string()), postBody: z.string() }))
+  .mutation(async ({ ctx, input }) => {
+    await ctx.prisma.user.update({
+      where: { id: ctx.session.user.id },
+      data: {
+        Posts: {
+          create: {
+            Body: input.postBody,
+            Interests: {
+              connect: input.interests.map((interest) => ({ id: interest })),
+            },
+          },
+        },
+      },
+    });
+    return { success: true };
+  });

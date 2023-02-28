@@ -1,10 +1,14 @@
+import { Interest } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
+import { api } from "../../../../../utils/api";
 import BadWordsFilter from "../../../../../utils/BadWordFilter";
+import Loading from "../../../../Loading";
 
 const PublishPost: React.FC<{
   postBody: string;
   changeIsInPreview: Dispatch<SetStateAction<boolean>>;
-}> = ({ postBody, changeIsInPreview }) => {
+  createPost: () => void
+}> = ({ postBody, changeIsInPreview, createPost }) => {
   return (
     <div className="flex items-center justify-between">
       <div className="m-2 text-sm text-gray-200 opacity-70">
@@ -18,7 +22,7 @@ const PublishPost: React.FC<{
       <div className="flex min-w-fit flex-row-reverse flex-wrap justify-start">
         <button
           className="m-2 flex rounded bg-green-600 py-2 px-4 font-bold text-white shadow-sm shadow-green-600 hover:bg-green-700"
-          // onClick={() => changeIsInPreview(true)}
+          onClick={createPost}
         >
           Publish
         </button>

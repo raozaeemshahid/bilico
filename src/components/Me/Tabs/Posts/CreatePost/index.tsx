@@ -1,17 +1,32 @@
-import { useEffect, useMemo, useState } from "react";
-import { api } from "../../../../../utils/api";
-import Image from "next/image";
-import moment from "moment";
-import BadWordsFilter from "../../../../../utils/BadWordFilter";
-import Loading from "../../../../Loading";
-import { Interest } from "@prisma/client";
+import { useState } from "react";
 import PreviewNewPost from "./PreviewNewPost";
 import CreateNewPost from "./CreateNewPost";
-
+import { api } from "../../../../../utils/api";
+import { Interest } from "@prisma/client";
+import Loading from "../../../../Loading";
 const CreatePost: React.FC = () => {
   const [isCreating, changeIsCreating] = useState(false);
   const [postBody, changePostBody] = useState("");
   const [isInPreview, changeIsInPreview] = useState(false);
+  const allInterests = api.me.getAllInterestsAndSkills.useQuery();
+  const [interestsFoundInPost, changeInterestsFound] = useState<Interest[]>([
+    { id: "", title: "" },
+  ]);
+  const createPostMutation = api.me.createPost.useMutation({
+    onSuccess: () => {
+      changePostBody("");
+      changeIsInPreview(false);
+      changeInterestsFound([{ id: "", title: "" }]);
+      changeIsCreating(false);
+    },
+  });
+  const createPost = () => {
+    createPostMutation.mutate({
+      postBody,
+      interests: interestsFoundInPost.map((interest) => interest.id),
+    });
+  };
+  if (createPostMutation.isLoading) return <Loading text="Creating" />;
 
   if (!isCreating)
     return (
@@ -29,8 +44,11 @@ const CreatePost: React.FC = () => {
   if (isInPreview) {
     return (
       <PreviewNewPost
+        createPost={createPost}
         changeIsInPreview={changeIsInPreview}
         postBody={postBody}
+        changeInterestsFound={changeInterestsFound}
+        interestsFoundInPost={interestsFoundInPost}
       />
     );
   }
