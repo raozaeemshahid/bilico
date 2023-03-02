@@ -9,7 +9,9 @@ const InterestFound: React.FC<{
   interestsFoundInPost: Interest[];
   changeInterestsFound: Dispatch<SetStateAction<Interest[]>>;
 }> = ({ postBody, changeInterestsFound, interestsFoundInPost }) => {
-  const allInterests = api.me.getAllInterestsAndSkills.useQuery();
+  const allInterests = api.me.getAllInterestsAndSkills.useQuery({
+    includeSkill: false,
+  });
   const createPost = api.me.createPost.useMutation();
   useEffect(() => {
     if (!allInterests.isSuccess) return;

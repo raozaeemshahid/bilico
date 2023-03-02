@@ -8,7 +8,9 @@ const CreatePost: React.FC = () => {
   const [isCreating, changeIsCreating] = useState(false);
   const [postBody, changePostBody] = useState("");
   const [isInPreview, changeIsInPreview] = useState(false);
-  const allInterests = api.me.getAllInterestsAndSkills.useQuery();
+  const allInterests = api.me.getAllInterestsAndSkills.useQuery({
+    includeSkill: false,
+  });
   const [interestsFoundInPost, changeInterestsFound] = useState<Interest[]>([
     { id: "", title: "" },
   ]);

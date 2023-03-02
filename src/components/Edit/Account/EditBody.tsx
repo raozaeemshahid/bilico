@@ -134,7 +134,7 @@ const EditBody: React.FC = () => {
               backgroundColor: "rgb(22, 163, 74)",
               fontSize: "18px",
               padding: "3px",
-              fontWeight: "700"
+              fontWeight: "700",
             }),
             multiValueLabel: (style) => ({
               ...style,
