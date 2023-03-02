@@ -18,12 +18,12 @@ const Postslist: React.FC = () => {
 
   return (
     <>
-      <div className="">
+      <div className="flex flex-col gap-4">
         {getPosts.data.pages.map((page) =>
           page.items.map((post) => (
             <div
               key={post.id}
-              className="m-2 my-4 w-full rounded-lg bg-gray-900 p-3 px-4"
+              className="w-full rounded-lg border-b-2 border-gray-400 bg-gray-800 py-3 px-4 sm:m-2"
             >
               <div className="">
                 <div className="flex items-center gap-3">
@@ -39,7 +39,9 @@ const Postslist: React.FC = () => {
                     )}
                   </div>
                   <div className="flex flex-col">
-                    <h3 className="text-md">{userData.data.name}</h3>
+                    <h3 className="text-md sm:text-base">
+                      {userData.data.name}
+                    </h3>
                     <h3 className="text-sm text-gray-100 opacity-80">
                       {moment(post.CreateAt).fromNow()}
                     </h3>
@@ -69,6 +71,15 @@ const Postslist: React.FC = () => {
             </div>
           ))
         )}
+        <div className="flex justify-center">
+          <button
+            onClick={() => {
+              getPosts.fetchNextPage();
+            }}
+          >
+            Show more
+          </button>
+        </div>
       </div>
     </>
   );

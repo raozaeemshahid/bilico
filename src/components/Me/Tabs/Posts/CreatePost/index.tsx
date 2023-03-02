@@ -10,6 +10,7 @@ const CreatePost: React.FC = () => {
   const [postBody, changePostBody] = useState("");
   const [isInPreview, changeIsInPreview] = useState(false);
   const [errors, changeErrors] = useState<string[] | undefined>();
+  const utilsApi = api.useContext()
   const allInterests = api.me.getAllInterestsAndSkills.useQuery({
     includeSkill: false,
   });
@@ -18,6 +19,7 @@ const CreatePost: React.FC = () => {
   ]);
   const createPostMutation = api.me.createPost.useMutation({
     onSuccess: () => {
+      utilsApi.me.getPosts.invalidate()
       changePostBody("");
       changeIsInPreview(false);
       changeInterestsFound([{ id: "", title: "" }]);
