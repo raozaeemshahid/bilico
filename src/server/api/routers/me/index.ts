@@ -9,7 +9,8 @@ import { data } from "./data";
 import { updateBio } from "./updateBio";
 import { getAllInterestsAndSkills } from "./getAllInterestsAndSkills";
 import { editAccount } from "./editAccount";
-import { createPost } from "./createPost"; 
+import { createPost } from "./createPost";
+import { getPosts } from "./getPosts";
 
 export const me = createTRPCRouter({
   amIBanned,
@@ -22,5 +23,6 @@ export const me = createTRPCRouter({
   updateBio,
   getAllInterestsAndSkills,
   editAccount,
-  createPost
+  createPost,
+  getPosts,
 });

@@ -4,10 +4,12 @@ import CreateNewPost from "./CreateNewPost";
 import { api } from "../../../../../utils/api";
 import { Interest } from "@prisma/client";
 import Loading from "../../../../Loading";
+import { zodPost } from "../../../../../lib/zod";
 const CreatePost: React.FC = () => {
   const [isCreating, changeIsCreating] = useState(false);
   const [postBody, changePostBody] = useState("");
   const [isInPreview, changeIsInPreview] = useState(false);
+  const [errors, changeErrors] = useState<string[] | undefined>();
   const allInterests = api.me.getAllInterestsAndSkills.useQuery({
     includeSkill: false,
   });
@@ -21,12 +23,18 @@ const CreatePost: React.FC = () => {
       changeInterestsFound([{ id: "", title: "" }]);
       changeIsCreating(false);
     },
+    onError: (err) => {
+      changeErrors(["Something went wrong"]);
+    },
   });
   const createPost = () => {
-    createPostMutation.mutate({
-      postBody,
-      interests: interestsFoundInPost.map((interest) => interest.id),
-    });
+    const post = zodPost.safeParse(postBody);
+    if (post.success)
+      createPostMutation.mutate({
+        postBody,
+        interests: interestsFoundInPost.map((interest) => interest.id),
+      });
+    else changeErrors(post.error.errors.map((err) => err.message));
   };
   if (createPostMutation.isLoading) return <Loading text="Creating" />;
 
@@ -51,6 +59,7 @@ const CreatePost: React.FC = () => {
         postBody={postBody}
         changeInterestsFound={changeInterestsFound}
         interestsFoundInPost={interestsFoundInPost}
+        errors={errors}
       />
     );
   }

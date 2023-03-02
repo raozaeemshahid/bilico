@@ -21,3 +21,19 @@ export const zodBio = z
   .trim()
   .min(3, { message: "Your bio can't be so short" })
   .max(1000, { message: "Your bio can't be so long" });
+
+
+export const zodPost = z
+  .string()
+  .trim()
+  .min(3, { message: "Post can't be too short" })
+  .max(5000, { message: "Post can't be too big" })
+  .transform((name) => name.split(" ").filter((word) => word.length > 0))
+  .pipe(
+    z
+      .string()
+      .array()
+      .max(1000, { message: "Post can't have more than 1000 words" })
+      .min(1, { message: "Post can't be empty" })
+  )
+  .transform((name) => name.join(" "));

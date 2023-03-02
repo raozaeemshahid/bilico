@@ -1,8 +1,11 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
+import { zodPost } from "../../../../lib/zod";
 
 export const createPost = protectedProcedure
-  .input(z.object({ interests: z.array(z.string()), postBody: z.string() }))
+  .input(
+    z.object({ interests: z.array(z.string()), postBody: zodPost })
+  )
   .mutation(async ({ ctx, input }) => {
     await ctx.prisma.user.update({
       where: { id: ctx.session.user.id },
