@@ -3,6 +3,7 @@ import BadWordsFilter from "../../../../../utils/BadWordFilter";
 import moment from "moment";
 import Image from "next/image";
 import Loading from "../../../../Loading";
+import ReactionsAndComments from "./ReactionsAndComments";
 
 const Postslist: React.FC = () => {
   const userData = api.me.data.useQuery();
@@ -12,6 +13,7 @@ const Postslist: React.FC = () => {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
+
   if (!getPosts.data || !userData.data) return <Loading />;
 
   return (
@@ -19,7 +21,10 @@ const Postslist: React.FC = () => {
       <div className="">
         {getPosts.data.pages.map((page) =>
           page.items.map((post) => (
-            <div key={post.id} className="m-2 my-4 w-full rounded-lg bg-gray-800 p-3 px-4">
+            <div
+              key={post.id}
+              className="m-2 my-4 w-full rounded-lg bg-gray-900 p-3 px-4"
+            >
               <div className="">
                 <div className="flex items-center gap-3">
                   <div>
@@ -43,13 +48,22 @@ const Postslist: React.FC = () => {
                 <h4 className="m-2 my-4 text-base">
                   {BadWordsFilter.clean(post.Body)}
                 </h4>
-                <div className="flex gap-4">
-                  <h5 className="text-xs text-gray-200 opacity-80">
-                    {post._count.Reactions} Reactions
-                  </h5>
-                  <h5 className="text-xs text-gray-200 opacity-80">
-                    {post._count.Comments} Comments
-                  </h5>
+                <div className="flex gap-1">
+                  {post.Interests.map((interest) => (
+                    <h3
+                      className="rounded-lg bg-green-700 p-1 px-3 text-xs"
+                      key={interest.id}
+                    >
+                      {interest.title}
+                    </h3>
+                  ))}
+                </div>
+                <div className="mt-3">
+                  <ReactionsAndComments
+                    commentsCount={post._count.Comments}
+                    postId={post.id}
+                    reactionsCount={post._count.Reactions}
+                  />
                 </div>
               </div>
             </div>
