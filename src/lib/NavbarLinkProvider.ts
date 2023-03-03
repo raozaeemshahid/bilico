@@ -78,10 +78,10 @@ export const NavbarLinkCreator = {
       icon: TbMessage,
     };
   },
-  ConnectionLink: (): LinkType => {
+  PeoplesLink: (): LinkType => {
     return {
-      Text: "Connections",
-      href: PagesLinks.getConnectionLink(),
+      Text: "Peoples",
+      href: PagesLinks.getPeoplesLink(),
       icon: IoIosPeople,
     };
   },

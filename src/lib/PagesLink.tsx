@@ -16,7 +16,9 @@ const PagesLinks = {
   getAnswerLink: (id?: string) => `/answer${id ? `/${id}` : ""}`,
   getReplyLink: (id?: string) => `/reply${id ? `/${id}` : ""}`,
   getMessageLink: (id?: string) => `/message${id ? `/${id}` : ""}`,
-  getConnectionLink: (id?: string) => `/connection${id ? `/${id}` : ""}`,
+  getPeoplesLink: (id?: string) => `/peoples${id ? `/${id}` : ""}`,
+  getMyConnectionsLink: (id?: string) =>
+    `/peoples/connections/${id ? `/${id}` : ""}`,
   HOME_Link: "/",
   ME: `/me`,
   NOT_FOUND_LINK: "/404",

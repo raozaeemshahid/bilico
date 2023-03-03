@@ -15,6 +15,8 @@ const GrDrag = dynamic(() =>
 import { NavbarLinkCreator } from "../lib/NavbarLinkProvider";
 import SidebarLink from "./SidebarLink";
 import { type UserInfo } from "./HomeLayout";
+import { useRouter } from "next/router";
+import PagesLinks from "../lib/PagesLink";
 
 let isDragging = false;
 
@@ -34,6 +36,7 @@ const Sidebar: React.FC<{
   const [sideNavbarWidth, changeSideBarNavbarWidth] = useState(0);
   const [isSideBarReady, changeIsSideBarReady] = useState(false);
   const SideBarRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!SideBarRef.current) return;
@@ -60,22 +63,34 @@ const Sidebar: React.FC<{
         }}
         ref={SideBarRef}
       >
-        <div className="flex h-screen w-full flex-col  p-3 py-5">
-          <SidebarLink link={NavbarLinkCreator.HomeLink()} />
+        <div className="mt-3 flex h-screen w-full flex-col gap-4 p-3 py-5">
+          <SidebarLink
+            link={NavbarLinkCreator.HomeLink()}
+            isActive={router.route === "/"}
+          />
           <SidebarLink
             count={userInfo.newMessages}
             link={NavbarLinkCreator.MessageLink()}
+            isActive={router.route.startsWith(PagesLinks.getMessageLink())}
           />
           <SidebarLink
             count={userInfo.newRequests}
-            link={NavbarLinkCreator.ConnectionLink()}
+            link={NavbarLinkCreator.PeoplesLink()}
+            isActive={router.route.startsWith(PagesLinks.getPeoplesLink())}
           />
           <SidebarLink
             count={userInfo.newNotifications}
             link={NavbarLinkCreator.NotificationLink()}
+            isActive={router.route.startsWith(PagesLinks.NOTIFICATION_LINK)}
           />
-          <SidebarLink link={NavbarLinkCreator.questionLink()} />
-          <SidebarLink link={NavbarLinkCreator.accountLink()} />
+          <SidebarLink
+            link={NavbarLinkCreator.questionLink()}
+            isActive={router.route.startsWith(PagesLinks.getQuestionLink())}
+          />
+          <SidebarLink
+            link={NavbarLinkCreator.accountLink()}
+            isActive={router.route.startsWith(PagesLinks.ME)}
+          />
         </div>
       </motion.div>
       {!isWindowLargerEnough && (
