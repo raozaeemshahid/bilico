@@ -9,7 +9,7 @@ export const getAllInterestsAndSkills = protectedProcedure
         includeSkill: z.boolean().default(true),
         includeInterests: z.boolean().default(true),
       })
-      .nullish()
+      .default({includeInterests: true, includeSkill: true})
   )
   .query(async ({ ctx, input }) => {
     const interests: Interest[] =

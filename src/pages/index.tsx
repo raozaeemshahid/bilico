@@ -3,15 +3,11 @@ import Head from "next/head";
 import { signOut, useSession } from "next-auth/react";
 
 import { LoadingFullScreen } from "../components/Loading";
-// import { useEffect } from "react";
 import { useRouter } from "next/router";
 import PagesLinks from "../lib/PagesLink";
 import { api } from "../utils/api";
-import dynamic from "next/dynamic";
 
-const HomePage = dynamic(() => import("../components/Home/Home"), {
-  loading: () => <LoadingFullScreen text="Getting Things Ready" />,
-});
+import HomePage from "../components/Home/Home"
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -28,6 +24,7 @@ const Home: NextPage = () => {
       if (user.banned) return void router.push(PagesLinks.BANNED_LINK);
       if (user.deactivated) return void router.push(PagesLinks.DEATIVATED_LINK);
       if (user.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
+      if (user.incompleteProfile) return void router.push(PagesLinks.EDIT_ACCOUNT_LINK)
       if (user.notFound) {
         void signOut();
         void router.push(PagesLinks.getLoginLink());

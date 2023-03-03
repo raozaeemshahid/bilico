@@ -27,7 +27,7 @@ const PreviewNewPost: React.FC<{
   if (!userData.data) return <Loading />;
   return (
     <>
-      <div className="m-2 w-full rounded-lg bg-gray-800 p-3 px-4">
+      <div className="m-2 w-full rounded-lg bg-gray-700 p-3 px-4">
         <div className="flex justify-center">
           <h2 className="text-2xl font-bold text-gray-200">Preview</h2>
         </div>

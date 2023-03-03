@@ -4,12 +4,9 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import PagesLinks from "../../lib/PagesLink";
 import { LoadingFullScreen } from "../../components/Loading";
-import dynamic from "next/dynamic";
 import { api } from "../../utils/api";
 
-const MeComponent = dynamic(() => import("../../components/Me/Me"), {
-  loading: () => <LoadingFullScreen text="Getting Things Ready" />,
-});
+import MeComponent from "../../components/Me/Me"
 
 const MyProfile: NextPage = () => {
   const router = useRouter();
@@ -30,6 +27,7 @@ const MyProfile: NextPage = () => {
         void signOut();
         return void router.push(PagesLinks.getLoginLink());
       }
+      if (data.incompleteProfile) return void router.push(PagesLinks.EDIT_ACCOUNT_LINK)
       if (data.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
     },
   });

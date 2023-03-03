@@ -6,14 +6,10 @@ import { Interest } from "@prisma/client";
 import Loading from "../../../../Loading";
 import { zodPost } from "../../../../../lib/zod";
 const CreatePost: React.FC = () => {
-  const [isCreating, changeIsCreating] = useState(false);
   const [postBody, changePostBody] = useState("");
   const [isInPreview, changeIsInPreview] = useState(false);
   const [errors, changeErrors] = useState<string[] | undefined>();
   const utilsApi = api.useContext()
-  const allInterests = api.me.getAllInterestsAndSkills.useQuery({
-    includeSkill: false,
-  });
   const [interestsFoundInPost, changeInterestsFound] = useState<Interest[]>([
     { id: "", title: "" },
   ]);
@@ -23,9 +19,8 @@ const CreatePost: React.FC = () => {
       changePostBody("");
       changeIsInPreview(false);
       changeInterestsFound([{ id: "", title: "" }]);
-      changeIsCreating(false);
     },
-    onError: (err) => {
+    onError: () => {
       changeErrors(["Something went wrong"]);
     },
   });
@@ -40,19 +35,6 @@ const CreatePost: React.FC = () => {
   };
   if (createPostMutation.isLoading) return <Loading text="Creating" />;
 
-  if (!isCreating)
-    return (
-      <>
-        <div className="flex w-full justify-end">
-          <button
-            className="m-2 flex rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-            onClick={() => changeIsCreating(true)}
-          >
-            New
-          </button>
-        </div>
-      </>
-    );
   if (isInPreview) {
     return (
       <PreviewNewPost
@@ -67,7 +49,6 @@ const CreatePost: React.FC = () => {
   }
   return (
     <CreateNewPost
-      changeIsCreating={changeIsCreating}
       changeIsInPreview={changeIsInPreview}
       changePostBody={changePostBody}
       postBody={postBody}
