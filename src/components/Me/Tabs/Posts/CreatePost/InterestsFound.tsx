@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { api } from "../../../../../utils/api";
 import { Interest } from "@prisma/client";
 import Select from "react-select";
@@ -14,19 +14,24 @@ const InterestFound: React.FC<{
   });
   useEffect(() => {
     if (!allInterests.isSuccess) return;
-    const words = postBody.toLowerCase();
+    console.log("Interests Searching");
+    let words = [
+      ...postBody.split(/(?:,| |\/)+/).map((word) => word.toLowerCase()),
+      ...postBody.split(" ").map((word) => word.toLowerCase()),
+    ];
+    console.log("Words: ", words);
     const interestsFound: string[] = [];
     allInterests.data.interests.forEach((interest) => {
-      if (words.includes(interest.title.toLowerCase()))
-        interestsFound.push(interest.title);
+      if (
+        words.includes(interest.title.toLowerCase()) ||
+        postBody.toLowerCase().includes(` ${interest.title.toLowerCase()} `)
+      )
+        interestsFound.push(interest.title.toLowerCase());
     });
     console.log("InterestFound", interestsFound);
     changeInterestsFound(
-      allInterests.data.interests.filter(
-        (interest) =>
-          !!interestsFound.find(
-            (i) => i.toLowerCase() == interest.title.toLowerCase()
-          )
+      allInterests.data.interests.filter((interest) =>
+        interestsFound.includes(interest.title.toLowerCase())
       )
     );
   }, [allInterests.isSuccess]);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PreviewNewPost from "./PreviewNewPost";
 import CreateNewPost from "./CreateNewPost";
 import { api } from "../../../../../utils/api";
@@ -9,13 +9,18 @@ const CreatePost: React.FC = () => {
   const [postBody, changePostBody] = useState("");
   const [isInPreview, changeIsInPreview] = useState(false);
   const [errors, changeErrors] = useState<string[] | undefined>();
-  const utilsApi = api.useContext()
+  const utilsApi = api.useContext();
   const [interestsFoundInPost, changeInterestsFound] = useState<Interest[]>([
     { id: "", title: "" },
   ]);
+  
+  useEffect(() => {
+    changeInterestsFound([{ id: "", title: "" }]);
+  }, [isInPreview]);
+  
   const createPostMutation = api.me.createPost.useMutation({
     onSuccess: () => {
-      utilsApi.me.getPosts.invalidate()
+      utilsApi.me.getPosts.invalidate();
       changePostBody("");
       changeIsInPreview(false);
       changeInterestsFound([{ id: "", title: "" }]);
