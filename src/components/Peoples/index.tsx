@@ -4,6 +4,7 @@ import { LoadingFullScreen } from "../Loading";
 import { useRouter } from "next/router";
 import PagesLinks from "../../lib/PagesLink";
 import HomeLayout from "../HomeLayout";
+import SearchBox from "./SearchBox";
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -32,7 +33,10 @@ const Home: React.FC = () => {
           newRequests: userInfo.data.newRequests,
         }}
       >
-      This is peoples page
+        <div className="flex flex-col gap-2 items-center justify-center">
+          <h2 className="text-3xl font-bold">Peoples</h2> 
+          <SearchBox />
+        </div>
       </HomeLayout>
     </>
   );

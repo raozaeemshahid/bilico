@@ -35,6 +35,14 @@ const MyProfile: NextPage = () => {
   if (status == "loading" || !userSession || !userSession.user)
     return <LoadingFullScreen text="Signing You In" />;
 
+  if (!userInfo.data) return <LoadingFullScreen text="Loading Data" />;
+  if (!userInfo.data.success || userInfo.data.incompleteProfile)
+    return <LoadingFullScreen text="Getting Things Ready" />;
+  if (userInfo.data.name !== userSession.user.name) {
+    void signOut();
+    void router.push(PagesLinks.getLoginLink());
+    return <LoadingFullScreen />;
+  }
   return (
     <>
       <Head>
