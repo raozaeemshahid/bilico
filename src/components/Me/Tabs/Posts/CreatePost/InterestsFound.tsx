@@ -14,18 +14,16 @@ const InterestFound: React.FC<{
   });
   useEffect(() => {
     if (!allInterests.isSuccess) return;
-    console.log("Interests Searching");
+    const loweredPostBody = postBody.toLowerCase();
     let words = [
-      ...postBody.split(/(?:,| |\/)+/).map((word) => word.toLowerCase()),
-      ...postBody.split(" ").map((word) => word.toLowerCase()),
+      ...loweredPostBody.split(/(?:,| |\/)+/),
+      ...loweredPostBody.split(" "),
     ];
     console.log("Words: ", words);
     const interestsFound: string[] = [];
     allInterests.data.interests.forEach((interest) => {
-      if (
-        words.includes(interest.title.toLowerCase()) ||
-        postBody.toLowerCase().includes(` ${interest.title.toLowerCase()} `)
-      )
+      const title = interest.title.toLowerCase();
+      if (words.includes(title) || loweredPostBody.includes(` ${title} `))
         interestsFound.push(interest.title.toLowerCase());
     });
     console.log("InterestFound", interestsFound);
