@@ -1,33 +1,37 @@
 import { Skill } from "@prisma/client";
 import Image from "next/image";
+import Link from "next/link";
+import PagesLinks from "../../../lib/PagesLink";
+
 const User: React.FC<{
   id: string;
   image: string | null;
   name: string;
   skills: Skill[];
-}> = ({ image, name, skills, id }) => {
+  bio: string | null;
+}> = ({ image, name, bio, skills, id }) => {
   return (
-    <div
-      key={id}
-      className="w-full rounded-lg border-b-2 border-gray-400 bg-gray-800 py-3 px-0 xs:px-4 sm:m-2"
-    >
+    <div key={id} className="w-full rounded-lg  bg-gray-800 py-3 px-1 sm:px-3 ">
       <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-3">
-          <div>
-            {!!image && (
-              <Image
-                alt="Profile Pic"
-                className="rounded-full"
-                width={40}
-                height={40}
-                src={image}
-              />
-            )}
+        <Link href={PagesLinks.getProfileLink(id)}>
+          <div className="flex items-center gap-3">
+            <div>
+              {!!image && (
+                <Image
+                  alt="Profile Pic"
+                  className="rounded-full"
+                  width={40}
+                  height={40}
+                  src={image}
+                />
+              )}
+            </div>
+            <div className="flex flex-col">
+              <h2 className="text-md sm:text-base">{name}</h2>
+              <h3 className="text-sm text-gray-100 opacity-80">{bio}</h3>
+            </div>
           </div>
-          <div className="flex flex-col">
-            <h3 className="text-md sm:text-base">{name}</h3>
-          </div>
-        </div>
+        </Link>
         <div className="flex gap-1">
           {skills.map((skill) => (
             <h3

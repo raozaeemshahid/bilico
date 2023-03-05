@@ -86,12 +86,6 @@ const EditBody: React.FC = () => {
           (currentSelectedInterest) => currentSelectedInterest.id == interest.id
         ) < 0
     ).map((interest) => interest.id);
-    console.log({
-      addedInterests,
-      addedSkills,
-      removedInterests,
-      removedSkills,
-    });
 
     if (
       addedInterests.length == 0 &&

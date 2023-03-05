@@ -7,16 +7,20 @@ import SearchBar from "./SearchBar";
 
 const SearchBox: React.FC<{
   changeSearchQuery: Dispatch<
-    SetStateAction<{ searchKeywords: string; requiredSkills: string[] } | undefined>
+    SetStateAction<
+      { searchKeywords: string; requiredSkills: string[] } | undefined
+    >
   >;
 }> = ({ changeSearchQuery }) => {
-  const listInterestsAndSkills = api.me.getAllInterestsAndSkills.useQuery();
-  const userData = api.me.data.useQuery(undefined, {
-    onSuccess: (data) => {
-      changeSelectedSkills([])
-      // changeSelectedSkills(data.Skills);
-    },
-  });
+  const listInterestsAndSkills = api.me.getAllInterestsAndSkills.useQuery(
+    undefined,
+    {
+      onSuccess: () => {
+        if (selectedSkills[0]?.id == "") changeSelectedSkills([]);
+      },
+    }
+  );
+  const userData = api.me.data.useQuery();
   const [selectedSkills, changeSelectedSkills] = useState<Skill[]>([
     { id: "", title: "" },
   ]);
@@ -47,14 +51,9 @@ const SearchBox: React.FC<{
             <button
               className="m-2 flex rounded bg-green-600 py-2 px-4 font-bold text-white shadow-sm shadow-green-600 hover:bg-green-600"
               onClick={() => {
-                console.log(selectedSkills)
                 changeSearchQuery({
                   requiredSkills: selectedSkills.map((skill) => skill.id),
                   searchKeywords: searchKeywords,
-                });
-                console.log({
-                  name: searchKeywords,
-                  skillsRequied: selectedSkills,
                 });
               }}
             >

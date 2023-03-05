@@ -29,7 +29,7 @@ const Home: React.FC = () => {
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2">
-        <h2 className="text-3xl font-bold">Peoples</h2>
+        <h2 className="text-3xl my-2 font-bold">Peoples</h2>
         <SearchBox changeSearchQuery={changeSearachQuery} />
         {!!searchQuery && <SearchResults searchQuery={searchQuery} />}
       </div>

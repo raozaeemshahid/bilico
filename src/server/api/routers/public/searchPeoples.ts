@@ -14,13 +14,12 @@ export const searchPeoples = protectedProcedure
     const limit = input.limit ?? 50;
     const { cursor } = input;
 
-    console.log(input.requiredSkills);
     const items = await ctx.prisma.user.findMany({
       take: limit + 1, // get an extra item at the end which we'll use as next cursor
       where: {
         BannedUntil: null || undefined,
         isDeactivated: false,
-        
+
         ...(input.searchKeywords.length > 0
           ? { name: { contains: input.searchKeywords } }
           : {}),
@@ -33,15 +32,20 @@ export const searchPeoples = protectedProcedure
             }
           : {}),
       },
-      cursor: cursor ? { id: cursor } : undefined,
-      // orderBy: {
-      //   createdAt: "desc",
-      // },
+      cursor: cursor
+        ? {
+            id: cursor,
+          }
+        : undefined,
+      orderBy: {
+        createdAt: "asc",
+      },
       select: {
         id: true,
         name: true,
         image: true,
         Skills: true,
+        Bio: true,
       },
     });
     let nextCursor: typeof cursor | undefined = undefined;

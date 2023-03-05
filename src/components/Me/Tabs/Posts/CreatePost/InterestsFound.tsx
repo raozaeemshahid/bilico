@@ -19,14 +19,12 @@ const InterestFound: React.FC<{
       ...loweredPostBody.split(/(?:,| |\/)+/),
       ...loweredPostBody.split(" "),
     ];
-    console.log("Words: ", words);
     const interestsFound: string[] = [];
     allInterests.data.interests.forEach((interest) => {
       const title = interest.title.toLowerCase();
       if (words.includes(title) || loweredPostBody.includes(` ${title} `))
         interestsFound.push(interest.title.toLowerCase());
     });
-    console.log("InterestFound", interestsFound);
     changeInterestsFound(
       allInterests.data.interests.filter((interest) =>
         interestsFound.includes(interest.title.toLowerCase())
