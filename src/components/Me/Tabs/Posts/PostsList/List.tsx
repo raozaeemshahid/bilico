@@ -4,9 +4,12 @@ import moment from "moment";
 import Image from "next/image";
 import Loading from "../../../../Loading";
 import ReactionsAndComments from "./ReactionsAndComments";
-import {OrderOfDataByTime} from "../../../../../lib/common/names";
+import { OrderOfDataByTime } from "../../../../../lib/common/names";
+import FetchMoreInfiniteComponent from "../../../../FetchMoreInfiniteQueryComponent";
 
-const PostsListComponent: React.FC<{order: OrderOfDataByTime}> = ({order}) => {
+const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
+  order,
+}) => {
   const userData = api.me.data.useQuery();
   const getPosts = api.me.getPosts.useInfiniteQuery(
     { limit: 10, order },
@@ -72,18 +75,11 @@ const PostsListComponent: React.FC<{order: OrderOfDataByTime}> = ({order}) => {
             </div>
           ))
         )}
-        {getPosts.isFetchingNextPage && <Loading />}
-        {getPosts.hasNextPage && !getPosts.isFetchingNextPage && (
-          <div className="flex justify-center">
-            <button
-              onClick={() => {
-                getPosts.fetchNextPage();
-              }}
-            >
-              Show more
-            </button>
-          </div>
-        )}
+        <FetchMoreInfiniteComponent
+          fetchNextPage={getPosts.fetchNextPage}
+          hasNextPage={getPosts.hasNextPage}
+          isFetchingNextPage={getPosts.isFetchingNextPage}
+        />
       </div>
     </>
   );

@@ -26,17 +26,8 @@ const Home: React.FC = () => {
     return <LoadingFullScreen text="Getting Things Ready" />;
   return (
     <>
-      <HomeLayout
-        userInfo={{
-          name: userInfo.data.name,
-          newMessages: userInfo.data.newMessages,
-          newNotifications: userInfo.data.newNotifications,
-          newRequests: userInfo.data.newRequests,
-        }}
-      >
-        <Profile />
-        <Tabs />
-      </HomeLayout>
+      <Profile />
+      <Tabs />
     </>
   );
 };

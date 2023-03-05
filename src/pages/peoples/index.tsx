@@ -6,7 +6,8 @@ import PagesLinks from "../../lib/PagesLink";
 import { LoadingFullScreen } from "../../components/Loading";
 import { api } from "../../utils/api";
 
-import Peoples from "../../components/Peoples"
+import HomeLayout from "../../components/HomeLayout";
+import Peoples from "../../components/Peoples";
 
 const MyProfile: NextPage = () => {
   const router = useRouter();
@@ -27,7 +28,8 @@ const MyProfile: NextPage = () => {
         void signOut();
         return void router.push(PagesLinks.getLoginLink());
       }
-      if (data.incompleteProfile) return void router.push(PagesLinks.EDIT_ACCOUNT_LINK)
+      if (data.incompleteProfile)
+        return void router.push(PagesLinks.EDIT_ACCOUNT_LINK);
       if (data.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
     },
   });
@@ -50,7 +52,16 @@ const MyProfile: NextPage = () => {
         <meta name="description" content="A Social Media For Professionals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Peoples />
+      <HomeLayout
+        userInfo={{
+          name: userInfo.data.name,
+          newMessages: userInfo.data.newMessages,
+          newNotifications: userInfo.data.newNotifications,
+          newRequests: userInfo.data.newRequests,
+        }}
+      >
+        <Peoples />
+      </HomeLayout>
     </>
   );
 };
