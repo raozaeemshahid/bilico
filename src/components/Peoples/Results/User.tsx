@@ -11,7 +11,7 @@ const User: React.FC<{
   bio: string | null;
 }> = ({ image, name, bio, skills, id }) => {
   return (
-    <div key={id} className="w-full rounded-lg  bg-gray-800 py-3 px-1 sm:px-3 ">
+    <div key={id} className="w-full rounded-lg border-b border-gray-400  bg-gray-800 py-3 px-1 sm:px-3 ">
       <div className="flex flex-col gap-3">
         <Link href={PagesLinks.getProfileLink(id)}>
           <div className="flex items-center gap-3">

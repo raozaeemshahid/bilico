@@ -27,7 +27,7 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
           page.items.map((post) => (
             <div
               key={post.id}
-              className="w-full rounded-lg border-b-2 border-gray-400 bg-gray-800 py-3 px-0 xs:px-4 sm:m-2"
+              className="w-full rounded-lg border-b border-gray-400 bg-gray-800 py-3 px-0 xs:px-4 sm:m-2"
             >
               <div className="">
                 <div className="flex items-center gap-3">

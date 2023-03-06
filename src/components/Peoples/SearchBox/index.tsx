@@ -4,6 +4,10 @@ import { Dispatch, SetStateAction, useState } from "react";
 import type { Skill } from "@prisma/client";
 import SkilledIn from "./SkilledIn";
 import SearchBar from "./SearchBar";
+import Tabs from "../../Tabs";
+
+type Tab = "All" | "Your Connections";
+const tabList: Tab[] = ["All", "Your Connections"];
 
 const SearchBox: React.FC<{
   changeSearchQuery: Dispatch<
@@ -25,6 +29,7 @@ const SearchBox: React.FC<{
     { id: "", title: "" },
   ]);
   const [searchKeywords, changeSearchKeywords] = useState("");
+  const [currentTab, changeCurrentTab] = useState<Tab>("All");
 
   if (
     !listInterestsAndSkills.data ||
@@ -62,6 +67,11 @@ const SearchBox: React.FC<{
           </div>
         </div>
       </div>
+      <Tabs<Tab>
+        changeCurrentTab={(tab) => changeCurrentTab(tab)}
+        currentTab={currentTab}
+        tabList={tabList}
+      />
     </>
   );
 };

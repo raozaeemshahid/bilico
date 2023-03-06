@@ -20,7 +20,7 @@ const SearchResults: React.FC<{
   if (!apiResults.data) return <Loading />;
   return (
     <>
-      <div className="mx-5 flex w-full flex-col gap-4 sm:p-2 ">
+      <div className="mx-5 flex w-full flex-col gap-5 sm:p-2 ">
         {apiResults.data.pages.map((page) =>
           page.items.map((user) => (
             <User
