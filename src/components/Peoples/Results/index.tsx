@@ -1,17 +1,19 @@
 import { Skill } from "@prisma/client";
+import { PeopleSearchQuery } from "..";
 import { api } from "../../../utils/api";
 import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
 import Loading from "../../Loading";
 import User from "./User";
 
 const SearchResults: React.FC<{
-  searchQuery: { searchKeywords: string; requiredSkills: string[] };
+  searchQuery: PeopleSearchQuery;
 }> = ({ searchQuery }) => {
   const apiResults = api.publicApi.searchPeoples.useInfiniteQuery(
     {
       limit: 10,
       requiredSkills: searchQuery.requiredSkills,
       searchKeywords: searchQuery.searchKeywords,
+      inConnections: searchQuery.inConnections,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,

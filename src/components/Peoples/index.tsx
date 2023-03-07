@@ -8,6 +8,11 @@ import SearchBox from "./SearchBox";
 import { useState } from "react";
 import SearchResults from "./Results";
 
+export interface PeopleSearchQuery {
+  searchKeywords: string;
+  requiredSkills: string[];
+  inConnections: boolean;
+}
 const Home: React.FC = () => {
   const router = useRouter();
   const { data: userSession, status } = useSession();
@@ -16,10 +21,7 @@ const Home: React.FC = () => {
     enabled: status === "authenticated" && router.isReady,
   });
 
-  const [searchQuery, changeSearachQuery] = useState<{
-    searchKeywords: string;
-    requiredSkills: string[];
-  }>();
+  const [searchQuery, changeSearachQuery] = useState<PeopleSearchQuery>();
 
   if (!userSession || !userSession.user)
     return <LoadingFullScreen text="Signing You In" />;
@@ -29,8 +31,11 @@ const Home: React.FC = () => {
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2">
-        <h2 className="text-3xl my-2 font-bold">Peoples</h2>
-        <SearchBox changeSearchQuery={changeSearachQuery} />
+        <h2 className="my-2 text-3xl font-bold">Peoples</h2>
+        <SearchBox
+          changeSearchQuery={changeSearachQuery}
+          searchQuery={searchQuery}
+        />
         {!!searchQuery && <SearchResults searchQuery={searchQuery} />}
       </div>
     </>

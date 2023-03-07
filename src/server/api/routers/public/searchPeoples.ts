@@ -8,6 +8,7 @@ export const searchPeoples = protectedProcedure
       requiredSkills: z.array(z.string()),
       limit: z.number().min(1).max(100).nullish(),
       cursor: z.string().nullish(), // <-- "cursor" needs to exist, but can be any type
+      inConnections: z.boolean().default(false),
     })
   )
   .query(async ({ input, ctx }) => {
@@ -20,6 +21,14 @@ export const searchPeoples = protectedProcedure
         BannedUntil: null || undefined,
         isDeactivated: false,
 
+        ...(input.inConnections
+          ? {
+              OR: [
+                { ConnectedTo: { some: { id: ctx.session.user.id } } },
+                { ConnectedWith: { some: { id: ctx.session.user.id } } },
+              ],
+            }
+          : {}),
         ...(input.searchKeywords.length > 0
           ? { name: { contains: input.searchKeywords } }
           : {}),

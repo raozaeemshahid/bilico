@@ -1,21 +1,19 @@
 import { api } from "../../../utils/api";
 import Loading from "../../Loading";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import type { Skill } from "@prisma/client";
 import SkilledIn from "./SkilledIn";
 import SearchBar from "./SearchBar";
 import Tabs from "../../Tabs";
+import { PeopleSearchQuery } from "..";
 
 type Tab = "All" | "Your Connections";
 const tabList: Tab[] = ["All", "Your Connections"];
 
 const SearchBox: React.FC<{
-  changeSearchQuery: Dispatch<
-    SetStateAction<
-      { searchKeywords: string; requiredSkills: string[] } | undefined
-    >
-  >;
-}> = ({ changeSearchQuery }) => {
+  searchQuery: PeopleSearchQuery | undefined;
+  changeSearchQuery: Dispatch<SetStateAction<PeopleSearchQuery | undefined>>;
+}> = ({ changeSearchQuery, searchQuery }) => {
   const listInterestsAndSkills = api.me.getAllInterestsAndSkills.useQuery(
     undefined,
     {
@@ -31,6 +29,22 @@ const SearchBox: React.FC<{
   const [searchKeywords, changeSearchKeywords] = useState("");
   const [currentTab, changeCurrentTab] = useState<Tab>("All");
 
+  const runQuery = () => {
+    console.log(
+      'currentTab === "Your Connections"',
+      currentTab == "Your Connections",
+      currentTab
+    );
+    changeSearchQuery({
+      requiredSkills: selectedSkills.map((skill) => skill.id),
+      searchKeywords: searchKeywords,
+      inConnections: currentTab == "Your Connections",
+    });
+  };
+  useEffect(() => {
+    if (!searchQuery) return;
+    runQuery();
+  }, [currentTab]);
   if (
     !listInterestsAndSkills.data ||
     !userData.data ||
@@ -55,12 +69,7 @@ const SearchBox: React.FC<{
           <div className="flex justify-end">
             <button
               className="m-2 flex rounded bg-green-600 py-2 px-4 font-bold text-white shadow-sm shadow-green-600 hover:bg-green-600"
-              onClick={() => {
-                changeSearchQuery({
-                  requiredSkills: selectedSkills.map((skill) => skill.id),
-                  searchKeywords: searchKeywords,
-                });
-              }}
+              onClick={runQuery}
             >
               Continue
             </button>
