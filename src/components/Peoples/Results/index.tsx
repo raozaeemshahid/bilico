@@ -32,6 +32,7 @@ const SearchResults: React.FC<{
               name={user.name}
               skills={user.Skills}
               bio={user.Bio}
+              isVerified={user.isVerified}
             />
           ))
         )}

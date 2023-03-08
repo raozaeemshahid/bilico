@@ -18,7 +18,7 @@ export const searchPeoples = protectedProcedure
     const items = await ctx.prisma.user.findMany({
       take: limit + 1, // get an extra item at the end which we'll use as next cursor
       where: {
-        BannedUntil: null || undefined,
+        BannedUntil: null,
         isDeactivated: false,
 
         ...(input.inConnections
@@ -55,6 +55,7 @@ export const searchPeoples = protectedProcedure
         image: true,
         Skills: true,
         Bio: true,
+        isVerified: true,
       },
     });
     let nextCursor: typeof cursor | undefined = undefined;

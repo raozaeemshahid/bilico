@@ -6,6 +6,11 @@ import Loading from "../../../../Loading";
 import ReactionsAndComments from "./ReactionsAndComments";
 import { OrderOfDataByTime } from "../../../../../lib/common/names";
 import FetchMoreInfiniteComponent from "../../../../FetchMoreInfiniteQueryComponent";
+import dynamic from "next/dynamic";
+
+const MdVerified = dynamic(() =>
+  import("react-icons/md").then((icons) => icons.MdVerified)
+);
 
 const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
   order,
@@ -43,9 +48,10 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
                     )}
                   </div>
                   <div className="flex flex-col">
-                    <h3 className="text-md sm:text-base">
-                      {userData.data.name}
-                    </h3>
+                    <div className="text-md flex items-center gap-1 sm:text-base">
+                      <h3>{userData.data.name}</h3>
+                      <h3>{userData.data.isVerified && <MdVerified />}</h3>
+                    </div>
                     <h3 className="text-sm text-gray-100 opacity-80">
                       {moment(post.CreateAt).fromNow()}
                     </h3>

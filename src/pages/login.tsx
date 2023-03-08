@@ -31,9 +31,7 @@ const SignIn: NextPage = () => {
               Bilico - Let&apos;s Connect, Learn and Grow Together
             </h1>
             <p className="mt-4 leading-relaxed">
-              A place to find friends and spaces of your interest, ask
-              questions, teach what you know, learn from others and share your
-              stories.
+              A Social Media for Professionals
             </p>
           </div>
           <div className="mt-10 flex w-full flex-col rounded-lg bg-gray-800 bg-opacity-50 p-8 md:ml-auto md:mt-0 md:w-1/2 lg:w-2/6">

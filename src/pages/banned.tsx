@@ -1,4 +1,4 @@
-import { type NextPage } from "next";
+import { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
@@ -8,6 +8,7 @@ import PagesLinks from "../lib/PagesLink";
 import { api } from "../utils/api";
 import { getCallbackUrlFromRouter } from "../lib/helperFunctions";
 import Head from "next/head";
+import moment from "moment";
 const Banned: NextPage = ({}) => {
   const router = useRouter();
   const { status } = useSession({
@@ -63,7 +64,12 @@ const Banned: NextPage = ({}) => {
           )}
           {amIBanned.data.reason && (
             <p className="title-font text-base leading-relaxed">
-              Reason: {amIBanned.data.reason}
+              For {amIBanned.data.reason}
+            </p>
+          )}
+          {amIBanned.data.bannedUntil && (
+            <p className="title-font text-base leading-relaxed">
+              You'll be unban {moment(amIBanned.data.bannedUntil).fromNow()}
             </p>
           )}
         </div>
