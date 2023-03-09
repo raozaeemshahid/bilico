@@ -53,7 +53,7 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
                       <h3>{userData.data.isVerified && <MdVerified />}</h3>
                     </div>
                     <h3 className="text-sm text-gray-100 opacity-80">
-                      {moment(post.CreateAt).fromNow()}
+                      {moment(post.CreatedAt).fromNow()}
                     </h3>
                   </div>
                 </div>
@@ -82,7 +82,7 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
           ))
         )}
         <FetchMoreInfiniteComponent
-          fetchNextPage={getPosts.fetchNextPage}
+          fetchNextPage={() => void getPosts.fetchNextPage()}
           hasNextPage={getPosts.hasNextPage}
           isFetchingNextPage={getPosts.isFetchingNextPage}
           endingMsg="You're all caught up!"

@@ -20,7 +20,7 @@ const CreatePost: React.FC = () => {
   
   const createPostMutation = api.me.createPost.useMutation({
     onSuccess: () => {
-      utilsApi.me.getPosts.invalidate();
+      void utilsApi.me.getPosts.invalidate();
       changePostBody("");
       changeIsInPreview(false);
       changeInterestsFound([{ id: "", title: "" }]);

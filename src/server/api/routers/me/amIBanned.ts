@@ -11,9 +11,9 @@ export const amIBanned = protectedProcedure.query(async ({ ctx }) => {
     select: {
       BannedUntil: true,
       ReasonOfBanned: true,
-      ReportsToAdmin: {
+      GetReported: {
         where: {
-          type: { equals: "TO_UNBAN" },
+          type: "TO_UNBAN",
         },
       },
     },
@@ -30,6 +30,6 @@ export const amIBanned = protectedProcedure.query(async ({ ctx }) => {
     isBanned: true,
     reason: user.ReasonOfBanned,
     bannedUntil: user.BannedUntil,
-    eligibleToApply: user.ReportsToAdmin.length == 0,
+    eligibleToApply: user.GetReported.length == 0,
   };
 });

@@ -25,13 +25,13 @@ export const getPosts = protectedProcedure
       },
       cursor: cursor ? { id: cursor } : undefined,
       orderBy: {
-        CreateAt: input.order == "Newest" ? "desc" : "asc",
+        CreatedAt: input.order == "Newest" ? "desc" : "asc",
       },
       select: {
         _count: { select: { Comments: true, Reactions: true } },
         id: true,
         Body: true,
-        CreateAt: true,
+        CreatedAt: true,
         Interests: { select: { title: true, id: true } },
       },
     });

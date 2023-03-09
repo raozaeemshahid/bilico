@@ -15,7 +15,7 @@ const InterestFound: React.FC<{
   useEffect(() => {
     if (!allInterests.isSuccess) return;
     const loweredPostBody = postBody.toLowerCase();
-    let words = [
+    const words = [
       ...loweredPostBody.split(/(?:,| |\/)+/),
       ...loweredPostBody.split(" "),
     ];

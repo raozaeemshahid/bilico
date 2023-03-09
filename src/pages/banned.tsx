@@ -64,12 +64,12 @@ const Banned: NextPage = ({}) => {
           )}
           {amIBanned.data.reason && (
             <p className="title-font text-base leading-relaxed">
-              For {amIBanned.data.reason}
+              Reason: {amIBanned.data.reason}
             </p>
           )}
           {amIBanned.data.bannedUntil && (
             <p className="title-font text-base leading-relaxed">
-              You'll be unban {moment(amIBanned.data.bannedUntil).fromNow()}
+              You&apos;ll be unbanned {moment(amIBanned.data.bannedUntil).fromNow()}
             </p>
           )}
         </div>

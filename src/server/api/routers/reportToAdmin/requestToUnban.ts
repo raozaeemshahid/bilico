@@ -23,11 +23,6 @@ export const requestToUnban = protectedProcedure
             id: ctx.session.user.id,
           },
         },
-        ReportedBy: {
-          connect: {
-            id: ctx.session.user.id,
-          },
-        },
       },
     });
   });
