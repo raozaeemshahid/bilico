@@ -64,28 +64,18 @@ model ReportToAdmin {
   id              String        @id @default(uuid())
   message         String        @db.Text
   link            String
-  status          ReportStatus  @default(PENDING)
   type            ReportType
-  ReportedBy      User          @relation("Reporter", fields: [reporterUserId], references: [id])
-  reporterUserId  String
   CreatedAt       DateTime      @default(now())
   ReportedUser    User?         @relation("Reported", fields: [reportedUserId], references: [id])
   reportedUserId  String?
   ReportedPost    Post?         @relation(fields: [postId], references: [id])
   postId          String?
-  ReportedComment Comment?      @relation(fields: [commentId], references: [id])
-  commentId       String?
   ReportedAnswer  Answer?       @relation(fields: [answerId], references: [id])
   answerId        String?
-  ReportedReply   CommentReply? @relation(fields: [commentReplyId], references: [id])
-  commentReplyId  String?
 
   @@index([reportedUserId])
   @@index([postId])
-  @@index([reporterUserId])
-  @@index([commentId])
   @@index([answerId])
-  @@index([commentReplyId])
 }
 
 model ReactPost {
@@ -132,7 +122,6 @@ model CommentReply {
   ByUser      User            @relation(fields: [userId], references: [id])
   userId      String
   Reactions   ReactReply[]
-  GetReported ReportToAdmin[]
 
   @@index([commentId])
   @@index([userId])
@@ -141,8 +130,8 @@ model CommentReply {
 model Comment {
   id            String          @id @default(uuid())
   Comment       String          @db.Text
+  CommentType   CommentType
   OnPost        Post?           @relation(fields: [postId], references: [id])
-  postId        String?
   OnAnswer      Answer?         @relation(fields: [answerId], references: [id])
   CreatedAt     DateTime        @default(now())
   CreatedBy     User            @relation(fields: [userId], references: [id])
@@ -150,8 +139,8 @@ model Comment {
   Reactions     ReactComment[]
   Replies       CommentReply[]
   LovedByAuthor Boolean         @default(false)
-  GetReported   ReportToAdmin[]
   answerId      String?
+  postId        String?
 
   @@index([postId])
   @@index([userId])
@@ -190,9 +179,9 @@ model Question {
   id        String     @id @default(uuid())
   Body      String     @db.Text
   Interests Interest[]
-  CreateBy  User       @relation(fields: [userId], references: [id])
+  CreatedBy  User       @relation(fields: [userId], references: [id])
   userId    String
-  CreateAt  DateTime   @default(now())
+  CreatedAt  DateTime   @default(now())
   Answers   Answer[]
 
   @@index([userId])
@@ -204,7 +193,7 @@ model Post {
   Interests      Interest[]
   CreatedBy      User            @relation(fields: [userId], references: [id])
   userId         String
-  CreateAt       DateTime        @default(now())
+  CreatedAt       DateTime        @default(now())
   Comments       Comment[]
   Reactions      ReactPost[]
   GetReported    ReportToAdmin[]
@@ -310,7 +299,6 @@ model User {
   Answers        Answer[]
   UpvotedAnswers AnswerUpvote[]
   GetReported    ReportToAdmin[] @relation("Reported")
-  ReportsToAdmin ReportToAdmin[] @relation("Reporter")
 }
 
 model VerificationToken {
@@ -321,19 +309,19 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-enum ReportStatus {
-  PENDING
-  REVIEWED
-}
-
 enum ReportType {
   TO_UNBAN
-  BULLY
-  OFFENSIVE
-  INAPPROPRIATE
-  ABUSIVE
-  FAKE
+  POST
+  ANSWER
+  PERSON
 }
+enum CommentType {
+    AGREE
+    DISAGREE
+    OPINION
+    APPRECIATION
+  }
+
 
 enum Gender {
   Male
