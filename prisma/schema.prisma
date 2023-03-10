@@ -83,7 +83,7 @@ model ReactPost {
   Reaction Reaction
   FromUser User     @relation(fields: [userId], references: [id])
   userId   String
-  toPost   Post     @relation(fields: [postId], references: [id])
+  ToPost   Post     @relation(fields: [postId], references: [id])
   postId   String
 
   @@index([userId])
@@ -92,10 +92,10 @@ model ReactPost {
 
 model ReactComment {
   id        String   @id @default(uuid())
-  Reaction  Reaction
+  reaction  Reaction
   FromUser  User     @relation(fields: [userId], references: [id])
   userId    String
-  toComment Comment? @relation(fields: [commentId], references: [id])
+  ToComment Comment? @relation(fields: [commentId], references: [id])
   commentId String?
 
   @@index([userId])
@@ -116,7 +116,7 @@ model ReactReply {
 
 model CommentReply {
   id          String          @id @default(uuid())
-  Reply       String
+  reply       String
   ToComment   Comment         @relation(fields: [commentId], references: [id])
   commentId   String
   ByUser      User            @relation(fields: [userId], references: [id])
@@ -266,9 +266,6 @@ model User {
 
   Trust     User[] @relation("Trust")
   TrustedBy User[] @relation("Trust")
-
-  Favorite    User[] @relation("Favorite")
-  FavoritedBy User[] @relation("Favorite")
 
   Follow     User[] @relation("Follow")
   FollowedBy User[] @relation("Follow")
