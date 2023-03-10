@@ -13,7 +13,7 @@ export interface PeopleSearchQuery {
   requiredSkills: string[];
   inConnections: boolean;
 }
-const Home: React.FC = () => {
+const Peoples: React.FC = () => {
   const router = useRouter();
   const { data: userSession, status } = useSession();
 
@@ -42,4 +42,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Peoples;

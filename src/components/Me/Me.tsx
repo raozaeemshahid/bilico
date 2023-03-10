@@ -7,7 +7,7 @@ import HomeLayout from "../HomeLayout";
 import Profile from "./Profile";
 import Tabs from "./Tabs";
 
-const Home: React.FC = () => {
+const MeComponent: React.FC = () => {
   const router = useRouter();
   const { data: userSession, status } = useSession({
     required: true,
@@ -32,4 +32,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default MeComponent;

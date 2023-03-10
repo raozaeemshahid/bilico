@@ -20,6 +20,7 @@ export const searchPeoples = protectedProcedure
       where: {
         BannedUntil: null,
         isDeactivated: false,
+        emailVerified: { not: null },
 
         ...(input.inConnections
           ? {

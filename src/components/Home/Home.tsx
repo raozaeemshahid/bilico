@@ -1,4 +1,4 @@
-import { type NextPage } from "next";
+import { NextPage } from "next";
 
 import { api } from "../../utils/api";
 import { useSession } from "next-auth/react";

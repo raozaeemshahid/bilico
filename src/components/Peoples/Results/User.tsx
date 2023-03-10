@@ -16,12 +16,12 @@ const User: React.FC<{
   isVerified: boolean;
 }> = ({ image, isVerified, name, bio, skills, id }) => {
   return (
-    <div
-      key={id}
-      className="w-full rounded-lg border-b border-gray-400  bg-gray-800 py-3 px-1 sm:px-3 "
-    >
-      <div className="flex flex-col gap-3">
-        <Link href={PagesLinks.getProfileLink(id)}>
+    <Link href={PagesLinks.getProfileLink(id)}>
+      <div
+        key={id}
+        className="w-full rounded-lg border-b border-gray-400 bg-gray-800  py-3 px-1 hover:bg-gray-700 sm:px-3 "
+      >
+        <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
             <div>
               {!!image && (
@@ -42,19 +42,19 @@ const User: React.FC<{
               <h3 className="text-sm text-gray-100 opacity-80">{bio}</h3>
             </div>
           </div>
-        </Link>
-        <div className="flex gap-1">
-          {skills.map((skill) => (
-            <h3
-              className="whitespace-nowrap rounded-lg bg-green-700 p-1 px-3 text-xs"
-              key={skill.id}
-            >
-              {skill.title}
-            </h3>
-          ))}
+          <div className="flex gap-1">
+            {skills.map((skill) => (
+              <h3
+                className="whitespace-nowrap rounded-lg bg-green-700 p-1 px-3 text-xs"
+                key={skill.id}
+              >
+                {skill.title}
+              </h3>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
