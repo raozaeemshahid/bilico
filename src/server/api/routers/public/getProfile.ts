@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { publicProcedure } from "../../trpc";
+import moment from "moment";
 
 export const getProfile = publicProcedure
-  .input(z.object({ userId: z.string() }))
+  .input(z.object({ userId: z.string().uuid() }))
   .query(async ({ input, ctx }) => {
     const user = await ctx.prisma.user.findUnique({
       where: {
@@ -14,14 +15,20 @@ export const getProfile = publicProcedure
             Follow: true,
             FollowedBy: true,
             Posts: true,
-            Questions: true,
+            TrustedBy: true,
             Answers: true,
+            ConnectedTo: true,
+            ConnectedWith: true,
           },
         },
+        id: true,
         name: true,
-        DateOfBirth: true,
-        Gender: true,
+        Bio: true,
         image: true,
+        createdAt: true,
+        Gender: true,
+        DateOfBirth: true,
+        Country: true,
         isDeactivated: true,
         isVerified: true,
         Interests: {
@@ -35,10 +42,73 @@ export const getProfile = publicProcedure
           },
         },
         BannedUntil: true,
+        emailVerified: true,
+
+        Blocked: { where: { id: input.userId }, select: { id: true } },
+        BlockedBy: { where: { id: input.userId }, select: { id: true } },
+        ConnectedTo: { where: { id: input.userId }, select: { id: true } },
+        ConnectedWith: { where: { id: input.userId }, select: { id: true } },
+        Follow: { where: { id: input.userId }, select: { id: true } },
+        FollowedBy: { where: { id: input.userId }, select: { id: true } },
+        ConnectionRequestsReceive: {
+          where: { senderId: input.userId },
+          select: { id: true },
+        },
+        ConnectionRequestsSent: {
+          where: { receiverId: input.userId },
+          select: { id: true },
+        },
+        TrustedBy: { where: { id: input.userId }, select: { id: true } },
+        Trust: { where: { id: input.userId }, select: { id: true } },
       },
     });
 
-    if (!user || user.BannedUntil || user.isDeactivated) {
+    if (
+      !user ||
+      user.BannedUntil ||
+      user.isDeactivated ||
+      !user.emailVerified
+    ) {
       return { notFound: true };
     }
+
+    if (user.Blocked.length > 0) return { blocked: true };
+
+    return {
+      _count: {
+        following: user._count.Follow,
+        followers: user._count.FollowedBy,
+        posts: user._count.Posts,
+        trusted: user._count.TrustedBy,
+        answers: user._count.Answers,
+        connections: user._count.ConnectedTo + user._count.ConnectedWith,
+      },
+      success: true,
+      id: user.id,
+      name: user.name,
+      bio: user.Bio,
+      image: user.image,
+      createdAt: user.createdAt,
+      gender: user.Gender,
+      age: moment().diff(moment(user.DateOfBirth), "years"),
+      country: user.Country,
+      isVerified: user.isVerified,
+      interests: user.Interests,
+      skills: user.Skills,
+      isBlockedByVisitor: user.BlockedBy.length > 0,
+      isConnectedWithVisitor:
+        user.ConnectedWith.length > 0 || user.ConnectedTo.length > 0,
+      following: {
+        doesFollowVisitor: user.Follow.length > 0,
+        isFollowedByVisitor: user.FollowedBy.length > 0,
+      },
+      connectionRequest: {
+        didUserSentToVisitor: user.ConnectionRequestsSent.length > 0,
+        diduserRecievedByVisitor: user.ConnectionRequestsReceive.length > 0,
+      },
+      trust: {
+        isTrustedByVisitor: user.TrustedBy.length > 0,
+        userTrustsVisitor: user.Trust.length > 0,
+      },
+    };
   });
