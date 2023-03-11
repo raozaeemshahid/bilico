@@ -27,7 +27,8 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
     }
   );
 
-  if (!getPosts.data || !userData.data || !userData.data.success) return <Loading />;
+  if (!getPosts.data || !userData.data || !userData.data.success)
+    return <Loading />;
 
   return (
     <>
@@ -35,6 +36,7 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
         {getPosts.data.pages.map((page) =>
           page.items.map((post) => (
             <Post
+              key={post.id}
               post={{
                 _count: {
                   comments: post._count.Comments,
