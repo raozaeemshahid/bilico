@@ -34,7 +34,10 @@ export const getUserPosts = protectedProcedure
         Body: true,
         CreatedAt: true,
         Interests: { select: { title: true, id: true } },
-        Reactions: { where: { userId: ctx.session.user.id } },
+        Reactions: {
+          where: { userId: ctx.session.user.id },
+          select: { Reaction: true, id: true },
+        },
       },
     });
     let nextCursor: typeof cursor | undefined = undefined;

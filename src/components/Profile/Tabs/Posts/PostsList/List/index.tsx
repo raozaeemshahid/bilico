@@ -46,6 +46,7 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
                 createdAt: post.CreatedAt,
                 id: post.id,
                 interests: post.Interests,
+                reactionByVisitor: post.Reactions[0],
               }}
               userData={{
                 image: userData.data.image,

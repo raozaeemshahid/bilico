@@ -313,10 +313,10 @@ enum ReportType {
   PERSON
 }
 enum CommentType {
-    AGREE
-    DISAGREE
-    OPINION
-    APPRECIATION
+    Agree
+    Disagree
+    Opinion
+    Appreciation
   }
 
 
@@ -334,10 +334,7 @@ enum NotificationType {
 }
 
 enum Reaction {
-  LIKE
-  AGREE
-  DISAGREE
-  LOVE
-  SAD
-  RELATABLE
+  Agree
+  Disagree 
+  Love 
 }

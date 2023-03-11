@@ -3,6 +3,8 @@ import moment from "moment";
 import dynamic from "next/dynamic";
 import BadWordsFilter from "../../../../../../utils/BadWordFilter";
 import ReactionsAndComments from "../ReactionsAndComments";
+import {Reaction, ReactPost} from "@prisma/client";
+import ReactPostComponent from "../../../../../ReactPost";
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
@@ -15,6 +17,7 @@ const Post: React.FC<{
     body: string;
     interests: { id: string; title: string }[];
     _count: { comments: number; reactions: number };
+    reactionByVisitor: {id: string, Reaction: Reaction} | undefined 
   };
   userData: { image: string | null | undefined; name: string | undefined; isVerified: boolean | undefined };
 }> = ({ post, userData }) => {
@@ -22,10 +25,10 @@ const Post: React.FC<{
     <>
       <div
         key={post.id}
-        className="w-full rounded-lg border-b border-gray-400 bg-gray-800 py-3 px-0 xs:px-4 sm:m-2"
+        className="w-full rounded-lg bg-gray-800 py-3 px-0 xs:px-4 sm:m-2"
       >
         <div className="">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <div>
               {!!userData.image && (
                 <Image
@@ -39,7 +42,7 @@ const Post: React.FC<{
             </div>
             <div className="flex flex-col">
               <div className="text-md flex items-center gap-1 sm:text-base">
-                <h3>{userData.name}</h3>
+                <h3 className="whitespace-nowrap">{userData.name}</h3>
                 <h3>{userData.isVerified && <MdVerified />}</h3>
               </div>
               <h3 className="text-sm text-gray-100 opacity-80">
@@ -60,6 +63,7 @@ const Post: React.FC<{
               </h3>
             ))}
           </div>
+          <ReactPostComponent postId={post.id} reactionByVisitor={post.reactionByVisitor} />
           <div className="mt-3">
             <ReactionsAndComments
               commentsCount={post._count.comments}

@@ -36,7 +36,7 @@ const ProfileHead: React.FC<{
       )}
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2 text-2xl">
-          <h1 className=" text-gray-200">{name}</h1>
+          <h1 className="whitespace-nowrap text-gray-200">{name}</h1>
           {isVerified && <MdVerified />}
         </div>
         <div className="flex items-center gap-1 p-1 text-gray-300">{bio}</div>
