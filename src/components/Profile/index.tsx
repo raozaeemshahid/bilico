@@ -6,8 +6,11 @@ import PagesLinks from "../../lib/PagesLink";
 import HomeLayout from "../HomeLayout";
 import Profile from "./Profile";
 import Tabs from "./Tabs";
+import { createContext } from "react";
 
-const ProfileComponent: React.FC<{userId: string}> = ({userId}) => {
+export const UserIdContext = createContext("");
+
+const ProfileComponent: React.FC<{ userId: string }> = ({ userId }) => {
   const router = useRouter();
   const { data: userSession, status } = useSession({
     required: true,
@@ -16,13 +19,16 @@ const ProfileComponent: React.FC<{userId: string}> = ({userId}) => {
     },
   });
 
-
   if (!userSession || !userSession.user)
     return <Loading text="Signing You In" />;
   return (
     <>
-      <Profile userId={userId} />
-      <Tabs userId={userId} />
+      <UserIdContext.Provider value={userId}>
+        <div>
+          <Profile />
+          <Tabs />
+        </div>
+      </UserIdContext.Provider>
     </>
   );
 };

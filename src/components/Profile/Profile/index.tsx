@@ -7,7 +7,11 @@ import BioData from "./BioData";
 import InterestAndSKill from "./InterestAndSkills";
 import Numbers from "./Numbers";
 
-const Profile: React.FC<{ userId: string }> = ({ userId }) => {
+import { UserIdContext } from "..";
+import { useContext } from "react";
+
+const Profile: React.FC = () => {
+  const userId = useContext(UserIdContext);
   const router = useRouter();
   const { status } = useSession();
 
@@ -33,7 +37,12 @@ const Profile: React.FC<{ userId: string }> = ({ userId }) => {
         />
         <div className="flex  flex-wrap sm:flex-nowrap">
           <Numbers _count={data._count} />
-          <BioData age={data.age} country={data.country} createdAt={data.createdAt} gender={data.gender} />
+          <BioData
+            age={data.age}
+            country={data.country}
+            gender={data.gender}
+            createdAt={data.createdAt}
+          />
         </div>
         <div className="flex flex-wrap sm:flex-nowrap">
           <InterestAndSKill interests={data.interests} skills={data.skills} />

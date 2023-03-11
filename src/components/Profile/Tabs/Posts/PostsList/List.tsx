@@ -7,17 +7,20 @@ import ReactionsAndComments from "./ReactionsAndComments";
 import { OrderOfDataByTime } from "../../../../../lib/common/names";
 import FetchMoreInfiniteComponent from "../../../../FetchMoreInfiniteQueryComponent";
 import dynamic from "next/dynamic";
+import { UserIdContext } from "../../..";
+import { useContext } from "react";
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
 );
 
-const PostsListComponent: React.FC<{ order: OrderOfDataByTime, userId: string }> = ({
-  order, userId
+const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
+  order,
 }) => {
-  const userData = api.publicApi.getProfile.useQuery({userId});
+  const userId = useContext(UserIdContext);
+  const userData = api.publicApi.getProfile.useQuery({ userId });
   const getPosts = api.publicApi.getUserPosts.useInfiniteQuery(
-    { limit: 10, order,userId },
+    { limit: 10, order, userId },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }

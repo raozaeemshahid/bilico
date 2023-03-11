@@ -12,7 +12,7 @@ import {
 } from "../../../../../lib/common/names";
 import PostsListComponent from "./List";
 
-const Postslist: React.FC<{userId: string}> = ({userId}) => {
+const Postslist: React.FC = () => {
   const [order, changeOrder] = useState<OrderOfDataByTime>("Newest");
 
   return (
@@ -45,7 +45,7 @@ const Postslist: React.FC<{userId: string}> = ({userId}) => {
             />
           </div>
         </div>
-        <PostsListComponent order={order} userId={userId} />
+        <PostsListComponent order={order}  />
       </div>
     </>
   );

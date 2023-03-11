@@ -19,7 +19,8 @@ const Answers = dynamic(() => import("./Answer"), {
 type Tab = "Posts" | "Work" | "Questions" | "Answers";
 
 const tabList: Tab[] = ["Posts", "Work", "Questions", "Answers"];
-const ProfileTabs: React.FC<{userId: string}> = ({userId}) => {
+
+const ProfileTabs: React.FC = () => {
   const [currentTab, changeCurrentTab] = useState<Tab>("Posts");
 
   return (
@@ -33,7 +34,7 @@ const ProfileTabs: React.FC<{userId: string}> = ({userId}) => {
           />
         </div>
         <div className="my-4 md:mx-4">
-          {currentTab === "Posts" && <Posts userId={userId} />}
+          {currentTab === "Posts" && <Posts />}
           {currentTab === "Work" && <Work />}
           {currentTab === "Questions" && <Questions />}
           {currentTab === "Answers" && <Answers />}
