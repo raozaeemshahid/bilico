@@ -2,7 +2,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { api } from "../../../utils/api";
 import { zodBio } from "../../../lib/zod";
-import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Loading from "../../Loading";
 import dynamic from "next/dynamic";
@@ -18,12 +17,8 @@ const MdVerified = dynamic(() =>
 );
 
 const ProfileHead: React.FC = () => {
-  const router = useRouter();
   const { status } = useSession();
 
-  // const userInfo = api.me.info.useQuery(undefined, {
-  //   enabled: status === "authenticated" && router.isReady,
-  // });
   const userData = api.me.data.useQuery(undefined, {
     enabled: status == "authenticated",
     onSuccess(data) {

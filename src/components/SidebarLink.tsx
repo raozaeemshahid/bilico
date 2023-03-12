@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LinkType } from "../lib/NavbarLinkProvider";
+import type { LinkType } from "../lib/NavbarLinkProvider";
 
 const SidebarLink: React.FC<{
   link: LinkType;

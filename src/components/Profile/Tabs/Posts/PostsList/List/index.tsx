@@ -1,19 +1,11 @@
 import { api } from "../../../../../../utils/api";
-import BadWordsFilter from "../../../../../../utils/BadWordFilter";
-import moment from "moment";
-import Image from "next/image";
 import Loading from "../../../../../Loading";
-import ReactionsAndComments from "./../ReactionsAndComments";
-import { OrderOfDataByTime } from "../../../../../../lib/common/names";
+import type { OrderOfDataByTime } from "../../../../../../lib/common/names";
 import FetchMoreInfiniteComponent from "../../../../../FetchMoreInfiniteQueryComponent";
-import dynamic from "next/dynamic";
 import { UserIdContext } from "../../../..";
 import { useContext } from "react";
 import Post from "./Post";
 
-const MdVerified = dynamic(() =>
-  import("react-icons/md").then((icons) => icons.MdVerified)
-);
 
 const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
   order,

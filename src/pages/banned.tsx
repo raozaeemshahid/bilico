@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
@@ -9,6 +9,7 @@ import { api } from "../utils/api";
 import { getCallbackUrlFromRouter } from "../lib/helperFunctions";
 import Head from "next/head";
 import moment from "moment";
+
 const Banned: NextPage = ({}) => {
   const router = useRouter();
   const { status } = useSession({

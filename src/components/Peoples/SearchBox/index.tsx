@@ -1,11 +1,12 @@
 import { api } from "../../../utils/api";
 import Loading from "../../Loading";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import type { Skill } from "@prisma/client";
 import SkilledIn from "./SkilledIn";
 import SearchBar from "./SearchBar";
 import Tabs from "../../Tabs";
-import { PeopleSearchQuery } from "..";
+import type { PeopleSearchQuery } from "..";
 
 type Tab = "All" | "Your Connections";
 const tabList: Tab[] = ["All", "Your Connections"];
@@ -30,11 +31,6 @@ const SearchBox: React.FC<{
   const [currentTab, changeCurrentTab] = useState<Tab>("All");
 
   const runQuery = () => {
-    console.log(
-      'currentTab === "Your Connections"',
-      currentTab == "Your Connections",
-      currentTab
-    );
     changeSearchQuery({
       requiredSkills: selectedSkills.map((skill) => skill.id),
       searchKeywords: searchKeywords,
@@ -64,7 +60,6 @@ const SearchBox: React.FC<{
           <SkilledIn
             allSkill={listInterestsAndSkills.data.skills}
             changeSelectedSkill={changeSelectedSkills}
-            selectedSkill={selectedSkills}
           />
           <div className="flex justify-end">
             <button

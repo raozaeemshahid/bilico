@@ -1,15 +1,9 @@
-import { api } from "../../../../../utils/api";
-import BadWordsFilter from "../../../../../utils/BadWordFilter";
-import moment from "moment";
-import Image from "next/image";
-import Loading from "../../../../Loading";
-import ReactionsAndComments from "./ReactionsAndComments";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Select from "react-select";
 import {
   listOrderOfDataByTime,
-  OrderOfDataByTime,
 } from "../../../../../lib/common/names";
+import type { OrderOfDataByTime } from "../../../../../lib/common/names"
 import PostsListComponent from "./List";
 
 const Postslist: React.FC = () => {

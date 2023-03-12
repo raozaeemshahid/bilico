@@ -4,7 +4,7 @@ import moment from "moment";
 import Image from "next/image";
 import Loading from "../../../../Loading";
 import ReactionsAndComments from "./ReactionsAndComments";
-import { OrderOfDataByTime } from "../../../../../lib/common/names";
+import type { OrderOfDataByTime } from "../../../../../lib/common/names";
 import FetchMoreInfiniteComponent from "../../../../FetchMoreInfiniteQueryComponent";
 import dynamic from "next/dynamic";
 

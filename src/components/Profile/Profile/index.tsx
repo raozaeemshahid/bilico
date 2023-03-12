@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { api } from "../../../utils/api";
 import { useSession } from "next-auth/react";
 import Loading from "../../Loading";
@@ -12,7 +11,6 @@ import { useContext } from "react";
 
 const Profile: React.FC = () => {
   const userId = useContext(UserIdContext);
-  const router = useRouter();
   const { status } = useSession();
 
   const userData = api.publicApi.getProfile.useQuery(

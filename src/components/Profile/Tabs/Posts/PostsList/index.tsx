@@ -1,15 +1,7 @@
-import { api } from "../../../../../utils/api";
-import BadWordsFilter from "../../../../../utils/BadWordFilter";
-import moment from "moment";
-import Image from "next/image";
-import Loading from "../../../../Loading";
-import ReactionsAndComments from "./ReactionsAndComments";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Select from "react-select";
-import {
-  listOrderOfDataByTime,
-  OrderOfDataByTime,
-} from "../../../../../lib/common/names";
+import { listOrderOfDataByTime } from "../../../../../lib/common/names";
+import type { OrderOfDataByTime } from "../../../../../lib/common/names";
 import PostsListComponent from "./List";
 
 const Postslist: React.FC = () => {
@@ -30,7 +22,7 @@ const Postslist: React.FC = () => {
                   border: "0px",
                   backgroundColor: "transparent",
                 }),
-                singleValue: style => ({...style, color: "white"})
+                singleValue: (style) => ({ ...style, color: "white" }),
               }}
               classNamePrefix="select"
               defaultValue={{ label: listOrderOfDataByTime[0] }}
@@ -45,7 +37,7 @@ const Postslist: React.FC = () => {
             />
           </div>
         </div>
-        <PostsListComponent order={order}  />
+        <PostsListComponent order={order} />
       </div>
     </>
   );

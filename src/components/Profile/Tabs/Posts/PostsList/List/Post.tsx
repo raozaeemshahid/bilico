@@ -3,7 +3,7 @@ import moment from "moment";
 import dynamic from "next/dynamic";
 import BadWordsFilter from "../../../../../../utils/BadWordFilter";
 import ReactionsAndComments from "../ReactionsAndComments";
-import {Reaction, ReactPost} from "@prisma/client";
+import type { Reaction } from "@prisma/client";
 import ReactPostComponent from "../../../../../ReactPost";
 
 const MdVerified = dynamic(() =>
@@ -17,9 +17,13 @@ const Post: React.FC<{
     body: string;
     interests: { id: string; title: string }[];
     _count: { comments: number; reactions: number };
-    reactionByVisitor: {id: string, Reaction: Reaction} | undefined 
+    reactionByVisitor: { id: string; Reaction: Reaction } | undefined;
   };
-  userData: { image: string | null | undefined; name: string | undefined; isVerified: boolean | undefined };
+  userData: {
+    image: string | null | undefined;
+    name: string | undefined;
+    isVerified: boolean | undefined;
+  };
 }> = ({ post, userData }) => {
   return (
     <>
@@ -63,7 +67,10 @@ const Post: React.FC<{
               </h3>
             ))}
           </div>
-          <ReactPostComponent postId={post.id} reactionByVisitor={post.reactionByVisitor} />
+          <ReactPostComponent
+            postId={post.id}
+            reactionByVisitor={post.reactionByVisitor}
+          />
           <div className="mt-3">
             <ReactionsAndComments
               commentsCount={post._count.comments}

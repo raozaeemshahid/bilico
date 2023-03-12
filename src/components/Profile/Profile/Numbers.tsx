@@ -1,7 +1,3 @@
-import { useSession } from "next-auth/react";
-import { api } from "../../../utils/api";
-import Loading from "../../Loading";
-
 const InfoBox: React.FC<{ number: number; text: string }> = ({
   number,
   text,

@@ -1,12 +1,11 @@
-import { Skill } from "@prisma/client";
-import { Dispatch, SetStateAction } from "react";
+import type { Skill } from "@prisma/client";
+import type { Dispatch, SetStateAction } from "react";
 import Select from "react-select";
 
 const SkilledIn: React.FC<{
   allSkill: Skill[];
-  selectedSkill: Skill[];
   changeSelectedSkill: Dispatch<SetStateAction<Skill[]>>;
-}> = ({ allSkill, changeSelectedSkill, selectedSkill }) => {
+}> = ({ allSkill, changeSelectedSkill }) => {
   return (
     <>
       <div className="flex flex-wrap items-center border border-gray-400 w-full rounded-lg xs:px-2 sm:flex-nowrap">
@@ -47,11 +46,6 @@ const SkilledIn: React.FC<{
               control: () => "p-1 ",
               multiValue: () => "text-blue-100",
             }}
-            // className="p-11"
-            // defaultValue={selectedSkill.map((skill) => ({
-            //   label: skill.title,
-            //   value: skill.id,
-            // }))}
             isMulti={true}
             name="Skills"
             options={allSkill

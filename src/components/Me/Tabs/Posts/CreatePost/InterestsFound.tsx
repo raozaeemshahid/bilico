@@ -1,6 +1,7 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
+import type { Dispatch, SetStateAction, } from "react";
+import { useEffect } from "react"; 
 import { api } from "../../../../../utils/api";
-import { Interest } from "@prisma/client";
+import type { Interest } from "@prisma/client";
 import Select from "react-select";
 import Loading from "../../../../Loading";
 

@@ -1,5 +1,4 @@
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { api } from "../../../utils/api";
 import Loading from "../../Loading";
 import Link from "next/link";

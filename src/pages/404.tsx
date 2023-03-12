@@ -1,7 +1,5 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
-import Navbar from "../components/Navbar";
-import { NavbarLinkCreator } from "../lib/NavbarLinkProvider";
 import { LoadingFullScreen } from "../components/Loading";
 import Head from "next/head";
 import { useRouter } from "next/router";

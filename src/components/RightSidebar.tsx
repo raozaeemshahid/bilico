@@ -1,12 +1,7 @@
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import {
-  type Dispatch,
-  type SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 const GrDrag = dynamic(() =>
   import("react-icons/gr").then((icons) => icons.GrDrag)

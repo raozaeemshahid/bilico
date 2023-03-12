@@ -1,8 +1,8 @@
 import PagesLinks from "./PagesLink";
-import { type IconBaseProps, type IconType } from "react-icons";
+import type { IconBaseProps } from "react-icons";
 
 import dynamic from "next/dynamic";
-import { type ComponentType } from "react";
+import type { ComponentType } from "react";
 
 const VscAccount = dynamic(() =>
   import("react-icons/vsc").then((icons) => icons.VscAccount)
@@ -10,17 +10,11 @@ const VscAccount = dynamic(() =>
 const MdForum = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdForum)
 );
-const TbWriting = dynamic(() =>
-  import("react-icons/tb").then((icons) => icons.TbWriting)
-);
 const MdNotifications = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdNotifications)
 );
 const TbMessage = dynamic(() =>
   import("react-icons/tb").then((icons) => icons.TbMessage)
-);
-const ImBlog = dynamic(() =>
-  import("react-icons/im").then((icons) => icons.ImBlog)
 );
 const FaHome = dynamic(() =>
   import("react-icons/fa").then((icons) => icons.FaHome)

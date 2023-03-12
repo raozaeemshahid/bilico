@@ -1,8 +1,5 @@
-import { Interest } from "@prisma/client";
-import { Dispatch, SetStateAction } from "react";
-import { api } from "../../../../../utils/api";
+import type { Dispatch, SetStateAction } from "react";
 import BadWordsFilter from "../../../../../utils/BadWordFilter";
-import Loading from "../../../../Loading";
 
 const PublishPost: React.FC<{
   postBody: string;

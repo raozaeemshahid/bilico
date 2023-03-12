@@ -1,12 +1,9 @@
-import { useSession } from "next-auth/react";
-import { api } from "../../../utils/api";
-import Loading from "../../Loading";
 import moment from "moment";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiCakeLine } from "react-icons/ri";
 import { MdOutlinePlace } from "react-icons/md";
 import dynamic from "next/dynamic";
-import { Gender } from "@prisma/client";
+import type { Gender } from "@prisma/client";
 
 const BsGenderFemale = dynamic(() =>
   import("react-icons/bs").then((icons) => icons.BsGenderFemale)

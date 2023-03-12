@@ -2,8 +2,6 @@ import { api } from "../../utils/api";
 import { useSession } from "next-auth/react";
 import { LoadingFullScreen } from "../Loading";
 import { useRouter } from "next/router";
-import PagesLinks from "../../lib/PagesLink";
-import HomeLayout from "../HomeLayout";
 import SearchBox from "./SearchBox";
 import { useState } from "react";
 import SearchResults from "./Results";

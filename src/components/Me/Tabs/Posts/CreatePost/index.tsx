@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import PreviewNewPost from "./PreviewNewPost";
 import CreateNewPost from "./CreateNewPost";
 import { api } from "../../../../../utils/api";
-import { Interest } from "@prisma/client";
+import type { Interest } from "@prisma/client";
 import Loading from "../../../../Loading";
 import { zodPost } from "../../../../../lib/zod";
+
 const CreatePost: React.FC = () => {
   const [postBody, changePostBody] = useState("");
   const [isInPreview, changeIsInPreview] = useState(false);
@@ -13,11 +14,12 @@ const CreatePost: React.FC = () => {
   const [interestsFoundInPost, changeInterestsFound] = useState<Interest[]>([
     { id: "", title: "" },
   ]);
-  
+
   useEffect(() => {
+    if (isInPreview) return;
     changeInterestsFound([{ id: "", title: "" }]);
   }, [isInPreview]);
-  
+
   const createPostMutation = api.me.createPost.useMutation({
     onSuccess: () => {
       void utilsApi.me.getPosts.invalidate();
@@ -31,12 +33,13 @@ const CreatePost: React.FC = () => {
   });
   const createPost = () => {
     const post = zodPost.safeParse(postBody);
-    if (post.success)
+    if (post.success) {
+      changeInterestsFound([{ id: "", title: "" }]);
       createPostMutation.mutate({
         postBody,
         interests: interestsFoundInPost.map((interest) => interest.id),
       });
-    else changeErrors(post.error.errors.map((err) => err.message));
+    } else changeErrors(post.error.errors.map((err) => err.message));
   };
   if (createPostMutation.isLoading) return <Loading text="Creating" />;
 

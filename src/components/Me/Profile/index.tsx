@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { api } from "../../../utils/api";
 import { useSession } from "next-auth/react";
 import Loading from "../../Loading";
@@ -8,11 +7,8 @@ import InterestAndSKill from "./InterestAndSkills";
 import Numbers from "./Numbers";
 
 const Profile: React.FC = () => {
-  const router = useRouter();
   const { status } = useSession();
-  // const userInfo = api.me.info.useQuery(undefined, {
-  //   enabled: status === "authenticated" && router.isReady,
-  // });
+  
   const userData = api.me.data.useQuery(undefined, {
     enabled: status === "authenticated",
   });

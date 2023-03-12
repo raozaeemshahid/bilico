@@ -1,11 +1,6 @@
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { api } from "../../../utils/api";
-import Loading from "../../Loading";
 import Link from "next/link";
 import PagesLinks from "../../../lib/PagesLink";
 import { FiEdit3 } from "react-icons/fi";
-import { Interest } from "@prisma/client";
 
 const InterestAndSKill: React.FC<{
   interests: { title: string }[];

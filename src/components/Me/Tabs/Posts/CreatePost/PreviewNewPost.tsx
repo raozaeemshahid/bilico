@@ -1,5 +1,5 @@
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { Interest } from "@prisma/client";
+import type {Dispatch, SetStateAction} from "react" 
+import type { Interest } from "@prisma/client";
 import { api } from "../../../../../utils/api";
 import Loading from "../../../../Loading";
 import Image from "next/image";

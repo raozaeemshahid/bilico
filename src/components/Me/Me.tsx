@@ -3,7 +3,6 @@ import { useSession } from "next-auth/react";
 import { LoadingFullScreen } from "../Loading";
 import { useRouter } from "next/router";
 import PagesLinks from "../../lib/PagesLink";
-import HomeLayout from "../HomeLayout";
 import Profile from "./Profile";
 import Tabs from "./Tabs";
 

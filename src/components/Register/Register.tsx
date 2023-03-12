@@ -11,7 +11,8 @@ import ErrorsComponent, { GenderError } from "./Errors";
 import ProceedComponent from "./Proceed";
 import GenderComponent from "./Gender";
 import EmailComponent from "./Email";
-import moment, { type Moment } from "moment";
+import moment from "moment";
+import type { Moment } from "moment";
 import DateOfBirthComponent, { MINIMUM_AGE_REQUIREMENT } from "./DateOfBirth";
 import CountryComponent from "./Country";
 

@@ -1,5 +1,4 @@
-import { Skill } from "@prisma/client";
-import { PeopleSearchQuery } from "..";
+import type { PeopleSearchQuery } from "..";
 import { api } from "../../../utils/api";
 import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
 import Loading from "../../Loading";

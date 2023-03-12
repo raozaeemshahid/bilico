@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { api } from "../../../utils/api";
 import Loading from "../../Loading";
 import { useEffect, useState } from "react";
-import { Interest, Skill } from "@prisma/client";
+import type { Interest, Skill } from "@prisma/client";
 import Select from "react-select";
 
 const EditBody: React.FC = () => {

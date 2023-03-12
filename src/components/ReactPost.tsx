@@ -1,6 +1,5 @@
 import { Reaction } from "@prisma/client";
-import { useContext, useEffect, useState } from "react";
-import { UserIdContext } from "./Profile";
+import { useEffect, useState } from "react";
 import { api } from "../utils/api";
 
 const ReactComponent: React.FC<{
@@ -17,8 +16,8 @@ const ReactComponent: React.FC<{
 
   return (
     <button
-      className={`border-collapse ${isConfirming && "bg-gray-700"} ${
-        isActive && "bg-gray-900"
+      className={`border-collapse ${isConfirming ? "bg-gray-700" : ""} ${
+        isActive ? "bg-gray-900" : ""
       } rounded-lg border border-gray-500 py-1 px-4 text-sm font-semibold text-gray-200 shadow-md shadow-gray-900 xs:w-full`}
       onClick={() => reactPost(reaction)}
     >
@@ -31,7 +30,6 @@ const ReactPostComponent: React.FC<{
   reactionByVisitor?: { id: string; Reaction: Reaction };
   postId: string;
 }> = ({ reactionByVisitor, postId }) => {
-  const userId = useContext(UserIdContext);
   const reactPostApi = api.publicApi.reactPost.useMutation({
     onSuccess(data) {
       if (data) {
@@ -78,6 +76,7 @@ const ReactPostComponent: React.FC<{
       <div className="my-1 mt-3 flex w-full flex-wrap justify-center xs:flex-nowrap">
         {Object.values(Reaction).map((r) => (
           <ReactComponent
+            key={r}
             reaction={r}
             isActive={!!active && active == r}
             isConfirming={!!confirming && confirming == r}
