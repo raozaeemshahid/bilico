@@ -43,12 +43,18 @@ const HomeLayout: React.FC<{
   return (
     <>
       <div className="min-h-screen overflow-x-hidden bg-gray-700">
-        <Navbar />
+        <div className="invisible">
+          {/* For Alignment due to fixed navbar */}
+          <Navbar />
+        </div>
+        <div className="fixed top-0 z-40 w-full">
+          <Navbar />
+        </div>
 
         <div className="relative mt-2 flex h-full w-full">
           {(isLeftBarOpen || isRightBarOpen) && !isWindowLargerEnough && (
             <motion.div
-              className="absolute top-0 left-0 z-[25] h-screen w-screen opacity-0"
+              className="fixed top-0 left-0 z-[25] h-screen w-screen opacity-0"
               onClick={() => {
                 changeIsLeftBarOpen(false);
                 changeIsRightBarOpen(false);
@@ -56,17 +62,31 @@ const HomeLayout: React.FC<{
               animate={{ width: "100vw" }}
             ></motion.div>
           )}
-          <LeftSideBar
-            isOpen={isLeftBarOpen}
-            changeIsOpen={changeIsLeftBarOpen}
-            isWindowLargerEnough={isWindowLargerEnough}
-            userInfo={userInfo}
-            changeIsAllClosed={changeIsAllClosed}
-          />
+          {isWindowLargerEnough && (
+            <div className="invisible">
+              {/* For Alignment due to fixed navbar */}
+              <LeftSideBar
+                isOpen={isLeftBarOpen}
+                changeIsOpen={changeIsLeftBarOpen}
+                isWindowLargerEnough={isWindowLargerEnough}
+                userInfo={userInfo}
+                changeIsAllClosed={changeIsAllClosed}
+              />
+            </div>
+          )}
+          <div className={`fixed ${isLeftBarOpen ? "z-[27]" : "z-20"} `}>
+            <LeftSideBar
+              isOpen={isLeftBarOpen}
+              changeIsOpen={changeIsLeftBarOpen}
+              isWindowLargerEnough={isWindowLargerEnough}
+              userInfo={userInfo}
+              changeIsAllClosed={changeIsAllClosed}
+            />
+          </div>
           <motion.div
-            className={`absolute left-0 right-0 ${
+            className={`${
               isAllClosed && !isLeftBarOpen && !isRightBarOpen ? "z-30" : "z-10"
-            } my-5 mx-4 xs:mx-5 rounded-xl bg-gray-800 p-2 py-5 md:static md:w-full`}
+            } my-5 ml-4 rounded-xl bg-gray-800 p-2 py-5 xs:mx-5 md:static md:w-full`}
           >
             {children}
           </motion.div>

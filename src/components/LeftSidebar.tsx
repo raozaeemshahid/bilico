@@ -1,11 +1,6 @@
 import { motion } from "framer-motion";
-import {
-  type Dispatch,
-  type SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 
 const GrDrag = dynamic(() =>
@@ -14,7 +9,7 @@ const GrDrag = dynamic(() =>
 
 import { NavbarLinkCreator } from "../lib/NavbarLinkProvider";
 import SidebarLink from "./SidebarLink";
-import { type UserInfo } from "./HomeLayout";
+import type { UserInfo } from "./HomeLayout";
 import { useRouter } from "next/router";
 import PagesLinks from "../lib/PagesLink";
 
@@ -44,7 +39,7 @@ const Sidebar: React.FC<{
   }, [isSideBarReady]);
   return (
     <div
-      className={` absolute left-0 ${
+      className={` ${
         isOpen ? "z-[27]" : "z-20"
       } flex overflow-x-hidden md:static md:overflow-x-visible`}
     >

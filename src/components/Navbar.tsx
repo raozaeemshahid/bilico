@@ -1,5 +1,5 @@
 import { signIn, signOut } from "next-auth/react";
-import { type LinkType } from "../lib/NavbarLinkProvider";
+import type { LinkType } from "../lib/NavbarLinkProvider";
 import Link from "next/link";
 import PagesLinks from "../lib/PagesLink";
 import { api } from "../utils/api";
@@ -67,7 +67,7 @@ const Navbar: React.FC<{
               deleteMe.mutate();
               void signOut();
             }}
-            className="mx-2 mt-4 inline-flex items-center rounded border-0 bg-gray-900 py-1 px-3 text-base hover:bg-gray-700 focus:outline-none md:mt-0"
+            className="mx-2 inline-flex items-center rounded border-0 bg-gray-900 py-1 px-3 text-base hover:bg-gray-700 focus:outline-none "
           >
             Delete
           </button>
