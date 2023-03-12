@@ -20,8 +20,21 @@ export const zodBio = z
   .string()
   .trim()
   .min(3, { message: "Your bio can't be so short" })
-  .max(1000, { message: "Your bio can't be so long" });
-
+  .max(1000, { message: "Your bio can't be so long" })
+  .transform((bio) => ({
+    bio,
+    largeWords: bio.split(" ").filter((word) => word.length > 40),
+  }))
+  .pipe(
+    z.object({
+      bio: z.string(),
+      largeWords: z
+        .string()
+        .array()
+        .max(0, { message: "A word can't be so long" }),
+    })
+  )
+  .transform((obj) => obj.bio);
 
 export const zodPost = z
   .string()
