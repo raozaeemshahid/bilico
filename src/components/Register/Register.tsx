@@ -15,6 +15,7 @@ import moment from "moment";
 import type { Moment } from "moment";
 import DateOfBirthComponent, { MINIMUM_AGE_REQUIREMENT } from "./DateOfBirth";
 import CountryComponent from "./Country";
+import { toast } from "react-toastify";
 
 const Register: React.FC = () => {
   const { data: userSession, status } = useSession();
@@ -29,7 +30,7 @@ const Register: React.FC = () => {
         return;
       }
       if (data.alreadyRegistered) {
-        changeErrors(["You've already registered"]);
+        toast.error("You've already registered");
         return;
       }
       if (data.userNotFound) {
@@ -50,21 +51,8 @@ const Register: React.FC = () => {
   );
 
   const [country, changeCountry] = useState<string>();
-  const [errors, changeErrors] = useState<string[]>([]);
 
   const router = useRouter();
-
-  useEffect(() => {
-    if (errors.length == 0) return;
-    changeErrors([]);
-  }, [
-    isNameEditing,
-    gender,
-    isDateOfBithEditing,
-    country,
-    dateOfBirth,
-    userName,
-  ]);
 
   useEffect(() => {
     if (
@@ -80,26 +68,26 @@ const Register: React.FC = () => {
     if (!userName) return;
     const nameValidation = zodName.safeParse(userName);
     if (!nameValidation.success) {
-      changeErrors(nameValidation.error.errors.map((err) => err.message));
+      nameValidation.error.errors.forEach((err) => toast.error(err.message));
       return;
     }
     if (isNameEditing) changeIsNameEditing(false);
     if (!gender) {
-      changeErrors([GenderError]);
+      toast.error("Please Select a Gender");
       return;
     }
 
     if (
       moment.utc().diff(dateOfBirth, "year", false) < MINIMUM_AGE_REQUIREMENT
     ) {
-      changeErrors([
-        `You have to be atleast ${MINIMUM_AGE_REQUIREMENT} years old`,
-      ]);
+      toast.error(
+        `You have to be atleast ${MINIMUM_AGE_REQUIREMENT} years old`
+      );
       return;
     }
     changeIsDateOfBirthEditing(false);
     if (!country) {
-      changeErrors(["Please Select Your Country"]);
+      toast.error("Please Select Your Country");
       return;
     }
     return {
@@ -135,7 +123,6 @@ const Register: React.FC = () => {
               <ImageComponent />
               <div className="w-full">
                 <NameComponent
-                  changeErrors={changeErrors}
                   changeIsNameEditing={changeIsNameEditing}
                   changeUserName={changeUserName}
                   isNameEditing={isNameEditing}
@@ -146,7 +133,6 @@ const Register: React.FC = () => {
                 <DateOfBirthComponent
                   dateOfBirth={dateOfBirth}
                   changeDateOfBirth={changeDateOfBirth}
-                  changeErrors={changeErrors}
                   isDateOfBithEditing={isDateOfBithEditing}
                   changeIsDateOfBirthEditing={changeIsDateOfBirthEditing}
                 />
@@ -156,9 +142,7 @@ const Register: React.FC = () => {
                 />
               </div>
             </div>
-            {errors.length !== 0 ? (
-              <ErrorsComponent errors={errors} />
-            ) : RegisterMe.isLoading ? (
+            {RegisterMe.isLoading ? (
               <Loading />
             ) : (
               <ProceedComponent

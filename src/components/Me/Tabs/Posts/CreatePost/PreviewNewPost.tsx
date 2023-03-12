@@ -1,4 +1,4 @@
-import type {Dispatch, SetStateAction} from "react" 
+import type { Dispatch, SetStateAction } from "react";
 import type { Interest } from "@prisma/client";
 import { api } from "../../../../../utils/api";
 import Loading from "../../../../Loading";
@@ -14,14 +14,12 @@ const PreviewNewPost: React.FC<{
   interestsFoundInPost: Interest[];
   changeInterestsFound: Dispatch<SetStateAction<Interest[]>>;
   createPost: () => void;
-  errors: string[] | undefined;
 }> = ({
   postBody,
   changeIsInPreview,
   changeInterestsFound,
   interestsFoundInPost,
   createPost,
-  errors,
 }) => {
   const userData = api.me.data.useQuery();
   if (!userData.data) return <Loading />;
@@ -65,13 +63,6 @@ const PreviewNewPost: React.FC<{
           postBody={postBody}
           createPost={createPost}
         />
-        {!!errors && (
-          <div className="text-md text-red-400">
-            {errors.map((err) => (
-              <h3 key={err}>{err}</h3>
-            ))}
-          </div>
-        )}
       </div>
     </>
   );

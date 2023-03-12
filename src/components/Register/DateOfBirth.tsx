@@ -3,6 +3,7 @@ import { type Dispatch, type SetStateAction } from "react";
 import moment, { type Moment } from "moment";
 import Select from "react-select";
 import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
 
 const IoMdDoneAll = dynamic(() =>
   import("react-icons/io").then((icons) => icons.IoMdDoneAll)
@@ -32,9 +33,7 @@ const DateOfBirthComponent: React.FC<{
   changeDateOfBirth: Dispatch<SetStateAction<Moment>>;
   isDateOfBithEditing: boolean;
   changeIsDateOfBirthEditing: Dispatch<SetStateAction<boolean>>;
-  changeErrors: Dispatch<SetStateAction<string[]>>;
 }> = ({
-  changeErrors,
   changeDateOfBirth,
   dateOfBirth,
   changeIsDateOfBirthEditing,
@@ -75,7 +74,7 @@ const DateOfBirthComponent: React.FC<{
                       (month) => month === val.label
                     );
                     if (month < 0) {
-                      changeErrors(["Invalid Month"]);
+                      toast.error("Invalid Month");
                       return;
                     }
                     dateOfBirth.set("month", month);

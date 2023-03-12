@@ -5,6 +5,7 @@ import { zodBio } from "../../../lib/zod";
 import { useSession } from "next-auth/react";
 import Loading from "../../Loading";
 import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
 
 const FiEdit3 = dynamic(() =>
   import("react-icons/fi").then((icons) => icons.FiEdit3)
@@ -31,11 +32,6 @@ const ProfileHead: React.FC = () => {
   const [Bio, changeBio] = useState<string>("");
   const [isBioEditing, changeIsBioEditing] = useState(false);
 
-  const [errors, changeError] = useState<string[]>([]);
-
-  useEffect(() => {
-    changeError([]);
-  }, [Bio, isBioEditing]);
 
   if (!userData.data || !userData.data.success)
     return <Loading text="Loading Data" />;
@@ -57,12 +53,7 @@ const ProfileHead: React.FC = () => {
           <h1 className=" text-gray-200">{data.name}</h1>
           {data.isVerified && <MdVerified />}
         </div>
-        {errors.length > 0 &&
-          errors.map((err) => (
-            <p className="text-sm text-red-400" key={err}>
-              {err}
-            </p>
-          ))}
+        
         {isBioEditing ? (
           <form
             onSubmit={(e) => {
@@ -72,7 +63,7 @@ const ProfileHead: React.FC = () => {
                 updateBio.mutate({ bio: Bio });
                 changeIsBioEditing(false);
               } else {
-                changeError(parsedBio.error.errors.map((err) => err.message));
+                parsedBio.error.errors.forEach((err) => toast.error(err.message))
               }
             }}
           >

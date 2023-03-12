@@ -5,11 +5,12 @@ import { api } from "../../../../../utils/api";
 import type { Interest } from "@prisma/client";
 import Loading from "../../../../Loading";
 import { zodPost } from "../../../../../lib/zod";
+import { toast } from "react-toastify";
 
 const CreatePost: React.FC = () => {
   const [postBody, changePostBody] = useState("");
   const [isInPreview, changeIsInPreview] = useState(false);
-  const [errors, changeErrors] = useState<string[] | undefined>();
+
   const utilsApi = api.useContext();
   const [interestsFoundInPost, changeInterestsFound] = useState<Interest[]>([
     { id: "", title: "" },
@@ -23,23 +24,22 @@ const CreatePost: React.FC = () => {
   const createPostMutation = api.me.createPost.useMutation({
     onSuccess: () => {
       void utilsApi.me.getPosts.invalidate();
-      changePostBody("");
-      changeIsInPreview(false);
-      changeInterestsFound([{ id: "", title: "" }]);
     },
     onError: () => {
-      changeErrors(["Something went wrong"]);
+      toast.error("Couldn't create post");
     },
   });
   const createPost = () => {
     const post = zodPost.safeParse(postBody);
     if (post.success) {
       changeInterestsFound([{ id: "", title: "" }]);
+      changeIsInPreview(false);
+      changePostBody("");
       createPostMutation.mutate({
         postBody,
         interests: interestsFoundInPost.map((interest) => interest.id),
       });
-    } else changeErrors(post.error.errors.map((err) => err.message));
+    } else post.error.errors.forEach((err) => toast.error(err.message));
   };
   if (createPostMutation.isLoading) return <Loading text="Creating" />;
 
@@ -51,7 +51,6 @@ const CreatePost: React.FC = () => {
         postBody={postBody}
         changeInterestsFound={changeInterestsFound}
         interestsFoundInPost={interestsFoundInPost}
-        errors={errors}
       />
     );
   }

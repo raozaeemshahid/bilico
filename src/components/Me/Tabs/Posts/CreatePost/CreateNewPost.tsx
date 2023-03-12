@@ -1,10 +1,11 @@
 import type { Dispatch, SetStateAction } from "react";
+import {toast} from "react-toastify";
 
 const CreateNewPost: React.FC<{
   postBody: string;
   changePostBody: Dispatch<SetStateAction<string>>;
   changeIsInPreview: Dispatch<SetStateAction<boolean>>;
-}> = ({ changePostBody, postBody, changeIsInPreview, }) => {
+}> = ({ changePostBody, postBody, changeIsInPreview }) => {
   return (
     <>
       <div className="w-full">
@@ -23,7 +24,10 @@ const CreateNewPost: React.FC<{
             <button
               className="m-2 flex rounded bg-green-600 py-2 px-4 font-bold text-white shadow-sm shadow-green-600 hover:bg-green-600"
               onClick={() => {
-                if (postBody.length == 0) return;
+                if (postBody.length == 0) {
+                  toast.error("Post can't be empty")
+                  return;
+                }
                 changeIsInPreview(true);
               }}
             >

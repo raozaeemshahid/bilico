@@ -3,6 +3,7 @@ import { type Dispatch, type SetStateAction } from "react";
 import { zodName } from "../../lib/zod";
 
 import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
 
 const IoMdDoneAll = dynamic(() =>
   import("react-icons/io").then((icons) => icons.IoMdDoneAll)
@@ -16,14 +17,7 @@ const NameComponent: React.FC<{
   changeUserName: Dispatch<SetStateAction<string | undefined>>;
   isNameEditing: boolean;
   changeIsNameEditing: Dispatch<SetStateAction<boolean>>;
-  changeErrors: Dispatch<SetStateAction<string[]>>;
-}> = ({
-  isNameEditing,
-  userName,
-  changeUserName,
-  changeIsNameEditing,
-  changeErrors,
-}) => {
+}> = ({ isNameEditing, userName, changeUserName, changeIsNameEditing }) => {
   const { data: userSession } = useSession();
   if (!userSession || !userSession.user) return <></>;
   return (
@@ -45,10 +39,9 @@ const NameComponent: React.FC<{
                   const nameValidation = zodName.safeParse(userName);
                   if (nameValidation.success) {
                     changeIsNameEditing(false);
-                    changeErrors([]);
                   } else
-                    changeErrors(
-                      nameValidation.error.errors.map((err) => err.message)
+                    nameValidation.error.errors.forEach((err) =>
+                      toast.error(err.message)
                     );
                 }}
               >
