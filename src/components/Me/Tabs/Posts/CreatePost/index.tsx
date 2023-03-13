@@ -25,9 +25,6 @@ const CreatePost: React.FC = () => {
     onSuccess: () => {
       void utilsApi.me.getPosts.invalidate();
     },
-    onError: () => {
-      toast.error("Couldn't create post");
-    },
   });
   const createPost = () => {
     const post = zodPost.safeParse(postBody);
@@ -35,13 +32,17 @@ const CreatePost: React.FC = () => {
       changeInterestsFound([{ id: "", title: "" }]);
       changeIsInPreview(false);
       changePostBody("");
-      createPostMutation.mutate({
+      const promiseToCreatePost = createPostMutation.mutateAsync({
         postBody,
         interests: interestsFoundInPost.map((interest) => interest.id),
       });
+      void toast.promise(promiseToCreatePost, {
+        success: "Post is Created",
+        error: "Couldn't Create Post",
+        pending: "Creating Post...",
+      });
     } else post.error.errors.forEach((err) => toast.error(err.message));
   };
-  if (createPostMutation.isLoading) return <Loading text="Creating" />;
 
   if (isInPreview) {
     return (

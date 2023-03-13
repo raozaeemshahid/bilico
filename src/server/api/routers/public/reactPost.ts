@@ -7,7 +7,6 @@ const ZReaction = z.union([
   z.literal(Reaction.Disagree),
   z.literal(Reaction.Love),
 ]);
-
 export const reactPost = protectedProcedure
   .input(
     z.object({

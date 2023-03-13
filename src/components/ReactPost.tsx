@@ -1,5 +1,5 @@
 import { Reaction } from "@prisma/client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { api } from "../utils/api";
 
 const ReactComponent: React.FC<{
@@ -26,6 +26,15 @@ const ReactComponent: React.FC<{
   );
 };
 
+interface ReactPost {
+  postId: string;
+  previousReactionId?: string;
+  reaction?: Reaction | null;
+}
+
+// stack of requests to not overload or confust server, and send request in sequence to mutate.
+const stackOfMutationsToReact: ReactPost[] = [];
+
 const ReactPostComponent: React.FC<{
   reactionByVisitor?: { id: string; Reaction: Reaction };
   postId: string;
@@ -35,6 +44,9 @@ const ReactPostComponent: React.FC<{
       if (data) {
         changeReaction({ Reaction: data.Reaction, id: data.id });
       }
+      const nextMutation = stackOfMutationsToReact.shift();
+      // if there's another request pending....
+      if (nextMutation) reactPostApi.mutate(nextMutation);
     },
   });
 
@@ -55,20 +67,26 @@ const ReactPostComponent: React.FC<{
       return changeConfirming(newReaction);
     }
     // user has confirmed which reaction to give
+    let ReactPostObj;
     changeConfirming(undefined);
     if (newReaction == active) {
       // removing the reactions
       changeActive(undefined);
-      reactPostApi.mutate({ postId, previousReactionId: reaction?.id });
+      ReactPostObj = { postId, previousReactionId: reaction?.id };
     } else {
       // upserting reaction
       changeActive(newReaction);
-      reactPostApi.mutate({
+      ReactPostObj = {
         postId,
         previousReactionId: reaction?.id,
         reaction: newReaction,
-      });
+      };
     }
+    if (reactPostApi.isLoading || stackOfMutationsToReact.length > 0) {
+      stackOfMutationsToReact.push(ReactPostObj);
+      return;
+    }
+    reactPostApi.mutate(ReactPostObj);
   };
 
   return (
