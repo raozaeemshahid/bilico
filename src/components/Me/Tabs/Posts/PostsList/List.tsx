@@ -3,10 +3,10 @@ import BadWordsFilter from "../../../../../utils/BadWordFilter";
 import moment from "moment";
 import Image from "next/image";
 import Loading from "../../../../Loading";
-import ReactionsAndComments from "./ReactionsAndComments";
 import type { OrderOfDataByTime } from "../../../../../lib/common/names";
 import FetchMoreInfiniteComponent from "../../../../FetchMoreInfiniteQueryComponent";
 import dynamic from "next/dynamic";
+import ReactionsAndComments from "../../../../CommentsAndReactions"; 
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)

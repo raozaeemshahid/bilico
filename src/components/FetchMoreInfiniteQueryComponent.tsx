@@ -4,7 +4,7 @@ const FetchMoreInfiniteComponent: React.FC<{
   isFetchingNextPage: boolean;
   hasNextPage: boolean | undefined;
   fetchNextPage: () => void;
-  endingMsg: "You've reached the end of your feed!" | "You're all caught up!" | undefined
+  endingMsg: "You've reached the end of your feed!" | "You're all caught up!" | "" | undefined
 }> = ({ fetchNextPage, hasNextPage, isFetchingNextPage, endingMsg }) => {
   if (isFetchingNextPage) return <Loading />;
   if (hasNextPage)

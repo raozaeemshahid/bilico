@@ -2,7 +2,7 @@ import Image from "next/image";
 import moment from "moment";
 import dynamic from "next/dynamic";
 import BadWordsFilter from "../../../../../../utils/BadWordFilter";
-import ReactionsAndComments from "../ReactionsAndComments";
+import ReactionsAndComments from "../../../../../CommentsAndReactions"; 
 import type { Reaction } from "@prisma/client";
 import ReactPostComponent from "../../../../../ReactPost";
 
