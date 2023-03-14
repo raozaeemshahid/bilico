@@ -86,7 +86,7 @@ const HomeLayout: React.FC<{
           <motion.div
             className={`${
               isAllClosed && !isLeftBarOpen && !isRightBarOpen ? "z-30" : "z-10"
-            } my-5 ml-4 rounded-xl bg-gray-800 p-2 py-5 xs:mx-5 md:static w-full`}
+            } my-5 ml-4 rounded-xl bg-gray-800 p-2 py-5 xs:mx-5 w-full`}
           >
             {children}
           </motion.div>

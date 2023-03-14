@@ -36,7 +36,7 @@ const InterestFound: React.FC<{
     return <Loading />;
   return (
     <div className="m-1 mt-3">
-      <div className="flex items-center gap-1">
+      <div className="flex flex-wrap sm:flex-nowrap items-center gap-1">
         <h2 className="text-lg font-bold text-gray-200">Interests </h2>
         <Select
           onChange={(interests) =>

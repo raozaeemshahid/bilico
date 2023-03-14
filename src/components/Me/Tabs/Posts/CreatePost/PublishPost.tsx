@@ -7,7 +7,7 @@ const PublishPost: React.FC<{
   createPost: () => void
 }> = ({ postBody, changeIsInPreview, createPost }) => {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-wrap sm:flex-nowrap items-center justify-between">
       <div className="m-2 text-sm text-gray-200 opacity-70">
         <h2>
           {BadWordsFilter.isProfane(postBody)

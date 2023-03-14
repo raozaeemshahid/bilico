@@ -24,7 +24,7 @@ const ReactComponent: React.FC<{
         isConfirming ? "bg-gray-700" : ""
       } ${
         isActive ? "bg-gray-900" : ""
-      } rounded-lg border border-gray-500 py-1 px-4 text-sm font-semibold text-gray-200 shadow-md shadow-gray-900 xs:w-full`}
+      } rounded-lg hover:bg-gray-700 border border-gray-500 py-1 px-4 text-sm font-semibold text-gray-200 shadow-md shadow-gray-900 xs:w-full`}
       onClick={() => reactPost(reaction)}
     >
       {isActive && (

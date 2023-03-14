@@ -42,7 +42,7 @@ const User: React.FC<{
               <h3 className="text-sm text-gray-100 opacity-80">{bio}</h3>
             </div>
           </div>
-          <div className="flex gap-1">
+          <div className="flex flex-wrap gap-1">
             {skills.map((skill) => (
               <h3
                 className="whitespace-nowrap rounded-lg bg-green-700 p-1 px-3 text-xs"

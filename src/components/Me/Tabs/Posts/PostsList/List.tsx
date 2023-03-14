@@ -60,7 +60,7 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
                 <h4 className="m-2 my-4 text-base">
                   {BadWordsFilter.clean(post.Body)}
                 </h4>
-                <div className="flex gap-1">
+                <div className="flex flex-wrap gap-1">
                   {post.Interests.map((interest) => (
                     <h3
                       className="whitespace-nowrap rounded-lg bg-green-700 p-1 px-3 text-xs"

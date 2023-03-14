@@ -6,7 +6,7 @@ const SearchBar: React.FC<{
 }> = ({ changeSearchKeywords, searchKeywords }) => {
   return (
     <>
-      <div className="flex w-full flex-wrap items-center gap-2 rounded-lg border border-gray-400 xs:px-2 sm:flex-nowrap">
+      <div className="flex w-full p-2 flex-wrap items-center gap-2 rounded-lg border border-gray-400 xs:px-2 xs:flex-nowrap">
         <h2 className="whitespace-nowrap text-lg font-semibold">Name </h2>
         <input
           className="w-full rounded-md bg-transparent py-2 text-gray-100 focus:outline-none "

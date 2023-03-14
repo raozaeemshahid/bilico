@@ -8,7 +8,7 @@ const SkilledIn: React.FC<{
 }> = ({ allSkill, changeSelectedSkill }) => {
   return (
     <>
-      <div className="flex flex-wrap items-center border border-gray-400 w-full rounded-lg xs:px-2 sm:flex-nowrap">
+      <div className="flex p-2 flex-wrap items-center border border-gray-400 w-full rounded-lg xs:px-2 xs:flex-nowrap">
         <h2 className="whitespace-nowrap text-lg font-semibold">Skilled In</h2>
         <div className="flex w-full flex-wrap items-center rounded-lg md:flex-nowrap">
           <Select
