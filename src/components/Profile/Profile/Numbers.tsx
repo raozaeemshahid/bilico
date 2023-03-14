@@ -18,11 +18,10 @@ const Numbers: React.FC<{
     following: number;
     followers: number;
     posts: number;
-    answers: number;
     trusted: number;
   };
 }> = ({ _count }) => {
-  const { answers, connections, followers, following, posts, trusted } = _count;
+  const { connections, followers, following, posts, trusted } = _count;
   return (
     <>
       <div className="roudned m-2 grid w-full grid-cols-2 gap-2 rounded-lg border-l-2 border-r-2 border-b-2 border-gray-400 bg-gray-800 p-3 xs:grid-cols-3 sm:max-w-fit sm:border-l-0">
@@ -30,7 +29,6 @@ const Numbers: React.FC<{
         <InfoBox number={following} text="Following" />
         <InfoBox number={followers} text="Followers" />
         <InfoBox number={posts} text="Posts" />
-        <InfoBox number={answers} text="Answers" />
         <InfoBox number={trusted} text="Trusted" />
       </div>
     </>

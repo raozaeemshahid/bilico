@@ -47,11 +47,10 @@ model Session {
 }
 
 model Interest {
-  id        String     @id @default(uuid())
-  title     String     @db.Text
-  Users     User[]
-  Posts     Post[]
-  Questions Question[]
+  id    String @id @default(uuid())
+  title String @db.Text
+  Users User[]
+  Posts Post[]
 }
 
 model Skill {
@@ -61,31 +60,28 @@ model Skill {
 }
 
 model ReportToAdmin {
-  id              String        @id @default(uuid())
-  message         String        @db.Text
-  link            String
-  type            ReportType
-  CreatedAt       DateTime      @default(now())
-  ReportedUser    User?         @relation("Reported", fields: [reportedUserId], references: [id])
-  reportedUserId  String?
-  ReportedPost    Post?         @relation(fields: [postId], references: [id])
-  postId          String?
-  ReportedAnswer  Answer?       @relation(fields: [answerId], references: [id])
-  answerId        String?
+  id             String     @id @default(uuid())
+  message        String     @db.Text
+  link           String
+  type           ReportType
+  CreatedAt      DateTime   @default(now())
+  ReportedUser   User?      @relation("Reported", fields: [reportedUserId], references: [id])
+  reportedUserId String?
+  ReportedPost   Post?      @relation(fields: [postId], references: [id])
+  postId         String?
 
   @@index([reportedUserId])
   @@index([postId])
-  @@index([answerId])
 }
 
 model ReactPost {
-  id       String   @id @default(uuid())
-  Reaction Reaction
-  CreatedAt       DateTime      @default(now())
-  FromUser User     @relation(fields: [userId], references: [id])
-  userId   String
-  ToPost   Post     @relation(fields: [postId], references: [id])
-  postId   String
+  id        String   @id @default(uuid())
+  Reaction  Reaction
+  CreatedAt DateTime @default(now())
+  FromUser  User     @relation(fields: [userId], references: [id])
+  userId    String
+  ToPost    Post     @relation(fields: [postId], references: [id])
+  postId    String
 
   @@index([userId])
   @@index([postId])
@@ -94,7 +90,7 @@ model ReactPost {
 model ReactComment {
   id        String   @id @default(uuid())
   reaction  Reaction
-  CreatedAt       DateTime      @default(now())
+  CreatedAt DateTime @default(now())
   FromUser  User     @relation(fields: [userId], references: [id])
   userId    String
   ToComment Comment? @relation(fields: [commentId], references: [id])
@@ -107,7 +103,7 @@ model ReactComment {
 model ReactReply {
   id               String        @id @default(uuid())
   Reaction         Reaction
-  CreatedAt       DateTime      @default(now())
+  CreatedAt        DateTime      @default(now())
   FromUser         User          @relation(fields: [userId], references: [id])
   userId           String
   ToReply          CommentReply? @relation(fields: [commentRepliesId], references: [id])
@@ -118,88 +114,45 @@ model ReactReply {
 }
 
 model CommentReply {
-  id          String          @id @default(uuid())
-  reply       String
-  ToComment   Comment         @relation(fields: [commentId], references: [id])
-  commentId   String
-  ByUser      User            @relation(fields: [userId], references: [id])
-  userId      String
-  Reactions   ReactReply[]
+  id        String       @id @default(uuid())
+  reply     String
+  ToComment Comment      @relation(fields: [commentId], references: [id])
+  commentId String
+  ByUser    User         @relation(fields: [userId], references: [id])
+  userId    String
+  Reactions ReactReply[]
 
   @@index([commentId])
   @@index([userId])
 }
 
 model Comment {
-  id            String          @id @default(uuid())
-  Comment       String          @db.Text
+  id            String         @id @default(uuid())
+  Comment       String         @db.Text
   CommentType   CommentType
-  OnPost        Post?           @relation(fields: [postId], references: [id])
-  OnAnswer      Answer?         @relation(fields: [answerId], references: [id])
-  CreatedAt     DateTime        @default(now())
-  CreatedBy     User            @relation(fields: [userId], references: [id])
+  OnPost        Post?          @relation(fields: [postId], references: [id])
+  CreatedAt     DateTime       @default(now())
+  CreatedBy     User           @relation(fields: [userId], references: [id])
   userId        String
   Reactions     ReactComment[]
   Replies       CommentReply[]
-  LovedByAuthor Boolean         @default(false)
-  answerId      String?
+  LovedByAuthor Boolean        @default(false)
   postId        String?
 
   @@index([postId])
   @@index([userId])
-  @@index([answerId])
-}
-
-model AnswerUpvote {
-  id         String @id @default(uuid())
-  upvotedAns Answer @relation(fields: [answerId], references: [id])
-  answerId   String
-  UpvotedBy  User   @relation(fields: [userId], references: [id])
-  userId     String
-
-  @@index([answerId])
-  @@index([userId])
-}
-
-model Answer {
-  id                    String          @id @default(uuid())
-  Answer                String          @db.Text
-  AnsweredBy            User            @relation(fields: [userId], references: [id])
-  userId                String
-  AnswerTo              Question        @relation(fields: [questionId], references: [id])
-  questionId            String
-  doesAnswerTheQuestion Boolean         @default(false)
-  createdAt             DateTime        @default(now())
-  upvotes               AnswerUpvote[]
-  GetReported           ReportToAdmin[]
-  Comments              Comment[]
-
-  @@index([userId])
-  @@index([questionId])
-}
-
-model Question {
-  id        String     @id @default(uuid())
-  Body      String     @db.Text
-  Interests Interest[]
-  CreatedBy  User       @relation(fields: [userId], references: [id])
-  userId    String
-  CreatedAt  DateTime   @default(now())
-  Answers   Answer[]
-
-  @@index([userId])
 }
 
 model Post {
-  id             String          @id @default(uuid())
-  Body           String          @db.Text
-  Interests      Interest[]
-  CreatedBy      User            @relation(fields: [userId], references: [id])
-  userId         String
-  CreatedAt       DateTime        @default(now())
-  Comments       Comment[]
-  Reactions      ReactPost[]
-  GetReported    ReportToAdmin[]
+  id          String          @id @default(uuid())
+  Body        String          @db.Text
+  Interests   Interest[]
+  CreatedBy   User            @relation(fields: [userId], references: [id])
+  userId      String
+  CreatedAt   DateTime        @default(now())
+  Comments    Comment[]
+  Reactions   ReactPost[]
+  GetReported ReportToAdmin[]
 
   @@index([userId])
 }
@@ -295,10 +248,7 @@ model User {
 
   RepliesToComments CommentReply[]
 
-  Questions      Question[]
-  Answers        Answer[]
-  UpvotedAnswers AnswerUpvote[]
-  GetReported    ReportToAdmin[] @relation("Reported")
+  GetReported ReportToAdmin[] @relation("Reported")
 }
 
 model VerificationToken {
@@ -312,16 +262,15 @@ model VerificationToken {
 enum ReportType {
   TO_UNBAN
   POST
-  ANSWER
   PERSON
 }
-enum CommentType {
-    Agree
-    Disagree
-    Opinion
-    Appreciation
-  }
 
+enum CommentType {
+  Agree
+  Disagree
+  Opinion
+  Appreciation
+}
 
 enum Gender {
   Male
@@ -338,6 +287,6 @@ enum NotificationType {
 
 enum Reaction {
   Agree
-  Disagree 
-  Love 
+  Disagree
+  Love
 }

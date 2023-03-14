@@ -9,16 +9,10 @@ export const sleepInSeconds = async (seconds: number) => {
 
 const Posts = dynamic(() => import("./Posts"), { loading: () => <Loading /> });
 const Work = dynamic(() => import("./Work"), { loading: () => <Loading /> });
-const Questions = dynamic(() => import("./Questions"), {
-  loading: () => <Loading />,
-});
-const Answers = dynamic(() => import("./Answer"), {
-  loading: () => <Loading />,
-});
 
-type Tab = "Posts" | "Work" | "Questions" | "Answers";
+type Tab = "Posts" | "Work";
 
-const tabList: Tab[] = ["Posts", "Work", "Questions", "Answers"];
+const tabList: Tab[] = ["Posts", "Work"];
 const ProfileTabs: React.FC = () => {
   const [currentTab, changeCurrentTab] = useState<Tab>("Posts");
 
@@ -35,8 +29,6 @@ const ProfileTabs: React.FC = () => {
         <div className="my-4 md:mx-4">
           {currentTab === "Posts" && <Posts />}
           {currentTab === "Work" && <Work />}
-          {currentTab === "Questions" && <Questions />}
-          {currentTab === "Answers" && <Answers />}
         </div>
       </div>
     </>

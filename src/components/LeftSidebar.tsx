@@ -79,10 +79,6 @@ const Sidebar: React.FC<{
             isActive={router.route.startsWith(PagesLinks.NOTIFICATION_LINK)}
           />
           <SidebarLink
-            link={NavbarLinkCreator.questionLink()}
-            isActive={router.route.startsWith(PagesLinks.getQuestionLink())}
-          />
-          <SidebarLink
             link={NavbarLinkCreator.accountLink()}
             isActive={router.route.startsWith(PagesLinks.ME)}
           />

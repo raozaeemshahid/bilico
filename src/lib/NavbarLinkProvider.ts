@@ -44,13 +44,6 @@ export const NavbarLinkCreator = {
       icon: VscAccount,
     };
   },
-  questionLink: (): LinkType => {
-    return {
-      Text: "Q/Answers",
-      href: PagesLinks.getQuestionLink(),
-      icon: MdForum,
-    };
-  },
   HomeLink: (): LinkType => {
     return {
       Text: "Home",

@@ -9,11 +9,7 @@ const PagesLinks = {
   getProfileLink: (userId: string) => {
     return `/profile/${userId}`;
   },
-  getQuestionLink: (id?: string) => `/question${id ? `/${id}` : ""}`,
-  getBlogLink: (id?: string) => `/blog${id ? `/${id}` : ""}`,
-  getStoryLink: (id?: string) => `/story${id ? `/${id}` : ""}`,
   getCommentLink: (id?: string) => `/comment${id ? `/${id}` : ""}`,
-  getAnswerLink: (id?: string) => `/answer${id ? `/${id}` : ""}`,
   getReplyLink: (id?: string) => `/reply${id ? `/${id}` : ""}`,
   getMessageLink: (id?: string) => `/message${id ? `/${id}` : ""}`,
   getPeoplesLink: (id?: string) => `/peoples${id ? `/${id}` : ""}`,
