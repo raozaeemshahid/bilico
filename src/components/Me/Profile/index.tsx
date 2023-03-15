@@ -6,8 +6,11 @@ import BioData from "./BioData";
 import InterestAndSKill from "./InterestAndSkills";
 import Numbers from "./Numbers";
 import TopRightDropDown from "../../TopRightDropdown";
+import { useRouter } from "next/router";
+import PagesLinks from "../../../lib/PagesLink";
 
 const Profile: React.FC = () => {
+  const router = useRouter();
   const { status } = useSession();
 
   const userData = api.me.data.useQuery(undefined, {
@@ -22,8 +25,24 @@ const Profile: React.FC = () => {
       <div className="flex flex-col">
         <TopRightDropDown
           options={[
-            { label: "Edit Account", onClick: () => {} },
-            { label: "Delete Account", onClick: () => {} },
+            {
+              label: "Edit Account",
+              onClick: () => {
+                void router.push(PagesLinks.EDIT_ACCOUNT_LINK);
+              },
+            },
+            {
+              label: "Deactive Account",
+              onClick: () => {
+                void router.push(PagesLinks.DEATIVATED_ME_LINK);
+              },
+            },
+            {
+              label: "Delete Account",
+              onClick: () => {
+                void router.push(PagesLinks.DELETE_ME_LINK);
+              },
+            },
           ]}
         />
         <ProfileHead />

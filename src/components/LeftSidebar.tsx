@@ -66,21 +66,21 @@ const Sidebar: React.FC<{
           <SidebarLink
             count={userInfo.newMessages}
             link={NavbarLinkCreator.MessageLink()}
-            isActive={router.route.startsWith(PagesLinks.getMessageLink())}
+            isActive={router.route == PagesLinks.getMessageLink()}
           />
           <SidebarLink
             count={userInfo.newRequests}
             link={NavbarLinkCreator.PeoplesLink()}
-            isActive={router.route.startsWith(PagesLinks.getPeoplesLink())}
+            isActive={router.route == PagesLinks.getPeoplesLink()}
           />
           <SidebarLink
             count={userInfo.newNotifications}
             link={NavbarLinkCreator.NotificationLink()}
-            isActive={router.route.startsWith(PagesLinks.NOTIFICATION_LINK)}
+            isActive={router.route == PagesLinks.NOTIFICATION_LINK}
           />
           <SidebarLink
             link={NavbarLinkCreator.accountLink()}
-            isActive={router.route.startsWith(PagesLinks.ME)}
+            isActive={router.route == PagesLinks.ME}
           />
         </div>
       </motion.div>

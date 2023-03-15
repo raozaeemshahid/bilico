@@ -1,4 +1,4 @@
-import { type NextRouter } from "next/router";
+import { NextRouter } from "next/router";
 import { callbackUrl } from "./common/names";
 
 const PagesLinks = {
@@ -13,6 +13,7 @@ const PagesLinks = {
   getReplyLink: (id?: string) => `/reply${id ? `/${id}` : ""}`,
   getMessageLink: (id?: string) => `/message${id ? `/${id}` : ""}`,
   getPeoplesLink: (id?: string) => `/peoples${id ? `/${id}` : ""}`,
+  getPostLink: (id: string) => `/post/${id}`,
   HOME_Link: "/",
   ME: `/me`,
   NOT_FOUND_LINK: "/404",
@@ -20,6 +21,8 @@ const PagesLinks = {
   EDIT_ACCOUNT_LINK: "/edit/account",
   REGISTER_LINK: "/register",
   DEATIVATED_LINK: "/deactivated",
+  DEATIVATED_ME_LINK: "/me/deactivate",
+  DELETE_ME_LINK: "/me/delete",
   NOTIFICATION_LINK: "/notification",
 };
 

@@ -61,7 +61,7 @@ model Skill {
 
 model ReportToAdmin {
   id             String     @id @default(uuid())
-  message        String     @db.Text
+  message        String?    @db.Text
   link           String
   type           ReportType
   CreatedAt      DateTime   @default(now())
