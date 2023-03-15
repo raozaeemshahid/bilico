@@ -3,7 +3,6 @@ import Navbar from "./Navbar";
 import { motion } from "framer-motion";
 
 import LeftSideBar from "./LeftSidebar";
-import RightSideBar from "./RightSidebar";
 
 export interface UserInfo {
   name: string;
@@ -13,12 +12,10 @@ export interface UserInfo {
 }
 
 const HomeLayout: React.FC<{
-  includeRightBar?: boolean;
   userInfo: UserInfo;
   children: string | JSX.Element | JSX.Element[];
-}> = ({ includeRightBar = false, userInfo, children }) => {
+}> = ({  userInfo, children }) => {
   const [isLeftBarOpen, changeIsLeftBarOpen] = useState(true);
-  const [isRightBarOpen, changeIsRightBarOpen] = useState(true);
 
   const [isAllClosed, changeIsAllClosed] = useState(false);
 
@@ -31,10 +28,8 @@ const HomeLayout: React.FC<{
       changeIsWindowLargerThanEnough(isWindowLarger);
       if (isWindowLarger) {
         changeIsLeftBarOpen(true);
-        changeIsRightBarOpen(true);
       } else {
         changeIsLeftBarOpen(false);
-        changeIsRightBarOpen(false);
       }
     };
     setToggler();
@@ -52,12 +47,11 @@ const HomeLayout: React.FC<{
         </div>
 
         <div className="relative mt-2 flex h-full w-full">
-          {(isLeftBarOpen || isRightBarOpen) && !isWindowLargerEnough && (
+          {isLeftBarOpen  && !isWindowLargerEnough && (
             <motion.div
               className="fixed top-0 left-0 z-[25] h-screen w-screen opacity-0"
               onClick={() => {
                 changeIsLeftBarOpen(false);
-                changeIsRightBarOpen(false);
               }}
               animate={{ width: "100vw" }}
             ></motion.div>
@@ -85,20 +79,11 @@ const HomeLayout: React.FC<{
           </div>
           <motion.div
             className={`${
-              isAllClosed && !isLeftBarOpen && !isRightBarOpen ? "z-30" : "z-10"
+              isAllClosed && !isLeftBarOpen  ? "z-30" : "z-10"
             } my-5 ml-4 rounded-xl bg-gray-800 p-2 py-5 xs:mx-5 w-full`}
           >
             {children}
           </motion.div>
-
-          {includeRightBar && (
-            <RightSideBar
-              isOpen={isRightBarOpen}
-              changeIsOpen={changeIsRightBarOpen}
-              isWindowLargerEnough={isWindowLargerEnough}
-              changeIsAllClosed={changeIsAllClosed}
-            />
-          )}
         </div>
       </div>
     </>

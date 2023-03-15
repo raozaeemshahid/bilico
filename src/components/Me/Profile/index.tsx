@@ -5,10 +5,11 @@ import ProfileHead from "./ProfileHead";
 import BioData from "./BioData";
 import InterestAndSKill from "./InterestAndSkills";
 import Numbers from "./Numbers";
+import TopRightDropDown from "../../TopRightDropdown";
 
 const Profile: React.FC = () => {
   const { status } = useSession();
-  
+
   const userData = api.me.data.useQuery(undefined, {
     enabled: status === "authenticated",
   });
@@ -19,6 +20,12 @@ const Profile: React.FC = () => {
   return (
     <>
       <div className="flex flex-col">
+        <TopRightDropDown
+          options={[
+            { label: "Edit Account", onClick: () => {} },
+            { label: "Delete Account", onClick: () => {} },
+          ]}
+        />
         <ProfileHead />
         <div className="flex  flex-wrap sm:flex-nowrap">
           <Numbers />

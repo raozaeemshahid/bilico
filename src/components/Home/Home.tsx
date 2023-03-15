@@ -19,7 +19,6 @@ const Home: NextPage = () => {
   return (
     <>
       <HomeLayout
-        includeRightBar={true}
         userInfo={{
           name: userInfo.data.name,
           newMessages: userInfo.data.newMessages,
