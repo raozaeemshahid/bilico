@@ -7,7 +7,6 @@ import PagesLinks from "../../lib/PagesLink";
 import { useRouter } from "next/router";
 import NameComponent from "./Name";
 import ImageComponent from "./Image";
-import ErrorsComponent, { GenderError } from "./Errors";
 import ProceedComponent from "./Proceed";
 import GenderComponent from "./Gender";
 import EmailComponent from "./Email";

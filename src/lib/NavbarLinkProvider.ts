@@ -3,6 +3,7 @@ import type { IconBaseProps } from "react-icons";
 
 import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
+import type { Session } from "next-auth";
 
 const VscAccount = dynamic(() =>
   import("react-icons/vsc").then((icons) => icons.VscAccount)
@@ -37,9 +38,20 @@ export const NavbarLinkCreator = {
       icon: VscAccount,
     };
   },
-  accountLink: (): LinkType => {
+  accountLink: (session: Session): LinkType => {
+    let name: string = "Account";
+    (() => {
+      if (!session.user || !session.user.name) return;
+      const splittedName = session.user.name.split(" ");
+      const firstName = splittedName[0];
+      if (!firstName) return;
+      const secondName = splittedName[1] || "";
+      const fullName = (firstName + " " + secondName).trim();
+      if (fullName.length <= 10) name = fullName;
+      else name = firstName;
+    })();
     return {
-      Text: "Account",
+      Text: name,
       href: PagesLinks.ME,
       icon: VscAccount,
     };

@@ -7,14 +7,15 @@ import { useRouter } from "next/router";
 import PagesLinks from "../lib/PagesLink";
 import { api } from "../utils/api";
 
-import HomePage from "../components/Home/Home"
+import HomePage from "../components/Home/Home";
+import HomeLayout from "../components/HomeLayout";
 
 const Home: NextPage = () => {
   const router = useRouter();
   const { data: userSession, status } = useSession({
     required: true,
     onUnauthenticated: () => {
-      void router.push(PagesLinks.getLoginLink(router));
+      void router.push(PagesLinks.getLoginLink());
     },
   });
 
@@ -22,9 +23,11 @@ const Home: NextPage = () => {
     enabled: router.isReady && status === "authenticated",
     onSuccess(user) {
       if (user.banned) return void router.push(PagesLinks.BANNED_LINK);
-      if (user.deactivated) return void router.push(PagesLinks.DEACTIVATED_LINK);
+      if (user.deactivated)
+        return void router.push(PagesLinks.DEACTIVATED_LINK);
       if (user.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
-      if (user.incompleteProfile) return void router.push(PagesLinks.EDIT_ACCOUNT_LINK)
+      if (user.incompleteProfile)
+        return void router.push(PagesLinks.EDIT_ACCOUNT_LINK);
       if (user.notFound) {
         void signOut();
         void router.push(PagesLinks.getLoginLink());
@@ -51,7 +54,16 @@ const Home: NextPage = () => {
         <meta name="description" content="A Social Media For Professionals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HomePage />
+      <HomeLayout
+        userInfo={{
+          name: userInfo.data.name,
+          newMessages: userInfo.data.newMessages,
+          newNotifications: userInfo.data.newNotifications,
+          newRequests: userInfo.data.newRequests,
+        }}
+      >
+        <HomePage />
+      </HomeLayout>
     </>
   );
 };

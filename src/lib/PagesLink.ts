@@ -4,7 +4,7 @@ import { callbackUrl } from "./common/names";
 const PagesLinks = {
   getLoginLink: (router?: NextRouter) => {
     if (!router) return `/login`;
-    return `/login?${callbackUrl}=${router.route}`;
+    return `/login?${callbackUrl}=${router.asPath}`;
   },
   getProfileLink: (userId: string) => {
     return `/profile/${userId}`;

@@ -12,6 +12,8 @@ import SidebarLink from "./SidebarLink";
 import type { UserInfo } from "./HomeLayout";
 import { useRouter } from "next/router";
 import PagesLinks from "../lib/PagesLink";
+import { useSession } from "next-auth/react";
+import Loading from "./Loading";
 
 let isDragging = false;
 
@@ -32,11 +34,13 @@ const Sidebar: React.FC<{
   const [isSideBarReady, changeIsSideBarReady] = useState(false);
   const SideBarRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const { data: userSession } = useSession();
 
   useEffect(() => {
     if (!SideBarRef.current) return;
     changeSideBarNavbarWidth(SideBarRef.current.clientWidth);
   }, [isSideBarReady]);
+  if (!userSession || !userSession.user) return <Loading />;
   return (
     <div
       className={` ${
@@ -79,7 +83,7 @@ const Sidebar: React.FC<{
             isActive={router.route == PagesLinks.NOTIFICATION_LINK}
           />
           <SidebarLink
-            link={NavbarLinkCreator.accountLink()}
+            link={NavbarLinkCreator.accountLink(userSession)}
             isActive={router.route == PagesLinks.ME}
           />
         </div>

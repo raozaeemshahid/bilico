@@ -12,24 +12,10 @@ const Home: NextPage = () => {
     enabled: status === "authenticated",
   });
 
-  if (!userSession || !userSession.user)
-    return <LoadingFullScreen text="Signing You In" />;
   if (!userInfo.data || !userInfo.data.success)
     return <LoadingFullScreen text="Getting Things Ready" />;
-  return (
-    <>
-      <HomeLayout
-        userInfo={{
-          name: userInfo.data.name,
-          newMessages: userInfo.data.newMessages,
-          newNotifications: userInfo.data.newNotifications,
-          newRequests: userInfo.data.newRequests,
-        }}
-      >
-        Hello
-      </HomeLayout>
-    </>
-  );
+
+  return <>Hello</>;
 };
 
 export default Home;
