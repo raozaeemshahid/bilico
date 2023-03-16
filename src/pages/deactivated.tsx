@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import PagesLinks from "../lib/PagesLink";
@@ -8,11 +8,12 @@ import { api } from "../utils/api";
 
 const Deactivated: NextPage = () => {
   const router = useRouter();
+  const reactivateApi = api.me.ReactivateAccount.useMutation();
 
   const { data: userSession, status } = useSession({
     required: true,
     onUnauthenticated: () => {
-      void router.push(PagesLinks.getLoginLink(router));
+      void router.push(PagesLinks.getLoginLink());
     },
   });
 
@@ -30,6 +31,13 @@ const Deactivated: NextPage = () => {
   if (!userInfo.data.deactivated)
     return <LoadingFullScreen text="Getting Things Ready" />;
 
+  const reactivate = () => {
+    void reactivateApi
+      .mutateAsync()
+      .then(() => void router.push(PagesLinks.HOME_Link));
+  };
+  if (reactivateApi.isLoading) return <LoadingFullScreen />
+
   return (
     <>
       <Head>
@@ -37,11 +45,28 @@ const Deactivated: NextPage = () => {
         <meta name="description" content="A Social Media For Professionals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="container mx-auto px-5 py-24 lg:w-2/3">
-        <div className="mb-12 flex w-full flex-col">
+      <div className="flex h-screen w-screen items-center justify-center">
+        <div>
           <h1 className="title-font mb-4 text-center font-medium text-gray-300 sm:text-2xl md:text-4xl">
-            You've been deactivated
+            You&apos;ve been deactivated
           </h1>
+          <div className="flex min-w-fit flex-wrap justify-center">
+            <button
+              className="m-2 flex rounded bg-green-600 py-2 px-4 font-bold text-white shadow-sm shadow-green-600 hover:bg-green-700"
+              onClick={() => {
+                void signOut();
+                void router.push(PagesLinks.getLoginLink());
+              }}
+            >
+              Sign out
+            </button>
+            <button
+              className="m-2 flex rounded bg-blue-500 py-2 px-4 font-bold text-white shadow-sm shadow-blue-500 hover:bg-blue-700"
+              onClick={reactivate}
+            >
+              Reactivate
+            </button>
+          </div>
         </div>
       </div>
     </>

@@ -20,8 +20,8 @@ const PagesLinks = {
   BANNED_LINK: `/banned`,
   EDIT_ACCOUNT_LINK: "/edit/account",
   REGISTER_LINK: "/register",
-  DEATIVATED_LINK: "/deactivated",
-  DEATIVATED_ME_LINK: "/me/deactivate",
+  DEACTIVATED_LINK: "/deactivated",
+  DEACTIVATED_ME_LINK: "/me/deactivate",
   DELETE_ME_LINK: "/me/delete",
   NOTIFICATION_LINK: "/notification",
 };

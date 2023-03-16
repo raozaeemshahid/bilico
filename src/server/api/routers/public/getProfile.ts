@@ -62,14 +62,10 @@ export const getProfile = publicProcedure
       },
     });
 
-    if (
-      !user ||
-      user.BannedUntil ||
-      user.isDeactivated ||
-      !user.emailVerified
-    ) {
+    if (!user || user.BannedUntil || !user.emailVerified) {
       return { notFound: true };
     }
+    if (user.isDeactivated) return { userDeactivated: true };
 
     if (user.Blocked.length > 0) return { blocked: true };
 

@@ -22,7 +22,7 @@ const Home: NextPage = () => {
     enabled: router.isReady && status === "authenticated",
     onSuccess(user) {
       if (user.banned) return void router.push(PagesLinks.BANNED_LINK);
-      if (user.deactivated) return void router.push(PagesLinks.DEATIVATED_LINK);
+      if (user.deactivated) return void router.push(PagesLinks.DEACTIVATED_LINK);
       if (user.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
       if (user.incompleteProfile) return void router.push(PagesLinks.EDIT_ACCOUNT_LINK)
       if (user.notFound) {

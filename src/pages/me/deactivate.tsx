@@ -14,7 +14,7 @@ const Deactivate: NextPage = () => {
   const { data: userSession, status } = useSession({
     required: true,
     onUnauthenticated: () => {
-      void router.push(PagesLinks.getLoginLink(router));
+      void router.push(PagesLinks.getLoginLink());
     },
   });
   const deactivateApi = api.me.DeactivateAccount.useMutation();
@@ -23,7 +23,7 @@ const Deactivate: NextPage = () => {
     enabled: router.isReady && status === "authenticated",
     onSuccess(user) {
       if (user.banned) return void router.push(PagesLinks.BANNED_LINK);
-      if (user.deactivated) return void router.push(PagesLinks.DEATIVATED_LINK);
+      if (user.deactivated) return void router.push(PagesLinks.DEACTIVATED_LINK);
       if (user.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
       if (user.incompleteProfile)
         return void router.push(PagesLinks.EDIT_ACCOUNT_LINK);
@@ -48,7 +48,7 @@ const Deactivate: NextPage = () => {
   }
   const deactivate = () => {
     void deactivateApi.mutateAsync().then(() => {
-      signOut();
+      void signOut();
       void router.push(PagesLinks.getLoginLink());
     });
   };
@@ -71,8 +71,8 @@ const Deactivate: NextPage = () => {
         <div className="my-2 flex flex-col gap-3 xs:mx-3">
           <h2 className="text-center text-3xl font-bold">Deactivate Account</h2>
           <p className="text-gray-300">
-            It's ok to take a break from social media, deactivating your account
-            means you won't appear in any search results and no one will be able
+            It&apos;s ok to take a break from social media, deactivating your account
+            means you won&apos;t appear in any search results and no one will be able
             to see your profile, although they can see your posts, comments and
             reactions so far.
           </p>
@@ -90,7 +90,7 @@ const Deactivate: NextPage = () => {
             <button
               className="m-2 flex rounded bg-blue-500 py-2 px-4 font-bold text-white shadow-sm shadow-blue-500 hover:bg-blue-700"
               onClick={() => {
-                router.push(PagesLinks.HOME_Link);
+                void router.push(PagesLinks.HOME_Link);
               }}
             >
               Cancel

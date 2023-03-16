@@ -15,7 +15,7 @@ const Delete: NextPage = () => {
   const { data: userSession, status } = useSession({
     required: true,
     onUnauthenticated: () => {
-      void router.push(PagesLinks.getLoginLink(router));
+      void router.push(PagesLinks.getLoginLink());
     },
   });
   const deleteMeApi = api.me.deleteMyAccount.useMutation();
@@ -24,7 +24,7 @@ const Delete: NextPage = () => {
     enabled: router.isReady && status === "authenticated",
     onSuccess(user) {
       if (user.banned) return void router.push(PagesLinks.BANNED_LINK);
-      if (user.deactivated) return void router.push(PagesLinks.DEATIVATED_LINK);
+      if (user.deactivated) return void router.push(PagesLinks.DEACTIVATED_LINK);
       if (user.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
       if (user.incompleteProfile)
         return void router.push(PagesLinks.EDIT_ACCOUNT_LINK);
@@ -73,13 +73,13 @@ const Delete: NextPage = () => {
           <h2 className="text-center text-3xl font-bold">Delete Account</h2>
           <p className="text-gray-300">
             Deleting your account means deleting all your data on bilico at
-            once, this isn't scheduling to delete instead it'll delete
+            once, this isn&apos;t scheduling to delete instead it&apos;ll delete
             everything the moment you click on delete next. Hence this action
-            can't be undone, are you sure?
+            can&apos;t be undone, are you sure?
           </p>
           <p className="text-gray-300">
-            If you want to take a break for while, consider{" "}
-            <Link href={PagesLinks.DEATIVATED_ME_LINK}>deactivating</Link>.
+            If you want to take a break for while, consider
+            <Link href={PagesLinks.DEACTIVATED_ME_LINK}>deactivating</Link>.
           </p>
           <div className="flex min-w-fit flex-row-reverse flex-wrap justify-start">
             <button
@@ -91,7 +91,7 @@ const Delete: NextPage = () => {
             <button
               className="m-2 flex rounded bg-blue-500 py-2 px-4 font-bold text-white shadow-sm shadow-blue-500 hover:bg-blue-700"
               onClick={() => {
-                router.push(PagesLinks.HOME_Link);
+                void router.push(PagesLinks.HOME_Link);
               }}
             >
               Cancel

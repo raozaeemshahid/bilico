@@ -1,29 +1,26 @@
-import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
+import { LoadingFullScreen } from "../components/Loading";
 import Head from "next/head";
-import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import PagesLinks from "../../lib/PagesLink";
-import { LoadingFullScreen } from "../../components/Loading";
-import { api } from "../../utils/api";
+import PagesLinks from "../lib/PagesLink";
+import { api } from "../utils/api";
+import { signOut } from "next-auth/react";
+import HomeLayout from "../components/HomeLayout";
 
-import MeComponent from "../../components/Me/Me";
-import HomeLayout from "../../components/HomeLayout";
-
-const MyProfile: NextPage = () => {
+const FailedFullBodyComponent: React.FC<{ text: string }> = ({ text }) => {
   const router = useRouter();
-
   const { data: userSession, status } = useSession({
     required: true,
     onUnauthenticated: () => {
       void router.push(PagesLinks.getLoginLink(router));
     },
   });
-
   const userInfo = api.me.info.useQuery(undefined, {
     enabled: status === "authenticated" && router.isReady,
     onSuccess(data) {
       if (data.banned) return void router.push(PagesLinks.BANNED_LINK);
-      if (data.deactivated) return void router.push(PagesLinks.DEACTIVATED_LINK);
+      if (data.deactivated)
+        return void router.push(PagesLinks.DEACTIVATED_LINK);
       if (data.notFound) {
         void signOut();
         return void router.push(PagesLinks.getLoginLink());
@@ -33,10 +30,8 @@ const MyProfile: NextPage = () => {
       if (data.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
     },
   });
-
   if (status == "loading" || !userSession || !userSession.user)
     return <LoadingFullScreen text="Signing You In" />;
-
   if (!userInfo.data) return <LoadingFullScreen text="Loading Data" />;
   if (!userInfo.data.success || userInfo.data.incompleteProfile)
     return <LoadingFullScreen text="Getting Things Ready" />;
@@ -45,6 +40,7 @@ const MyProfile: NextPage = () => {
     void router.push(PagesLinks.getLoginLink());
     return <LoadingFullScreen />;
   }
+
   return (
     <>
       <Head>
@@ -60,10 +56,16 @@ const MyProfile: NextPage = () => {
           newRequests: userInfo.data.newRequests,
         }}
       >
-        <MeComponent />
+        <div className="container mx-auto px-5 py-24 lg:w-2/3">
+          <div className="mb-12 flex w-full flex-col">
+            <h1 className="title-font mb-4 text-center font-medium text-gray-300 sm:text-2xl md:text-4xl">
+              {text}
+            </h1>
+          </div>
+        </div>
       </HomeLayout>
     </>
   );
 };
 
-export default MyProfile;
+export default FailedFullBodyComponent;

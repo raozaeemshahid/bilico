@@ -8,12 +8,7 @@ import EditBody from "./EditBody";
 
 const EditAccount: React.FC = () => {
   const router = useRouter();
-  const { data: userSession, status } = useSession({
-    required: true,
-    onUnauthenticated: () => {
-      void router.push(PagesLinks.getLoginLink());
-    },
-  });
+  const { data: userSession, status } = useSession();
 
   const userInfo = api.me.info.useQuery(undefined, {
     enabled: status === "authenticated" && router.isReady,

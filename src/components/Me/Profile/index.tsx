@@ -34,7 +34,7 @@ const Profile: React.FC = () => {
             {
               label: "Deactive Account",
               onClick: () => {
-                void router.push(PagesLinks.DEATIVATED_ME_LINK);
+                void router.push(PagesLinks.DEACTIVATED_ME_LINK);
               },
             },
             {

@@ -10,6 +10,7 @@ import { api } from "../../../utils/api";
 import { signOut } from "next-auth/react";
 import { z } from "zod";
 import ProfileComponent from "../../../components/Profile";
+import FailedFullBodyComponent from "../../../components/FailedFullBodyComponent";
 
 const Profile: NextPage = () => {
   const router = useRouter();
@@ -27,7 +28,8 @@ const Profile: NextPage = () => {
     enabled: status === "authenticated" && router.isReady,
     onSuccess(data) {
       if (data.banned) return void router.push(PagesLinks.BANNED_LINK);
-      if (data.deactivated) return void router.push(PagesLinks.DEATIVATED_LINK);
+      if (data.deactivated)
+        return void router.push(PagesLinks.DEACTIVATED_LINK);
       if (data.notFound) {
         void signOut();
         return void router.push(PagesLinks.getLoginLink());
@@ -37,6 +39,13 @@ const Profile: NextPage = () => {
       if (data.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
     },
   });
+
+  const getProfile = api.publicApi.getProfile.useQuery(
+    { userId: !!userId ? userId : "" },
+    {
+      enabled: !!userId,
+    }
+  );
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -70,7 +79,15 @@ const Profile: NextPage = () => {
     void router.push(PagesLinks.getLoginLink());
     return <LoadingFullScreen />;
   }
-  if (!userId) return <LoadingFullScreen text="Getting Things Ready" />;
+  if (!userId || !getProfile.data)
+    return <LoadingFullScreen text="Getting Things Ready" />;
+  if (getProfile.data.notFound)
+    return <FailedFullBodyComponent text="User not found" />;
+  if (getProfile.data.userDeactivated)
+    return <FailedFullBodyComponent text="User is deactivated" />;
+  if (getProfile.data.blocked)
+    return <FailedFullBodyComponent text="You've been blocked by user" />;
+  if (!getProfile.data.success) return <LoadingFullScreen />;
 
   return (
     <>
@@ -87,7 +104,7 @@ const Profile: NextPage = () => {
           newRequests: userInfo.data.newRequests,
         }}
       >
-       <ProfileComponent userId={userId} />
+        <ProfileComponent userId={userId} />
       </HomeLayout>
     </>
   );
