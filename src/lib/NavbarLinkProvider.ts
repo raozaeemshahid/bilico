@@ -39,7 +39,7 @@ export const NavbarLinkCreator = {
     };
   },
   accountLink: (session: Session): LinkType => {
-    let name: string = "Account";
+    let name = "Account";
     (() => {
       if (!session.user || !session.user.name) return;
       const splittedName = session.user.name.split(" ");

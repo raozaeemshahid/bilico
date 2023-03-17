@@ -11,6 +11,7 @@ import { getAllInterestsAndSkills } from "./getAllInterestsAndSkills";
 import { editAccount } from "./editAccount";
 import { createPost } from "./createPost";
 import { getPosts } from "./getPosts";
+import { DeletePost } from "./deletePost";
 
 export const me = createTRPCRouter({
   amIBanned,
@@ -25,4 +26,5 @@ export const me = createTRPCRouter({
   editAccount,
   createPost,
   getPosts,
+  DeletePost,
 });
