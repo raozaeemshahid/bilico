@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import PagesLinks from "../lib/PagesLink";
 import { LoadingFullScreen } from "../components/Loading";
 import { api } from "../utils/api";
+import { toast } from "react-toastify";
 
 const Deactivated: NextPage = () => {
   const router = useRouter();
@@ -32,11 +33,15 @@ const Deactivated: NextPage = () => {
     return <LoadingFullScreen text="Getting Things Ready" />;
 
   const reactivate = () => {
-    void reactivateApi
-      .mutateAsync()
+    toast
+      .promise(reactivateApi.mutateAsync(), {
+        error: "Couldn't Reactivate",
+        pending: "Reactivating Account",
+        success: "Account Reactivated",
+      })
       .then(() => void router.push(PagesLinks.HOME_Link));
   };
-  if (reactivateApi.isLoading) return <LoadingFullScreen />
+  if (reactivateApi.isLoading) return <LoadingFullScreen />;
 
   return (
     <>

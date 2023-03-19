@@ -64,7 +64,7 @@ const Register: React.FC = () => {
   }, [status, userSession]);
 
   const validateInfo = () => {
-    if (!userName) return;
+    if (!userName) return void toast.error("Name can't be empty");
     const nameValidation = zodName.safeParse(userName);
     if (!nameValidation.success) {
       nameValidation.error.errors.forEach((err) => toast.error(err.message));
@@ -101,12 +101,19 @@ const Register: React.FC = () => {
     const info = validateInfo();
     if (!info) return;
 
-    RegisterMe.mutate({
-      name: info.name,
-      gender: info.gender,
-      country: info.country,
-      dateOfBirth: info.dateOfBirth,
-    });
+    void toast.promise(
+      RegisterMe.mutateAsync({
+        name: info.name,
+        gender: info.gender,
+        country: info.country,
+        dateOfBirth: info.dateOfBirth,
+      }),
+      {
+        error: "Couldn't Register You",
+        pending: "Registering",
+        success: "Registered Successfully",
+      }
+    );
   };
 
   if (!userSession || !userSession.user) return <LoadingFullScreen />;
@@ -141,17 +148,13 @@ const Register: React.FC = () => {
                 />
               </div>
             </div>
-            {RegisterMe.isLoading ? (
-              <Loading />
-            ) : (
-              <ProceedComponent
-                FnCompleteRegistratoin={FnCompleteRegistratoin}
-                isInfoEditing={
-                  isNameEditing || !gender || isDateOfBithEditing || !country
-                }
-                changeIsInfoEditing={validateInfo}
-              />
-            )}
+            <ProceedComponent
+              FnCompleteRegistratoin={FnCompleteRegistratoin}
+              isInfoEditing={
+                isNameEditing || !gender || isDateOfBithEditing || !country
+              }
+              changeIsInfoEditing={validateInfo}
+            />
           </div>
         </div>
       </section>

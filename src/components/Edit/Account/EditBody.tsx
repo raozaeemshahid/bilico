@@ -5,6 +5,7 @@ import Loading from "../../Loading";
 import { useEffect, useState } from "react";
 import type { Interest, Skill } from "@prisma/client";
 import Select from "react-select";
+import { toast } from "react-toastify";
 
 const EditBody: React.FC = () => {
   const router = useRouter();
@@ -14,19 +15,12 @@ const EditBody: React.FC = () => {
 
   const editMyAccount = api.me.editAccount.useMutation({
     onSuccess: () => {
-      changeIsSaved(true);
       void utils.me.data.invalidate();
     },
   });
 
   const [selectedSkill, changeSelectedSkill] = useState<Skill[]>([]);
   const [selectedInterest, changeSelectedInterest] = useState<Interest[]>([]);
-
-  const [isSaved, changeIsSaved] = useState<boolean>(false);
-
-  useEffect(() => {
-    changeIsSaved(false);
-  }, [selectedSkill.length, selectedInterest.length]);
 
   const userInfo = api.me.info.useQuery(undefined, {
     enabled: status === "authenticated" && router.isReady,
@@ -95,12 +89,19 @@ const EditBody: React.FC = () => {
     )
       return;
 
-    editMyAccount.mutate({
-      addedInterests,
-      addedSkills,
-      removedInterests,
-      removedSkills,
-    });
+    void toast.promise(
+      editMyAccount.mutateAsync({
+        addedInterests,
+        addedSkills,
+        removedInterests,
+        removedSkills,
+      }),
+      {
+        error: "Couldn't Save Changed",
+        pending: "Saving Changes",
+        success: "Changes Saved",
+      }
+    );
   };
   return (
     <>
@@ -212,7 +213,6 @@ const EditBody: React.FC = () => {
         />
       </div>
       <div className="flex items-center justify-end">
-        {isSaved && <h4 className="opacity-60">Saved</h4>}
         <div>
           {editMyAccount.isLoading ? (
             <Loading />

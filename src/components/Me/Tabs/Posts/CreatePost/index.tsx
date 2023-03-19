@@ -23,7 +23,11 @@ const CreatePost: React.FC = () => {
 
   const createPostMutation = api.me.createPost.useMutation({
     onSuccess: () => {
-      void utilsApi.me.getPosts.invalidate();
+      void toast.promise(utilsApi.me.getPosts.invalidate(), {
+        error: "Couldn't Reload Posts",
+        pending: "Reloading Posts",
+        success: "Posts Reloaded",
+      });
     },
   });
   const createPost = () => {
@@ -32,15 +36,17 @@ const CreatePost: React.FC = () => {
       changeInterestsFound([{ id: "", title: "" }]);
       changeIsInPreview(false);
       changePostBody("");
-      const promiseToCreatePost = createPostMutation.mutateAsync({
-        postBody,
-        interests: interestsFoundInPost.map((interest) => interest.id),
-      });
-      void toast.promise(promiseToCreatePost, {
-        success: "Post is Created",
-        error: "Couldn't Create Post",
-        pending: "Creating Post...",
-      });
+      void toast.promise(
+        createPostMutation.mutateAsync({
+          postBody,
+          interests: interestsFoundInPost.map((interest) => interest.id),
+        }),
+        {
+          success: "Post is Created",
+          error: "Couldn't Create Post",
+          pending: "Creating Post...",
+        }
+      );
     } else post.error.errors.forEach((err) => toast.error(err.message));
   };
 

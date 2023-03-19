@@ -8,6 +8,7 @@ import PagesLinks from "../../lib/PagesLink";
 import { api } from "../../utils/api";
 
 import HomeLayout from "../../components/HomeLayout";
+import { toast } from "react-toastify";
 
 const Deactivate: NextPage = () => {
   const router = useRouter();
@@ -23,7 +24,8 @@ const Deactivate: NextPage = () => {
     enabled: router.isReady && status === "authenticated",
     onSuccess(user) {
       if (user.banned) return void router.push(PagesLinks.BANNED_LINK);
-      if (user.deactivated) return void router.push(PagesLinks.DEACTIVATED_LINK);
+      if (user.deactivated)
+        return void router.push(PagesLinks.DEACTIVATED_LINK);
       if (user.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
       if (user.incompleteProfile)
         return void router.push(PagesLinks.EDIT_ACCOUNT_LINK);
@@ -47,10 +49,16 @@ const Deactivate: NextPage = () => {
     return <LoadingFullScreen />;
   }
   const deactivate = () => {
-    void deactivateApi.mutateAsync().then(() => {
-      void signOut();
-      void router.push(PagesLinks.getLoginLink());
-    });
+    toast
+      .promise(deactivateApi.mutateAsync(), {
+        error: "Couldn't Deactivated Account",
+        pending: "Deactivating Account",
+        success: "Account Deactivated",
+      })
+      .then(() => {
+        void signOut();
+        void router.push(PagesLinks.getLoginLink());
+      });
   };
   if (deactivateApi.isLoading) return <LoadingFullScreen />;
   return (
@@ -71,10 +79,10 @@ const Deactivate: NextPage = () => {
         <div className="my-2 flex flex-col gap-3 xs:mx-3">
           <h2 className="text-center text-3xl font-bold">Deactivate Account</h2>
           <p className="text-gray-300">
-            It&apos;s ok to take a break from social media, deactivating your account
-            means you won&apos;t appear in any search results and no one will be able
-            to see your profile, although they can see your posts, comments and
-            reactions so far.
+            It&apos;s ok to take a break from social media, deactivating your
+            account means you won&apos;t appear in any search results and no one
+            will be able to see your profile, although they can see your posts,
+            comments and reactions so far.
           </p>
           <p className="text-gray-300">
             Once deactivated, You can reactivate your account anytime by logging
