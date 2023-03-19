@@ -7,7 +7,7 @@ export const reportPost = protectedProcedure
   .mutation(async ({ input, ctx }) => {
     const previousReport = await ctx.prisma.reportToAdmin.findFirst({
       where: {
-        postId: input.postId
+        reportedPostId: input.postId,
       },
     });
     if (previousReport) return { success: true };
@@ -23,5 +23,5 @@ export const reportPost = protectedProcedure
         },
       },
     });
-    return {success: true}
+    return { success: true };
   });
