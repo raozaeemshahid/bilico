@@ -41,12 +41,12 @@ const ReactionsAndComments: React.FC<{
       </div>
       <div className="flex flex-wrap lg:flex-nowrap">
         {isReactionsPanelOpen && (
-          <div className="m-1 my-2 h-72 max-h-72 w-full overflow-y-auto rounded-lg bg-gray-700 p-2 xs:m-3">
+          <div className="m-1 my-2 max-h-72 w-full overflow-y-auto rounded-lg bg-gray-700 p-2 xs:m-3">
             <Reactions postId={postId} />
           </div>
         )}
         {isCommentsPanelOpen && (
-          <div className="m-1 my-2 h-72 max-h-72 w-full overflow-y-auto rounded-lg bg-gray-700 p-2 xs:m-3">
+          <div className="m-1 my-2 max-h-72 w-full overflow-y-auto rounded-lg bg-gray-700 p-2 xs:m-3">
             <Comments postId={postId} />
           </div>
         )}

@@ -12,7 +12,7 @@ export const reactPost = protectedProcedure
     z.object({
       reaction: ZReaction.nullish(),
       previousReactionId: z.string().default(""),
-      postId: z.string(),
+      postId: z.string().uuid(),
     })
   )
   .mutation(async ({ ctx, input }) => {

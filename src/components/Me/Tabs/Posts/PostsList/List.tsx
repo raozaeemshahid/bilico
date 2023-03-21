@@ -1,12 +1,9 @@
 import { api } from "../../../../../utils/api";
-import BadWordsFilter from "../../../../../utils/BadWordFilter";
 import moment from "moment";
-import Image from "next/image";
 import Loading from "../../../../Loading";
 import type { OrderOfDataByTime } from "../../../../../lib/common/names";
 import FetchMoreInfiniteComponent from "../../../../FetchMoreInfiniteQueryComponent";
 import dynamic from "next/dynamic";
-import ReactionsAndComments from "../../../../CommentsAndReactions";
 import PostItem from "./PostItem";
 import { toast } from "react-toastify";
 
@@ -74,7 +71,7 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
           fetchNextPage={() => void getPosts.fetchNextPage()}
           hasNextPage={getPosts.hasNextPage}
           isFetchingNextPage={getPosts.isFetchingNextPage}
-          endingMsg="You're all caught up!"
+          endingMsg=""
         />
       </div>
     </>

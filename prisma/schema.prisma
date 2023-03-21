@@ -90,7 +90,7 @@ model ReactPost {
 model Comment {
   id               String      @id @default(uuid())
   Comment          String      @db.Text
-  CommentType      CommentType
+  CommentType      CommentType?
   OnPost           Post?       @relation(fields: [postId], references: [id])
   CreatedAt        DateTime    @default(now())
   CreatedBy        User        @relation(fields: [CommenterUserId], references: [id])
