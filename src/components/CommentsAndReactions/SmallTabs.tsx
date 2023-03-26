@@ -3,12 +3,14 @@ interface Props<T> {
   tabList: T[];
   currentTab: T;
   changeCurrentTab: (id: T) => void;
+  count?: { [index: string]: number };
 }
 
 const SmallTabs = <T extends string>({
   changeCurrentTab,
   currentTab,
   tabList,
+  count,
 }: Props<T>) => {
   return (
     <>
@@ -49,14 +51,14 @@ const SmallTabs = <T extends string>({
                   className="bg-gray-900 px-5 py-1 text-gray-300"
                   aria-current="page"
                 >
-                  {tab}
+                  {count ? (count[tab] ? count[tab] : "") : ""} {tab}
                 </button>
               ) : (
                 <button
                   onClick={() => changeCurrentTab(tab)}
                   className="px-5  py-1 text-gray-100 hover:bg-gray-500 hover:text-gray-300"
                 >
-                  {tab}
+                  {count ? (count[tab] ? count[tab] : "") : ""} {tab}
                 </button>
               )}
             </div>
