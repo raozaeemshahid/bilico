@@ -1,5 +1,4 @@
 import Select from "react-select";
-import { AllReactions } from "./Reactions";
 interface Props<T> {
   tabList: T[];
   currentTab: T;
