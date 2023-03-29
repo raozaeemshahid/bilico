@@ -41,13 +41,13 @@ const ReactionsAndComments: React.FC<{
       </div>
       <div className="flex flex-wrap lg:flex-nowrap">
         {isReactionsPanelOpen && (
-          <div className="m-1 my-2 max-h-72 w-full overflow-y-auto rounded-lg bg-gray-700 p-2 xs:m-3">
-            <Reactions postId={postId} />
+          <div className="m-1 my-2 w-full rounded-lg bg-gray-700 p-2 xs:m-3">
+            <Reactions postId={postId} reactionsCount={reactionsCount} />
           </div>
         )}
         {isCommentsPanelOpen && (
-          <div className="m-1 my-2 max-h-72 w-full overflow-y-auto rounded-lg bg-gray-700 p-2 xs:m-3">
-            <Comments postId={postId} />
+          <div className="m-1 my-2 w-full rounded-lg bg-gray-700 p-2 xs:m-3">
+            <Comments postId={postId} commentsCount={commentsCount} />
           </div>
         )}
       </div>

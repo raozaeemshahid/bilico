@@ -8,7 +8,7 @@ const DropDownBody: React.FC<{
   if (!isOpen) return <></>;
   return (
     <>
-      <div className="rounded-lg bg-gray-700 p-2 shadow-lg shadow-gray-900">
+      <div className="rounded-lg bg-gray-700 p-1 mt-1 shadow-lg shadow-gray-900">
         {options.map((option) => (
           <div
             key={option.label}

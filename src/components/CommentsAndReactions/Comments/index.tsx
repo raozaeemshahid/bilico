@@ -4,6 +4,9 @@ import SmallTabs from "../SmallTabs";
 import CommentsComponent from "./Comments";
 import CreateComment from "./CreateComment";
 import SelectedCommentComponent from "./SelectedComment";
+import { api } from "../../../utils/api";
+import Loading from "../../Loading";
+import { toast } from "react-toastify";
 
 export interface SelectedComment {
   Comment: string;
@@ -21,7 +24,10 @@ export interface SelectedComment {
   LovedByAuthor: boolean;
 }
 
-const Comments: React.FC<{ postId: string }> = ({ postId }) => {
+const Comments: React.FC<{ postId: string; commentsCount: number }> = ({
+  postId,
+  commentsCount,
+}) => {
   const [currentTab, changeCurrentTab] = useState<CommentType>("Agree");
   const [selectedComment, changeSelectedComment] = useState<SelectedComment>();
 
@@ -29,6 +35,12 @@ const Comments: React.FC<{ postId: string }> = ({ postId }) => {
   useEffect(() => {
     changeComment("");
   }, [currentTab]);
+
+  const count = api.publicApi.getCommentsCount.useQuery(
+    { postId },
+    { enabled: commentsCount > 0 }
+  );
+
   if (!!selectedComment)
     return (
       <SelectedCommentComponent
@@ -48,23 +60,29 @@ const Comments: React.FC<{ postId: string }> = ({ postId }) => {
             changeCurrentTab={(id) => changeCurrentTab(id)}
             currentTab={currentTab}
             tabList={Object.values(CommentType)}
+            count={count.data ? count.data : {}}
+          />
+        </div>
+        <div className="py-3">
+          <CreateComment
+            changeComment={changeComment}
+            comment={comment}
+            currentTab={currentTab}
+            postId={postId}
           />
         </div>
         <div className="my-2 mt-3">
-          <CommentsComponent
-            postId={postId}
-            tab={currentTab}
-            changeSelectedComment={changeSelectedComment}
-
-          />
-        </div>
-        <div className="pb-3">
-        <CreateComment
-          changeComment={changeComment}
-          comment={comment}
-          currentTab={currentTab}
-          postId={postId}
-        />
+          {commentsCount > 0 && (
+            <div className="my-2 mt-3">
+              {!!count.data && !!count.data[currentTab] && (
+                <CommentsComponent
+                  postId={postId}
+                  tab={currentTab}
+                  changeSelectedComment={changeSelectedComment}
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>

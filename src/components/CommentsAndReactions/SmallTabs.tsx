@@ -3,7 +3,7 @@ interface Props<T> {
   tabList: T[];
   currentTab: T;
   changeCurrentTab: (id: T) => void;
-  count?: { [index: string]: number };
+  count: { [index: string]: number };
 }
 
 const SmallTabs = <T extends string>({
@@ -41,28 +41,31 @@ const SmallTabs = <T extends string>({
       </div>
       <div className="hidden 2sm:block">
         <div className="flex flex-nowrap justify-center">
-          {tabList.map((tab) => (
-            <div
-              key={tab}
-              className="mx-1 my-2 inline-block rounded-t-lg border border-gray-900 shadow-lg shadow-gray-900 sm:my-0"
-            >
-              {tab == currentTab ? (
-                <button
-                  className="bg-gray-900 px-5 py-1 text-gray-300"
-                  aria-current="page"
-                >
-                  {count ? (count[tab] ? count[tab] : "") : ""} {tab}
-                </button>
-              ) : (
-                <button
-                  onClick={() => changeCurrentTab(tab)}
-                  className="px-5  py-1 text-gray-100 hover:bg-gray-500 hover:text-gray-300"
-                >
-                  {count ? (count[tab] ? count[tab] : "") : ""} {tab}
-                </button>
-              )}
-            </div>
-          ))}
+          {tabList.map((tab) => {
+            const itemCount = count[tab] ? count[tab] : "";
+            return (
+              <div
+                key={tab}
+                className="mx-1 my-2 inline-block rounded-t-lg border border-gray-900 shadow-lg shadow-gray-900 sm:my-0"
+              >
+                {tab == currentTab ? (
+                  <button
+                    className="bg-gray-900 px-5 py-1 text-gray-300"
+                    aria-current="page"
+                  >
+                    {itemCount} {tab}
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => changeCurrentTab(tab)}
+                    className="px-5  py-1 text-gray-100 hover:bg-gray-500 hover:text-gray-300"
+                  >
+                    {itemCount} {tab}
+                  </button>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </>

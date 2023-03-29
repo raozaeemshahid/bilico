@@ -51,6 +51,7 @@ const CommentsComponent: React.FC<{
               id: comment.id,
             }}
             userData={{
+              id: comment.CreatedBy.id,
               image: comment.CreatedBy.image,
               isVerified: comment.CreatedBy.isVerified,
               name: comment.CreatedBy.name,

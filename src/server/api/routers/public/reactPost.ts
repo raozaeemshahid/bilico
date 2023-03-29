@@ -1,6 +1,7 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import { Reaction } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 
 const ZReaction = z.union([
   z.literal(Reaction.Agree),
@@ -16,6 +17,16 @@ export const reactPost = protectedProcedure
     })
   )
   .mutation(async ({ ctx, input }) => {
+    const previousReaction = await ctx.prisma.reactPost.findFirst({
+      where: { postId: input.postId, userId: ctx.session.user.id },
+    });
+    if (
+      previousReaction &&
+      input.previousReactionId.length > 0 &&
+      previousReaction.id !== input.previousReactionId
+    ) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
     if (!input.reaction) {
       return void (await ctx.prisma.post.update({
         where: { id: input.postId },

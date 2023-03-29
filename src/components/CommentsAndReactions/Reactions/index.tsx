@@ -4,6 +4,7 @@ import SmallTabs from "../SmallTabs";
 
 import ReactionsComponent from "./Reactions";
 import { api } from "../../../utils/api";
+import Loading from "../../Loading";
 
 export type AllReactions = "All" | Reaction;
 export const AllReactions: AllReactions[] = [
@@ -13,9 +14,15 @@ export const AllReactions: AllReactions[] = [
   "Love",
 ];
 
-const Reactions: React.FC<{ postId: string }> = ({ postId }) => {
+const Reactions: React.FC<{ postId: string; reactionsCount: number }> = ({
+  postId,
+  reactionsCount,
+}) => {
   const [currentTab, changeCurrentTab] = useState<AllReactions>("All");
-  const count = api.publicApi.getReactionsCount.useQuery({ postId });
+  const count = api.publicApi.getReactionsCount.useQuery(
+    { postId },
+    { enabled: reactionsCount > 0 }
+  );
 
   return (
     <>
@@ -37,13 +44,19 @@ const Reactions: React.FC<{ postId: string }> = ({ postId }) => {
                     ),
                     ...count.data,
                   }
-                : undefined
+                : {}
             }
           />
         </div>
-        <div className="my-2 mt-3">
-          <ReactionsComponent postId={postId} tab={currentTab} />
-        </div>
+        {!!count.data && reactionsCount > 0 && (
+          <div className="my-2 mt-3">
+            {(currentTab == "All"
+              ? reactionsCount > 0
+              : !!count.data[currentTab]) && (
+              <ReactionsComponent postId={postId} tab={currentTab} />
+            )}
+          </div>
+        )}
       </div>
     </>
   );
