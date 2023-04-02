@@ -14,6 +14,7 @@ export interface SelectedComment {
     Replies: number;
   };
   id: string;
+  ReplyTo?: SelectedComment | undefined;
   CreatedBy: {
     id: string;
     name: string;
@@ -21,7 +22,6 @@ export interface SelectedComment {
     isVerified: boolean;
   };
   CreatedAt: Date;
-  LovedByAuthor: boolean;
 }
 
 const Comments: React.FC<{ postId: string; commentsCount: number }> = ({
@@ -44,7 +44,7 @@ const Comments: React.FC<{ postId: string; commentsCount: number }> = ({
   if (!!selectedComment)
     return (
       <SelectedCommentComponent
-        commentId={selectedComment.id}
+        selectedComment={selectedComment}
         changeSelectedComment={changeSelectedComment}
       />
     );

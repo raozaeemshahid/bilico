@@ -13,7 +13,7 @@ const CommentsComponent: React.FC<{
   changeSelectedComment: Dispatch<SetStateAction<SelectedComment | undefined>>;
 }> = ({ tab, postId, changeSelectedComment }) => {
   const getComments = api.publicApi.getComments.useInfiniteQuery(
-    { limit: 20, postId, commentType: tab },
+    { limit: 10, postId, commentType: tab },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
@@ -39,26 +39,29 @@ const CommentsComponent: React.FC<{
 
   return (
     <>
-      {getComments.data.pages.map((page) =>
-        page.items.map((comment) => (
-          <CommentItem
-            key={comment.id}
-            deleteComment={deleteComment}
-            comment={{
-              _count: { replies: comment._count.Replies },
-              body: comment.Comment,
-              createdAt: comment.CreatedAt,
-              id: comment.id,
-            }}
-            userData={{
-              id: comment.CreatedBy.id,
-              image: comment.CreatedBy.image,
-              isVerified: comment.CreatedBy.isVerified,
-              name: comment.CreatedBy.name,
-            }}
-          />
-        ))
-      )}
+      <div className="flex flex-col gap-1">
+        {getComments.data.pages.map((page) =>
+          page.items.map((comment) => (
+            <CommentItem
+              key={comment.id}
+              deleteComment={deleteComment}
+              comment={{
+                _count: { replies: comment._count.Replies },
+                body: comment.Comment,
+                createdAt: comment.CreatedAt,
+                id: comment.id,
+              }}
+              userData={{
+                id: comment.CreatedBy.id,
+                image: comment.CreatedBy.image,
+                isVerified: comment.CreatedBy.isVerified,
+                name: comment.CreatedBy.name,
+              }}
+              changeSelectedComment={changeSelectedComment}
+            />
+          ))
+        )}
+      </div>
     </>
   );
 };
