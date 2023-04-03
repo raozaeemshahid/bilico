@@ -16,13 +16,12 @@ const MdVerified = dynamic(() =>
 );
 
 const SelectedCommentComponent: React.FC<{
-  selectedComment: SelectedComment | undefined;
+  selectedComment: SelectedComment;
   changeSelectedComment: Dispatch<SetStateAction<SelectedComment | undefined>>;
 }> = ({ changeSelectedComment, selectedComment }) => {
   const getReplies = api.publicApi.getReplies.useInfiniteQuery(
-    { limit: 10, commentId: !!selectedComment ? selectedComment.id : "" },
+    { limit: 10, commentId: selectedComment.id },
     {
-      enabled: !!selectedComment,
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
@@ -46,10 +45,7 @@ const SelectedCommentComponent: React.FC<{
       });
   };
   if (!getReplies.data) return <Loading />;
-  if (!selectedComment) {
-    changeSelectedComment(undefined);
-    return <></>;
-  }
+
   const submitReply = () => {
     changeReply("");
     toast

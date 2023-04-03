@@ -17,6 +17,7 @@ const MdVerified = dynamic(() =>
 );
 
 const CommentItem: React.FC<{
+  theme?: "Dark" | "Transparent";
   deleteComment: (id: string) => void;
   changeSelectedComment: Dispatch<SetStateAction<SelectedComment | undefined>>;
   ReplyTo?: SelectedComment;
@@ -32,13 +33,24 @@ const CommentItem: React.FC<{
     name: string;
     isVerified: boolean;
   };
-}> = ({ comment, userData, deleteComment, ReplyTo, changeSelectedComment }) => {
+}> = ({
+  comment,
+  userData,
+  deleteComment,
+  ReplyTo,
+  changeSelectedComment,
+  theme = "Transparent",
+}) => {
   const { data: userSession } = useSession();
   if (!userSession || !userSession.user) return <></>;
   return (
     <div className="mx-0 w-fit sm:m-2">
       <div className="flex w-fit items-center gap-2 rounded-lg">
-        <div className="flex w-fit items-center gap-2 rounded-lg bg-gray-800 px-3">
+        <div
+          className={`flex w-fit items-center gap-2 rounded-lg ${
+            theme == "Dark" ? "bg-gray-800" : ""
+          } px-3`}
+        >
           <div>
             {!!userData.image && (
               <Link href={PagesLinks.getProfileLink(userData.id)}>

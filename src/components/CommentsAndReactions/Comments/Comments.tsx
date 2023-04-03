@@ -58,6 +58,7 @@ const CommentsComponent: React.FC<{
                 name: comment.CreatedBy.name,
               }}
               changeSelectedComment={changeSelectedComment}
+              theme="Dark"
             />
           ))
         )}
