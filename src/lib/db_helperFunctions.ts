@@ -1,9 +1,30 @@
+import { Comment } from "@prisma/client";
 import { prisma } from "../server/db";
 
+export const deleteCommentsWithAllNestedReplies = async (
+  commentId: string
+): Promise<void> => {
+  // delete all nested comments
+  const nestedComments = await prisma.comment.findMany({
+    where: { replyToCommentId: commentId },
+  });
+  await Promise.all(
+    nestedComments.map((comment) =>
+      deleteCommentsWithAllNestedReplies(comment.id)
+    )
+  );
+
+  // delete the comment
+  await prisma.comment.delete({ where: { id: commentId } });
+};
+
 export const deleteUserPermanently = async (id: string) => {
-  // Deleting Comments....
-  await prisma.comment.deleteMany({ where: { CommenterUserId: id } });
-  // Deleting Replies to Comments
+  const comments = await prisma.comment.findMany({
+    where: { CommenterUserId: id },
+  });
+  await Promise.all(
+    comments.map((comment) => deleteCommentsWithAllNestedReplies(comment.id))
+  );
   await prisma.connectionRequest.deleteMany({ where: { senderId: id } });
   await prisma.message.deleteMany({ where: { senderId: id } });
   await prisma.notification.deleteMany({ where: { userId: id } });

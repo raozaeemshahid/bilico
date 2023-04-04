@@ -1,6 +1,7 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
+import { deleteCommentsWithAllNestedReplies } from "../../../../lib/db_helperFunctions";
 
 export const deleteComment = protectedProcedure
   .input(z.object({ commentId: z.string().uuid() }))
@@ -16,12 +17,10 @@ export const deleteComment = protectedProcedure
     if (comment.CommenterUserId !== ctx.session.user.id)
       throw new TRPCError({
         code: "UNAUTHORIZED",
-        message: "You're not the author to comment",
+        message: "You're not the author of comment",
       });
-    await ctx.prisma.comment.delete({
-      where: {
-        id: input.commentId,
-      },
-    });
+
+    await deleteCommentsWithAllNestedReplies(input.commentId);
+
     return { success: true };
   });

@@ -37,8 +37,8 @@ const SelectedCommentComponent: React.FC<{
         success: "Reply Deleted Successfully",
       })
       .then(() => {
-        void toast.promise(utils.publicApi.getComments.invalidate(), {
-          error: "Couldn't Reload Reply",
+        void toast.promise(utils.publicApi.getReplies.invalidate(), {
+          error: "Couldn't Reload Replies",
           pending: "Reloading Replies",
           success: "Replies Reloaded",
         });
@@ -61,7 +61,6 @@ const SelectedCommentComponent: React.FC<{
         }
       )
       .then(() => {
-        console.log("Commented, now reloading comments");
         void utils.publicApi.getReplies.invalidate();
       });
   };
