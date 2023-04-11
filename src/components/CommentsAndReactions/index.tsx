@@ -2,7 +2,6 @@ import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import Loading from "../Loading";
-import { api } from "../../utils/api";
 
 const Reactions = dynamic(() => import("./Reactions"), {
   loading: () => <Loading />,
@@ -19,18 +18,6 @@ const ReactionsAndComments: React.FC<{
 }> = ({ commentsCount, changeCommentCount, postId, reactionsCount }) => {
   const [isReactionsPanelOpen, changeIsReactionsPanelOpen] = useState(false);
   const [isCommentsPanelOpen, changeIsCommentsPanelOpen] = useState(false);
-
-  api.publicApi.getCommentsCount.useQuery(
-    { postId },
-    {
-      enabled: commentsCount > 0,
-      onSuccess: (data) => {
-        changeCommentCount(
-          Object.values(data).reduce((partialSum, a) => partialSum + a, 0)
-        );
-      },
-    }
-  );
 
   return (
     <>
@@ -62,7 +49,11 @@ const ReactionsAndComments: React.FC<{
         )}
         {isCommentsPanelOpen && (
           <div className="m-1 my-2 w-full rounded-lg bg-gray-700 p-2 xs:m-3">
-            <Comments postId={postId} commentsCount={commentsCount} />
+            <Comments
+              postId={postId}
+              commentsCount={commentsCount}
+              changeCommentCount={changeCommentCount}
+            />
           </div>
         )}
       </div>

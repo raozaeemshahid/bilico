@@ -10,8 +10,9 @@ import { toast } from "react-toastify";
 const CommentsComponent: React.FC<{
   postId: string;
   tab: CommentType;
+  changeCommentCount: Dispatch<SetStateAction<number>>;
   changeSelectedComment: Dispatch<SetStateAction<SelectedComment | undefined>>;
-}> = ({ tab, postId, changeSelectedComment }) => {
+}> = ({ tab, postId, changeSelectedComment, changeCommentCount }) => {
   const getComments = api.publicApi.getComments.useInfiniteQuery(
     { limit: 10, postId, commentType: tab },
     {
@@ -29,6 +30,7 @@ const CommentsComponent: React.FC<{
       })
       .then(() => {
         void utils.publicApi.getCommentsCount.invalidate({ postId });
+        changeCommentCount((count) => count - 1);
         void toast.promise(
           utils.publicApi.getComments.invalidate({
             postId,

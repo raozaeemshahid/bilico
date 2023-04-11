@@ -1,5 +1,5 @@
 import { CommentType } from "@prisma/client";
-import { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 import { api } from "../../../utils/api";
 import { useState } from "react";
@@ -7,9 +7,10 @@ import { useState } from "react";
 const CreateComment: React.FC<{
   comment: string;
   changeComment: Dispatch<SetStateAction<string>>;
+  changeCommentCount: Dispatch<SetStateAction<number>>;
   currentTab: CommentType;
   postId: string;
-}> = ({ changeComment, postId, comment, currentTab }) => {
+}> = ({ changeComment, postId, comment, currentTab, changeCommentCount }) => {
   const createComment = api.publicApi.createComment.useMutation();
   const [isCommenting, changeISCommenting] = useState(false);
 
@@ -44,6 +45,7 @@ const CreateComment: React.FC<{
       )
       .then(() => {
         void utils.publicApi.getCommentsCount.invalidate({ postId });
+        changeCommentCount((count) => count + 1);
         void toast.promise(
           utils.publicApi.getComments.invalidate({
             postId,
@@ -69,9 +71,11 @@ const CreateComment: React.FC<{
           onChange={(e) => changeComment(e.target.value)}
           id="large-input"
           className="sm:text-md block w-full rounded-lg border border-gray-600 bg-gray-900 px-3 py-2 text-lg text-gray-200 placeholder-gray-400 shadow-lg shadow-gray-800 focus:border-blue-500 focus:ring-blue-500"
-          placeholder={`${currentTab == "Agree" ? "How do you Agree?" : ""}${currentTab == "Disagree" ? "How do you Disagree?" : ""
-            }${currentTab == "Opinion" ? "What's your Opinion?" : ""}${currentTab == "Appreciation" ? "Write your Appreciation?" : ""
-            }`}
+          placeholder={`${currentTab == "Agree" ? "How do you Agree?" : ""}${
+            currentTab == "Disagree" ? "How do you Disagree?" : ""
+          }${currentTab == "Opinion" ? "What's your Opinion?" : ""}${
+            currentTab == "Appreciation" ? "Write your Appreciation?" : ""
+          }`}
         />
       </form>
       <div className="flex justify-end">

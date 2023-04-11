@@ -1,5 +1,6 @@
 import { CommentType } from "@prisma/client";
-import { useEffect, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { useState, useEffect } from "react";
 import SmallTabs from "../SmallTabs";
 import CommentsComponent from "./Comments";
 import CreateComment from "./CreateComment";
@@ -22,10 +23,11 @@ export interface SelectedComment {
   CreatedAt: Date;
 }
 
-const Comments: React.FC<{ postId: string; commentsCount: number }> = ({
-  postId,
-  commentsCount,
-}) => {
+const Comments: React.FC<{
+  postId: string;
+  commentsCount: number;
+  changeCommentCount: Dispatch<SetStateAction<number>>;
+}> = ({ postId, commentsCount, changeCommentCount }) => {
   const [currentTab, changeCurrentTab] = useState<CommentType>("Agree");
   const [selectedComment, changeSelectedComment] = useState<SelectedComment>();
 
@@ -63,6 +65,7 @@ const Comments: React.FC<{ postId: string; commentsCount: number }> = ({
         </div>
         <div className="py-3">
           <CreateComment
+            changeCommentCount={changeCommentCount}
             changeComment={changeComment}
             comment={comment}
             currentTab={currentTab}
@@ -74,6 +77,7 @@ const Comments: React.FC<{ postId: string; commentsCount: number }> = ({
             <div className="my-2 mt-3">
               {!!count.data && !!count.data[currentTab] && (
                 <CommentsComponent
+                  changeCommentCount={changeCommentCount}
                   postId={postId}
                   tab={currentTab}
                   changeSelectedComment={changeSelectedComment}
