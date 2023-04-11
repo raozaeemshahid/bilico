@@ -1,5 +1,5 @@
 import { Reaction } from "@prisma/client";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { api } from "../utils/api";
 import { AiFillLike, AiFillDislike, AiFillHeart } from "react-icons/ai";
 
@@ -20,11 +20,9 @@ const ReactComponent: React.FC<{
 
   return (
     <button
-      className={`flex border-collapse items-center justify-center gap-2 py-[5px] ${
-        isConfirming ? "bg-gray-700" : ""
-      } ${
-        isActive ? "bg-gray-900" : ""
-      } rounded-lg hover:bg-gray-700 border border-gray-500 py-1 px-4 text-sm font-semibold text-gray-200 shadow-md shadow-gray-900 xs:w-full`}
+      className={`flex border-collapse items-center justify-center gap-2 py-[5px] ${isConfirming ? "bg-gray-700" : ""
+        } ${isActive ? "bg-gray-900" : ""
+        } rounded-lg border border-gray-500 py-1 px-4 text-sm font-semibold text-gray-200 shadow-md shadow-gray-900 hover:bg-gray-700 xs:w-full`}
       onClick={() => reactPost(reaction)}
     >
       {isActive && (
@@ -45,7 +43,8 @@ const stackOfMutationsToReact: (Reaction | undefined)[] = [];
 const ReactPostComponent: React.FC<{
   reactionByVisitor?: { id: string; Reaction: Reaction };
   postId: string;
-}> = ({ reactionByVisitor, postId }) => {
+  changeReactionCount: Dispatch<SetStateAction<number>>;
+}> = ({ reactionByVisitor, postId, changeReactionCount }) => {
   const reactPostApi = api.publicApi.reactPost.useMutation({
     onSuccess(data) {
       if (data) {
@@ -83,18 +82,24 @@ const ReactPostComponent: React.FC<{
     changeConfirming(undefined);
     if (newReaction == active) {
       // removing the reactions
+      changeReactionCount((count) => count - 1);
       changeActive(undefined);
-      nextReaction = undefined
+      nextReaction = undefined;
     } else {
       // upserting reaction
+      if (!active) changeReactionCount((count) => count + 1);
       changeActive(newReaction);
-      nextReaction = newReaction
+      nextReaction = newReaction;
     }
     if (reactPostApi.isLoading || stackOfMutationsToReact.length > 0) {
       stackOfMutationsToReact.push(nextReaction);
       return;
     }
-    reactPostApi.mutate({postId, previousReactionId: reaction?.id, reaction: nextReaction});
+    reactPostApi.mutate({
+      postId,
+      previousReactionId: reaction?.id,
+      reaction: nextReaction,
+    });
   };
 
   return (

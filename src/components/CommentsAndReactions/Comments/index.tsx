@@ -5,8 +5,6 @@ import CommentsComponent from "./Comments";
 import CreateComment from "./CreateComment";
 import SelectedCommentComponent from "./SelectedComment";
 import { api } from "../../../utils/api";
-import Loading from "../../Loading";
-import { toast } from "react-toastify";
 
 export interface SelectedComment {
   Comment: string;

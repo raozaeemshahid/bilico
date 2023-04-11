@@ -2,9 +2,10 @@ import Image from "next/image";
 import moment from "moment";
 import dynamic from "next/dynamic";
 import BadWordsFilter from "../../../../../../utils/BadWordFilter";
-import ReactionsAndComments from "../../../../../CommentsAndReactions"; 
+import ReactionsAndComments from "../../../../../CommentsAndReactions";
 import type { Reaction } from "@prisma/client";
 import ReactPostComponent from "../../../../../ReactPost";
+import { useState } from "react";
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
@@ -25,6 +26,8 @@ const Post: React.FC<{
     isVerified: boolean | undefined;
   };
 }> = ({ post, userData }) => {
+  const [reactionsCount, changeReactionCount] = useState(post._count.reactions);
+  const [commentCount, changeCommentCount] = useState(post._count.comments);
   return (
     <>
       <div
@@ -68,14 +71,16 @@ const Post: React.FC<{
             ))}
           </div>
           <ReactPostComponent
+            changeReactionCount={changeReactionCount}
             postId={post.id}
             reactionByVisitor={post.reactionByVisitor}
           />
           <div className="mt-3">
             <ReactionsAndComments
-              commentsCount={post._count.comments}
+              changeCommentCount={changeCommentCount}
+              commentsCount={commentCount}
               postId={post.id}
-              reactionsCount={post._count.reactions}
+              reactionsCount={reactionsCount}
             />
           </div>
         </div>

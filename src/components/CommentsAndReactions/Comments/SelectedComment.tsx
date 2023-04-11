@@ -37,11 +37,16 @@ const SelectedCommentComponent: React.FC<{
         success: "Reply Deleted Successfully",
       })
       .then(() => {
-        void toast.promise(utils.publicApi.getReplies.invalidate(), {
-          error: "Couldn't Reload Replies",
-          pending: "Reloading Replies",
-          success: "Replies Reloaded",
-        });
+        void toast.promise(
+          utils.publicApi.getReplies.invalidate({
+            commentId: selectedComment.id,
+          }),
+          {
+            error: "Couldn't Reload Replies",
+            pending: "Reloading Replies",
+            success: "Replies Reloaded",
+          }
+        );
       });
   };
   if (!getReplies.data) return <Loading />;
@@ -61,7 +66,16 @@ const SelectedCommentComponent: React.FC<{
         }
       )
       .then(() => {
-        void utils.publicApi.getReplies.invalidate();
+        void toast.promise(
+          utils.publicApi.getReplies.invalidate({
+            commentId: selectedComment.id,
+          }),
+          {
+            error: "Couldn't Reload Replies",
+            pending: "Reloading Replies",
+            success: "Replies Reloaded",
+          }
+        );
       });
   };
   return (

@@ -1,7 +1,9 @@
+import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import Loading from "../Loading";
-import { Reaction } from "@prisma/client";
+import { api } from "../../utils/api";
+
 const Reactions = dynamic(() => import("./Reactions"), {
   loading: () => <Loading />,
 });
@@ -13,9 +15,22 @@ const ReactionsAndComments: React.FC<{
   reactionsCount: number;
   commentsCount: number;
   postId: string;
-}> = ({ commentsCount, postId, reactionsCount }) => {
+  changeCommentCount: Dispatch<SetStateAction<number>>;
+}> = ({ commentsCount, changeCommentCount, postId, reactionsCount }) => {
   const [isReactionsPanelOpen, changeIsReactionsPanelOpen] = useState(false);
   const [isCommentsPanelOpen, changeIsCommentsPanelOpen] = useState(false);
+
+  api.publicApi.getCommentsCount.useQuery(
+    { postId },
+    {
+      enabled: commentsCount > 0,
+      onSuccess: (data) => {
+        changeCommentCount(
+          Object.values(data).reduce((partialSum, a) => partialSum + a, 0)
+        );
+      },
+    }
+  );
 
   return (
     <>

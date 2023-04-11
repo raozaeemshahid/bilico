@@ -28,11 +28,18 @@ const CommentsComponent: React.FC<{
         success: "Comment Deleted Successfully",
       })
       .then(() => {
-        void toast.promise(utils.publicApi.getComments.invalidate(), {
-          error: "Couldn't Reload Comments",
-          pending: "Reloading Comments",
-          success: "Comments Reloaded",
-        });
+        void utils.publicApi.getCommentsCount.invalidate({ postId });
+        void toast.promise(
+          utils.publicApi.getComments.invalidate({
+            postId,
+            commentType: tab,
+          }),
+          {
+            error: "Couldn't Reload Comments",
+            pending: "Reloading Comments",
+            success: "Comments Reloaded",
+          }
+        );
       });
   };
   if (!getComments.data) return <Loading />;
