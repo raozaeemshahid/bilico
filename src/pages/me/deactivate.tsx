@@ -9,6 +9,8 @@ import { api } from "../../utils/api";
 
 import HomeLayout from "../../components/HomeLayout";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { ModalContext } from "../_app";
 
 const Deactivate: NextPage = () => {
   const router = useRouter();
@@ -36,6 +38,7 @@ const Deactivate: NextPage = () => {
       }
     },
   });
+  const controlModal = useContext(ModalContext);
 
   if (status == "loading" || !userSession || !userSession.user)
     return <LoadingFullScreen text="Signing You In" />;
@@ -49,16 +52,22 @@ const Deactivate: NextPage = () => {
     return <LoadingFullScreen />;
   }
   const deactivate = () => {
-    toast
-      .promise(deactivateApi.mutateAsync(), {
-        error: "Couldn't Deactivated Account",
-        pending: "Deactivating Account",
-        success: "Account Deactivated",
-      })
-      .then(() => {
-        void signOut();
-        void router.push(PagesLinks.getLoginLink());
-      });
+    controlModal.changeModal({
+      text: "Are you sure you want to deactivate your account?",
+      confirmText: "Delete",
+      confirm: () => {
+        toast
+          .promise(deactivateApi.mutateAsync(), {
+            error: "Couldn't Deactivated Account",
+            pending: "Deactivating Account",
+            success: "Account Deactivated",
+          })
+          .then(() => {
+            void signOut();
+            void router.push(PagesLinks.getLoginLink());
+          });
+      },
+    });
   };
   if (deactivateApi.isLoading) return <LoadingFullScreen />;
   return (

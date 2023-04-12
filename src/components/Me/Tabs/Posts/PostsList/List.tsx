@@ -6,6 +6,8 @@ import FetchMoreInfiniteComponent from "../../../../FetchMoreInfiniteQueryCompon
 import dynamic from "next/dynamic";
 import PostItem from "./PostItem";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { ModalContext } from "../../../../../pages/_app";
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
@@ -23,23 +25,30 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
   );
   const utils = api.useContext();
   const deletePostApi = api.me.DeletePost.useMutation();
+  const controlModal = useContext(ModalContext);
 
   if (!getPosts.data || !userData.data) return <Loading />;
 
   const deletePost = (postId: string) => {
-    void toast
-      .promise(deletePostApi.mutateAsync({ postId }), {
-        error: "Couldn't Delete Post",
-        pending: "Deleting Post",
-        success: "Post Deleted Successfully",
-      })
-      .then(() => {
-        void toast.promise(utils.me.getPosts.invalidate(), {
-          error: "Couldn't Reload Posts",
-          pending: "Reloading Posts",
-          success: "Posts Reloaded",
-        });
-      });
+    controlModal.changeModal({
+      text: "Are you sure you want to delete this Post?",
+      confirmText: "Delete",
+      confirm: () => {
+        void toast
+          .promise(deletePostApi.mutateAsync({ postId }), {
+            error: "Couldn't Delete Post",
+            pending: "Deleting Post",
+            success: "Post Deleted Successfully",
+          })
+          .then(() => {
+            void toast.promise(utils.me.getPosts.invalidate(), {
+              error: "Couldn't Reload Posts",
+              pending: "Reloading Posts",
+              success: "Posts Reloaded",
+            });
+          });
+      },
+    });
   };
   return (
     <>

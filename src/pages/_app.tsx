@@ -3,16 +3,31 @@ import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { createContext, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 import { api } from "../utils/api";
 
 import "../styles/globals.css";
 import Head from "next/head";
+import Modal from "../components/Modal";
+
+interface Modal {
+  text: string;
+  confirm: () => void;
+  confirmText?: string;
+}
+
+export const ModalContext = createContext<{
+  modal: Modal | undefined;
+  changeModal: Dispatch<SetStateAction<Modal | undefined>>;
+}>({ modal: undefined, changeModal: () => {} });
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const [modal, changeModal] = useState<Modal>();
   return (
     <SessionProvider session={session}>
       <Head>
@@ -20,7 +35,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="description" content="A Social Media For Professionals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Component {...pageProps} />
+      <ModalContext.Provider value={{ modal, changeModal }}>
+        <Modal />
+        <Component {...pageProps} />
+      </ModalContext.Provider>
       <ToastContainer
         position="top-right"
         autoClose={2000}

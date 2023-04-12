@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import type { SelectedComment } from ".";
 import { BiArrowBack } from "react-icons/bi";
 import { api } from "../../../utils/api";
@@ -10,6 +10,7 @@ import Link from "next/link";
 import PagesLinks from "../../../lib/PagesLink";
 import BadWordsFilter from "../../../utils/BadWordFilter";
 import dynamic from "next/dynamic";
+import { ModalContext } from "../../../pages/_app";
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
@@ -29,25 +30,32 @@ const SelectedCommentComponent: React.FC<{
   const deleteReplyApi = api.publicApi.deleteComment.useMutation();
   const replyCommentApi = api.publicApi.replyComment.useMutation();
   const utils = api.useContext();
+  const controlModal = useContext(ModalContext);
   const deleteComment = (commentId: string) => {
-    void toast
-      .promise(deleteReplyApi.mutateAsync({ commentId }), {
-        error: "Couldn't Delete Reply",
-        pending: "Deleting Reply",
-        success: "Reply Deleted Successfully",
-      })
-      .then(() => {
-        void toast.promise(
-          utils.publicApi.getReplies.invalidate({
-            commentId: selectedComment.id,
-          }),
-          {
-            error: "Couldn't Reload Replies",
-            pending: "Reloading Replies",
-            success: "Replies Reloaded",
-          }
-        );
-      });
+    controlModal.changeModal({
+      text: "Are you sure you want to delete this reply?",
+      confirmText: "Delete",
+      confirm: () => {
+        void toast
+          .promise(deleteReplyApi.mutateAsync({ commentId }), {
+            error: "Couldn't Delete Reply",
+            pending: "Deleting Reply",
+            success: "Reply Deleted Successfully",
+          })
+          .then(() => {
+            void toast.promise(
+              utils.publicApi.getReplies.invalidate({
+                commentId: selectedComment.id,
+              }),
+              {
+                error: "Couldn't Reload Replies",
+                pending: "Reloading Replies",
+                success: "Replies Reloaded",
+              }
+            );
+          });
+      },
+    });
   };
   if (!getReplies.data) return <Loading />;
 

@@ -1,11 +1,12 @@
 import type { CommentType } from "@prisma/client";
-import type { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import type { SelectedComment } from ".";
 import Loading from "../../Loading";
 
 import { api } from "../../../utils/api";
 import CommentItem from "./CommentItem";
 import { toast } from "react-toastify";
+import { ModalContext } from "../../../pages/_app";
 
 const CommentsComponent: React.FC<{
   postId: string;
@@ -21,28 +22,35 @@ const CommentsComponent: React.FC<{
   );
   const deleteCommentApi = api.publicApi.deleteComment.useMutation();
   const utils = api.useContext();
+  const controlModal = useContext(ModalContext);
   const deleteComment = (commentId: string) => {
-    void toast
-      .promise(deleteCommentApi.mutateAsync({ commentId }), {
-        error: "Couldn't Delete Comment",
-        pending: "Deleting Comment",
-        success: "Comment Deleted Successfully",
-      })
-      .then(() => {
-        void utils.publicApi.getCommentsCount.invalidate({ postId });
-        changeCommentCount((count) => count - 1);
-        void toast.promise(
-          utils.publicApi.getComments.invalidate({
-            postId,
-            commentType: tab,
-          }),
-          {
-            error: "Couldn't Reload Comments",
-            pending: "Reloading Comments",
-            success: "Comments Reloaded",
-          }
-        );
-      });
+    controlModal.changeModal({
+      text: "Are you sure you want to delete this comment?",
+      confirmText: "Delete",
+      confirm: () => {
+        void toast
+          .promise(deleteCommentApi.mutateAsync({ commentId }), {
+            error: "Couldn't Delete Comment",
+            pending: "Deleting Comment",
+            success: "Comment Deleted Successfully",
+          })
+          .then(() => {
+            void utils.publicApi.getCommentsCount.invalidate({ postId });
+            changeCommentCount((count) => count - 1);
+            void toast.promise(
+              utils.publicApi.getComments.invalidate({
+                postId,
+                commentType: tab,
+              }),
+              {
+                error: "Couldn't Reload Comments",
+                pending: "Reloading Comments",
+                success: "Comments Reloaded",
+              }
+            );
+          });
+      },
+    });
   };
   if (!getComments.data) return <Loading />;
 

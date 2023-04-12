@@ -10,6 +10,8 @@ import { api } from "../../utils/api";
 import HomeLayout from "../../components/HomeLayout";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { ModalContext } from "../_app";
 
 const Delete: NextPage = () => {
   const router = useRouter();
@@ -37,6 +39,7 @@ const Delete: NextPage = () => {
       }
     },
   });
+  const controlModal = useContext(ModalContext);
 
   if (status == "loading" || !userSession || !userSession.user)
     return <LoadingFullScreen text="Signing You In" />;
@@ -50,16 +53,22 @@ const Delete: NextPage = () => {
     return <LoadingFullScreen />;
   }
   const deleteMe = () => {
-    toast
-      .promise(deleteMeApi.mutateAsync(), {
-        error: "Couldn't Delete Account",
-        pending: "Deleting Account",
-        success: "Account Deleted",
-      })
-      .then(() => {
-        void signOut();
-        void router.push(PagesLinks.getLoginLink());
-      });
+    controlModal.changeModal({
+      text: "Are you sure you want to delete your account?",
+      confirmText: "Delete",
+      confirm: () => {
+        toast
+          .promise(deleteMeApi.mutateAsync(), {
+            error: "Couldn't Delete Account",
+            pending: "Deleting Account",
+            success: "Account Deleted",
+          })
+          .then(() => {
+            void signOut();
+            void router.push(PagesLinks.getLoginLink());
+          });
+      },
+    });
   };
   if (deleteMeApi.isLoading) return <LoadingFullScreen />;
   return (
