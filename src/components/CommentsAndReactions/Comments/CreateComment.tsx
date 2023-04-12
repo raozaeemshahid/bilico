@@ -71,8 +71,8 @@ const CreateComment: React.FC<{
           onChange={(e) => changeComment(e.target.value)}
           id="large-input"
           className="sm:text-md block w-full rounded-lg border border-gray-600 bg-gray-900 px-3 py-2 text-lg text-gray-200 placeholder-gray-400 shadow-lg shadow-gray-800 focus:border-blue-500 focus:ring-blue-500"
-          placeholder={`${currentTab == "Agree" ? "How do you Agree?" : ""}${
-            currentTab == "Disagree" ? "How do you Disagree?" : ""
+          placeholder={`${currentTab == "Question" ? "What's your Question?" : ""}${
+            currentTab == "Suggestion" ? "What's your Suggestion?" : ""
           }${currentTab == "Opinion" ? "What's your Opinion?" : ""}${
             currentTab == "Appreciation" ? "Write your Appreciation?" : ""
           }`}

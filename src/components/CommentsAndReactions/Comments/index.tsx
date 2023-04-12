@@ -28,7 +28,7 @@ const Comments: React.FC<{
   commentsCount: number;
   changeCommentCount: Dispatch<SetStateAction<number>>;
 }> = ({ postId, commentsCount, changeCommentCount }) => {
-  const [currentTab, changeCurrentTab] = useState<CommentType>("Agree");
+  const [currentTab, changeCurrentTab] = useState<CommentType>("Opinion");
   const [selectedComment, changeSelectedComment] = useState<SelectedComment>();
 
   const [comment, changeComment] = useState("");
@@ -53,9 +53,6 @@ const Comments: React.FC<{
     <>
       <div className="h-full rounded-lg py-2 md:px-3">
         <div className="flex items-center justify-center gap-2 rounded-lg border-b-4 border-gray-700 text-center text-sm">
-          <h2 className="block text-center text-lg font-bold 2sm:hidden">
-            Comments
-          </h2>
           <SmallTabs<CommentType>
             changeCurrentTab={(id) => changeCurrentTab(id)}
             currentTab={currentTab}

@@ -3,10 +3,10 @@ import { z } from "zod";
 import { CommentType } from "@prisma/client";
 
 const ZReaction = z.union([
-  z.literal(CommentType.Agree),
-  z.literal(CommentType.Disagree),
   z.literal(CommentType.Appreciation),
   z.literal(CommentType.Opinion),
+  z.literal(CommentType.Question),
+  z.literal(CommentType.Suggestion),
 ]);
 export const createComment = protectedProcedure
   .input(

@@ -225,10 +225,10 @@ enum ReportType {
 }
 
 enum CommentType {
-  Agree
-  Disagree
   Opinion
   Appreciation
+  Suggestion
+  Question
 }
 
 enum Gender {

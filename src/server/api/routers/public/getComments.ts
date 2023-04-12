@@ -8,12 +8,12 @@ export const getComments = protectedProcedure
       postId: z.string().uuid(),
       commentType: z
         .union([
-          z.literal<CommentType>("Agree"),
-          z.literal<CommentType>("Disagree"),
-          z.literal<CommentType>("Opinion"),
           z.literal<CommentType>("Appreciation"),
+          z.literal<CommentType>("Opinion"),
+          z.literal<CommentType>("Question"),
+          z.literal<CommentType>("Suggestion"),
         ])
-        .default("Agree"),
+        .default("Appreciation"),
       limit: z.number().min(1).max(100).nullish(),
       cursor: z.string().nullish(), // <-- "cursor" needs to exist, but can be any type
     })
