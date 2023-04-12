@@ -1,10 +1,50 @@
 import { z } from "zod";
 import { publicProcedure } from "../../trpc";
 import moment from "moment";
+import type { Gender } from "@prisma/client";
 
 export const getProfile = publicProcedure
   .input(z.object({ userId: z.string().uuid() }))
-  .query(async ({ input, ctx }) => {
+  .query<
+    | { notFound: boolean }
+    | { userDeactivated: true }
+    | { blocked: true }
+    | {
+        _count: {
+          following: number;
+          followers: number;
+          posts: number;
+          trusted: number;
+          connections: number;
+        };
+        success: boolean;
+        id: string;
+        name: string;
+        bio: string | null;
+        image: string | null;
+        createdAt: Date;
+        gender: Gender | null;
+        age: number;
+        country: string | null;
+        isVerified: boolean;
+        interests: { title: string }[];
+        skills: { title: string }[];
+        relationWithVisitor:
+          | "Blocked By Vistor"
+          | "Request Sent"
+          | "Request Recieved"
+          | "Connected"
+          | "Strangers";
+        following: {
+          doesFollowVisitor: boolean;
+          isFollowedByVisitor: boolean;
+        };
+        trust: {
+          isTrustedByVisitor: boolean;
+          userTrustsVisitor: boolean;
+        };
+      }
+  >(async ({ input, ctx }) => {
     const user = await ctx.prisma.user.findUnique({
       where: {
         id: input.userId,
@@ -89,16 +129,19 @@ export const getProfile = publicProcedure
       isVerified: user.isVerified,
       interests: user.Interests,
       skills: user.Skills,
-      isBlockedByVisitor: user.BlockedBy.length > 0,
-      isConnectedWithVisitor:
-        user.ConnectedWith.length > 0 || user.ConnectedTo.length > 0,
+      relationWithVisitor:
+        user.BlockedBy.length > 0
+          ? "Blocked By Vistor"
+          : user.ConnectedWith.length > 0 || user.ConnectedTo.length > 0
+          ? "Connected"
+          : user.ConnectionRequestsReceive.length > 0
+          ? "Request Recieved"
+          : user.ConnectionRequestsSent.length > 0
+          ? "Request Sent"
+          : "Strangers",
       following: {
         doesFollowVisitor: user.Follow.length > 0,
         isFollowedByVisitor: user.FollowedBy.length > 0,
-      },
-      connectionRequest: {
-        didUserSentToVisitor: user.ConnectionRequestsSent.length > 0,
-        diduserRecievedByVisitor: user.ConnectionRequestsReceive.length > 0,
       },
       trust: {
         isTrustedByVisitor: user.TrustedBy.length > 0,
