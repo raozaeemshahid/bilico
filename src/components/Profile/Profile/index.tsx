@@ -8,6 +8,7 @@ import Numbers from "./Numbers";
 
 import { UserIdContext } from "..";
 import { useContext } from "react";
+import Relation from "./Relation";
 
 const Profile: React.FC = () => {
   const userId = useContext(UserIdContext);
@@ -32,6 +33,11 @@ const Profile: React.FC = () => {
           image={data.image}
           isVerified={data.isVerified}
           name={data.name}
+        />
+        <Relation
+          trust={data.trust}
+          following={data.following}
+          relationWithVisitor={data.relationWithVisitor}
         />
         <div className="flex  flex-wrap sm:flex-nowrap">
           <Numbers _count={data._count} />

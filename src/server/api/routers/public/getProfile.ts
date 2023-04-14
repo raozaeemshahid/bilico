@@ -5,46 +5,7 @@ import type { Gender } from "@prisma/client";
 
 export const getProfile = publicProcedure
   .input(z.object({ userId: z.string().uuid() }))
-  .query<
-    | { notFound: boolean }
-    | { userDeactivated: true }
-    | { blocked: true }
-    | {
-        _count: {
-          following: number;
-          followers: number;
-          posts: number;
-          trusted: number;
-          connections: number;
-        };
-        success: boolean;
-        id: string;
-        name: string;
-        bio: string | null;
-        image: string | null;
-        createdAt: Date;
-        gender: Gender | null;
-        age: number;
-        country: string | null;
-        isVerified: boolean;
-        interests: { title: string }[];
-        skills: { title: string }[];
-        relationWithVisitor:
-          | "Blocked By Vistor"
-          | "Request Sent"
-          | "Request Recieved"
-          | "Connected"
-          | "Strangers";
-        following: {
-          doesFollowVisitor: boolean;
-          isFollowedByVisitor: boolean;
-        };
-        trust: {
-          isTrustedByVisitor: boolean;
-          userTrustsVisitor: boolean;
-        };
-      }
-  >(async ({ input, ctx }) => {
+  .query(async ({ input, ctx }) => {
     const user = await ctx.prisma.user.findUnique({
       where: {
         id: input.userId,
@@ -109,6 +70,21 @@ export const getProfile = publicProcedure
 
     if (user.Blocked.length > 0) return { blocked: true };
 
+    const relationWithVisitor:
+      | "Blocked By Vistor"
+      | "Request Sent"
+      | "Request Recieved"
+      | "Connected"
+      | "Strangers" = user.BlockedBy.length > 0
+        ? "Blocked By Vistor"
+        : user.ConnectedWith.length > 0 || user.ConnectedTo.length > 0
+          ? "Connected"
+          : user.ConnectionRequestsReceive.length > 0
+            ? "Request Recieved"
+            : user.ConnectionRequestsSent.length > 0
+              ? "Request Sent"
+              : "Strangers";
+
     return {
       _count: {
         following: user._count.Follow,
@@ -129,16 +105,7 @@ export const getProfile = publicProcedure
       isVerified: user.isVerified,
       interests: user.Interests,
       skills: user.Skills,
-      relationWithVisitor:
-        user.BlockedBy.length > 0
-          ? "Blocked By Vistor"
-          : user.ConnectedWith.length > 0 || user.ConnectedTo.length > 0
-          ? "Connected"
-          : user.ConnectionRequestsReceive.length > 0
-          ? "Request Recieved"
-          : user.ConnectionRequestsSent.length > 0
-          ? "Request Sent"
-          : "Strangers",
+      relationWithVisitor,
       following: {
         doesFollowVisitor: user.Follow.length > 0,
         isFollowedByVisitor: user.FollowedBy.length > 0,
