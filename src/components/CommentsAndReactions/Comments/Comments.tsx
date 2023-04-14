@@ -1,12 +1,17 @@
 import type { CommentType } from "@prisma/client";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import type { SelectedComment } from ".";
 import Loading from "../../Loading";
-
 import { api } from "../../../utils/api";
 import CommentItem from "./CommentItem";
 import { toast } from "react-toastify";
 import { ModalContext } from "../../../pages/_app";
+import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
+import {
+  listOrderOfDataByTime,
+  OrderOfDataByTime,
+} from "../../../lib/common/names";
+import Select from "react-select";
 
 const CommentsComponent: React.FC<{
   postId: string;
@@ -14,8 +19,9 @@ const CommentsComponent: React.FC<{
   changeCommentCount: Dispatch<SetStateAction<number>>;
   changeSelectedComment: Dispatch<SetStateAction<SelectedComment | undefined>>;
 }> = ({ tab, postId, changeSelectedComment, changeCommentCount }) => {
+  const [order, changeOrder] = useState<OrderOfDataByTime>("Oldest");
   const getComments = api.publicApi.getComments.useInfiniteQuery(
-    { limit: 10, postId, commentType: tab },
+    { limit: 10, postId, commentType: tab, order },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
@@ -56,6 +62,30 @@ const CommentsComponent: React.FC<{
 
   return (
     <>
+      <div className="flex items-center gap-2">
+        <h2>Order by</h2>
+        <Select
+          className="basic-single"
+          styles={{
+            control: (style) => ({
+              ...style,
+              border: "0px",
+              backgroundColor: "transparent",
+            }),
+            singleValue: (style) => ({ ...style, color: "white" }),
+          }}
+          classNamePrefix="select"
+          defaultValue={{ label: order }}
+          isClearable={false}
+          isSearchable={false}
+          name="order-select"
+          onChange={(data) => {
+            if (!data || !data.label) return;
+            changeOrder(data.label);
+          }}
+          options={listOrderOfDataByTime.map((order) => ({ label: order }))}
+        />
+      </div>
       <div className="flex flex-col gap-1">
         {getComments.data.pages.map((page) =>
           page.items.map((comment) => (
@@ -80,6 +110,12 @@ const CommentsComponent: React.FC<{
           ))
         )}
       </div>
+      <FetchMoreInfiniteComponent
+        fetchNextPage={() => void getComments.fetchNextPage()}
+        hasNextPage={getComments.hasNextPage}
+        isFetchingNextPage={getComments.isFetchingNextPage}
+        endingMsg=""
+      />
     </>
   );
 };

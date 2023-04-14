@@ -23,7 +23,11 @@ const CreateComment: React.FC<{
             className="m-2 flex rounded bg-green-600 py-2 px-4 text-sm font-bold text-white shadow-sm shadow-green-600 hover:bg-green-600"
             onClick={() => changeISCommenting(true)}
           >
-            Comment
+            {currentTab == "Question"
+              ? "Ask"
+              : currentTab == "Appreciation"
+              ? "Appreciate"
+              : "Comment"}
           </button>
         </div>
       </div>
@@ -71,11 +75,11 @@ const CreateComment: React.FC<{
           onChange={(e) => changeComment(e.target.value)}
           id="large-input"
           className="sm:text-md block w-full rounded-lg border border-gray-600 bg-gray-900 px-3 py-2 text-lg text-gray-200 placeholder-gray-400 shadow-lg shadow-gray-800 focus:border-blue-500 focus:ring-blue-500"
-          placeholder={`${currentTab == "Question" ? "What's your Question?" : ""}${
-            currentTab == "Suggestion" ? "What's your Suggestion?" : ""
-          }${currentTab == "Opinion" ? "What's your Opinion?" : ""}${
-            currentTab == "Appreciation" ? "Write your Appreciation?" : ""
-          }`}
+          placeholder={`${
+            currentTab == "Question" ? "What's your Question?" : ""
+          }${currentTab == "Suggestion" ? "What's your Suggestion?" : ""}${
+            currentTab == "Opinion" ? "What's your Opinion?" : ""
+          }${currentTab == "Appreciation" ? "Write your Appreciation?" : ""}`}
         />
       </form>
       <div className="flex justify-end">
@@ -98,7 +102,11 @@ const CreateComment: React.FC<{
             changeISCommenting(false);
           }}
         >
-          Continue
+          {currentTab == "Question"
+            ? "Ask"
+            : currentTab == "Appreciation"
+            ? "Appreciate"
+            : "Comment"}
         </button>
       </div>
     </div>

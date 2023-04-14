@@ -1,5 +1,6 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
+import { OrderOfDataByTime } from "../../../../lib/common/names";
 
 export const getReplies = protectedProcedure
   .input(
@@ -7,6 +8,12 @@ export const getReplies = protectedProcedure
       commentId: z.string().uuid(),
       limit: z.number().min(1).max(100).nullish(),
       cursor: z.string().nullish(), // <-- "cursor" needs to exist, but can be any type
+      order: z
+        .union([
+          z.literal<OrderOfDataByTime>("Newest"),
+          z.literal<OrderOfDataByTime>("Oldest"),
+        ])
+        .default("Newest"),
     })
   )
   .query(async ({ input, ctx }) => {
@@ -19,7 +26,7 @@ export const getReplies = protectedProcedure
       },
       cursor: cursor ? { id: cursor } : undefined,
       orderBy: {
-        CreatedAt: "asc",
+        CreatedAt: input.order == "Newest" ? "desc" : "asc",
       },
       select: {
         id: true,

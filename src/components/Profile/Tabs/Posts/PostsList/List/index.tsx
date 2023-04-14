@@ -52,7 +52,7 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
           fetchNextPage={() => void getPosts.fetchNextPage()}
           hasNextPage={getPosts.hasNextPage}
           isFetchingNextPage={getPosts.isFetchingNextPage}
-          endingMsg="You're all caught up!"
+          endingMsg=""
         />
       </div>
     </>

@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { publicProcedure } from "../../trpc";
 import moment from "moment";
-import type { Gender } from "@prisma/client";
 
 export const getProfile = publicProcedure
   .input(z.object({ userId: z.string().uuid() }))

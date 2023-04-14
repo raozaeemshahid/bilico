@@ -1,6 +1,7 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import { CommentType } from "@prisma/client";
+import { OrderOfDataByTime } from "../../../../lib/common/names";
 
 export const getComments = protectedProcedure
   .input(
@@ -14,6 +15,12 @@ export const getComments = protectedProcedure
           z.literal<CommentType>("Suggestion"),
         ])
         .default("Appreciation"),
+      order: z
+        .union([
+          z.literal<OrderOfDataByTime>("Newest"),
+          z.literal<OrderOfDataByTime>("Oldest"),
+        ])
+        .default("Newest"),
       limit: z.number().min(1).max(100).nullish(),
       cursor: z.string().nullish(), // <-- "cursor" needs to exist, but can be any type
     })
@@ -29,7 +36,7 @@ export const getComments = protectedProcedure
       },
       cursor: cursor ? { id: cursor } : undefined,
       orderBy: {
-        CreatedAt: "asc",
+        CreatedAt: input.order == "Newest" ? "desc" : "asc",
       },
       select: {
         id: true,
