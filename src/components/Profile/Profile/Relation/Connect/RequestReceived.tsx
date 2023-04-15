@@ -21,7 +21,7 @@ const RequestReceived: React.FC = () => {
             onClick: () => {
               if (acceptRequestApi.isLoading) return;
               modalControl.changeModal({
-                text: "Accept Request?",
+                text: "Accept Request",
                 confirmText: "Accept",
                 confirm: () => {
                   void toast.promise(

@@ -5,6 +5,11 @@ import { TRPCError } from "@trpc/server";
 export const acceptRequest = protectedProcedure
   .input(z.object({ senderId: z.string().uuid() }))
   .mutation(async ({ input, ctx }) => {
+    if (ctx.session.user.id == input.senderId)
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "Couldn't do operation to self",
+      });
     const request = await ctx.prisma.connectionRequest.findFirst({
       where: {
         senderId: input.senderId,

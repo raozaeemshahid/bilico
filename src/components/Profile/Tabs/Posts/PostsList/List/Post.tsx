@@ -5,7 +5,9 @@ import BadWordsFilter from "../../../../../../utils/BadWordFilter";
 import ReactionsAndComments from "../../../../../CommentsAndReactions";
 import type { Reaction } from "@prisma/client";
 import ReactPostComponent from "../../../../../ReactPost";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useSession } from "next-auth/react";
+import { UserIdContext } from "../../../..";
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
@@ -28,6 +30,10 @@ const Post: React.FC<{
 }> = ({ post, userData }) => {
   const [reactionsCount, changeReactionCount] = useState(post._count.reactions);
   const [commentCount, changeCommentCount] = useState(post._count.comments);
+  const { data: userSession } = useSession();
+  const userId = useContext(UserIdContext);
+
+  if (!userSession || !userSession.user) return <></>;
   return (
     <>
       <div
@@ -70,11 +76,13 @@ const Post: React.FC<{
               </h3>
             ))}
           </div>
-          <ReactPostComponent
-            changeReactionCount={changeReactionCount}
-            postId={post.id}
-            reactionByVisitor={post.reactionByVisitor}
-          />
+          {userSession.user.id !== userId && (
+            <ReactPostComponent
+              changeReactionCount={changeReactionCount}
+              postId={post.id}
+              reactionByVisitor={post.reactionByVisitor}
+            />
+          )}
           <div className="mt-3">
             <ReactionsAndComments
               changeCommentCount={changeCommentCount}

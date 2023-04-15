@@ -53,7 +53,7 @@ const Follow: React.FC<{
             onClick: () => {
               if (unfollowApi.isLoading) return;
               modalControl.changeModal({
-                text: "Unfollow?",
+                text: "",
                 confirmText: "unfollow",
                 confirm: () => {
                   void toast.promise(

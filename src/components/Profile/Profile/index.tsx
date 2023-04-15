@@ -12,7 +12,7 @@ import Relation from "./Relation";
 
 const Profile: React.FC = () => {
   const userId = useContext(UserIdContext);
-  const { status } = useSession();
+  const { status, data: userSession } = useSession();
 
   const userData = api.publicApi.getProfile.useQuery(
     { userId },
@@ -21,7 +21,12 @@ const Profile: React.FC = () => {
     }
   );
 
-  if (!userData.data || !userData.data.success)
+  if (
+    !userData.data ||
+    !userData.data.success ||
+    !userSession ||
+    !userSession.user
+  )
     return <Loading text="Loading Data" />;
 
   const data = userData.data;
@@ -34,12 +39,14 @@ const Profile: React.FC = () => {
           isVerified={data.isVerified}
           name={data.name}
         />
-        <Relation
-          trust={data.trust}
-          following={data.following}
-          relationWithVisitor={data.relationWithVisitor}
-          Gender={data.gender}
-        />
+        {userSession.user.id !== userId && (
+          <Relation
+            trust={data.trust}
+            following={data.following}
+            relationWithVisitor={data.relationWithVisitor}
+            Gender={data.gender}
+          />
+        )}
         <div className="flex  flex-wrap sm:flex-nowrap">
           <Numbers _count={data._count} />
           <BioData

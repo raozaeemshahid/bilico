@@ -21,7 +21,7 @@ const RequestSent: React.FC = () => {
             onClick: () => {
               if (cancelRequestApi.isLoading) return;
               modalControl.changeModal({
-                text: "Cancel Request?",
+                text: "Cancel Request",
                 confirmText: "Confirm",
                 confirm: () => {
                   void toast.promise(

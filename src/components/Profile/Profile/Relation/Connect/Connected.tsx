@@ -20,7 +20,7 @@ const Connected: React.FC = () => {
             onClick: () => {
               if (removeConnnectionApi.isLoading) return;
               modalControl.changeModal({
-                text: "Remove Connection?",
+                text: "Remove Connection",
                 confirmText: "Remove",
                 confirm: () => {
                   void toast.promise(
