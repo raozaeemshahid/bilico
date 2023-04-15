@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { publicProcedure } from "../../trpc";
+import { protectedProcedure } from "../../trpc";
 import moment from "moment";
 
-export const getProfile = publicProcedure
+export const getProfile = protectedProcedure
   .input(z.object({ userId: z.string().uuid() }))
   .query(async ({ input, ctx }) => {
     const user = await ctx.prisma.user.findUnique({
@@ -43,22 +43,22 @@ export const getProfile = publicProcedure
         BannedUntil: true,
         emailVerified: true,
 
-        Blocked: { where: { id: input.userId }, select: { id: true } },
-        BlockedBy: { where: { id: input.userId }, select: { id: true } },
-        ConnectedTo: { where: { id: input.userId }, select: { id: true } },
-        ConnectedWith: { where: { id: input.userId }, select: { id: true } },
-        Follow: { where: { id: input.userId }, select: { id: true } },
-        FollowedBy: { where: { id: input.userId }, select: { id: true } },
+        Blocked: { where: { id: ctx.session.user.id}, select: { id: true } },
+        BlockedBy: { where: { id: ctx.session.user.id }, select: { id: true } },
+        ConnectedTo: { where: { id: ctx.session.user.id }, select: { id: true } },
+        ConnectedWith: { where: { id: ctx.session.user.id }, select: { id: true } },
+        Follow: { where: { id: ctx.session.user.id }, select: { id: true } },
+        FollowedBy: { where: { id: ctx.session.user.id }, select: { id: true } },
         ConnectionRequestsReceive: {
-          where: { senderId: input.userId },
+          where: { senderId: ctx.session.user.id },
           select: { id: true },
         },
         ConnectionRequestsSent: {
-          where: { receiverId: input.userId },
+          where: { receiverId: ctx.session.user.id },
           select: { id: true },
         },
-        TrustedBy: { where: { id: input.userId }, select: { id: true } },
-        Trust: { where: { id: input.userId }, select: { id: true } },
+        TrustedBy: { where: { id: ctx.session.user.id }, select: { id: true } },
+        Trust: { where: { id: ctx.session.user.id }, select: { id: true } },
       },
     });
 
@@ -79,9 +79,9 @@ export const getProfile = publicProcedure
         : user.ConnectedWith.length > 0 || user.ConnectedTo.length > 0
           ? "Connected"
           : user.ConnectionRequestsReceive.length > 0
-            ? "Request Recieved"
+            ? "Request Sent"
             : user.ConnectionRequestsSent.length > 0
-              ? "Request Sent"
+              ? "Request Recieved"
               : "Strangers";
 
     return {

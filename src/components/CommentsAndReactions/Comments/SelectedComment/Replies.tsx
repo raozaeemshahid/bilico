@@ -55,30 +55,23 @@ const Replies: React.FC<{
   const submitReply = () => {
     if (replyCommentApi.isLoading) return;
     changeReply("");
-    toast
-      .promise(
-        replyCommentApi.mutateAsync({
+    void toast.promise(
+      replyCommentApi
+        .mutateAsync({
           comment: reply,
           replyToCommentId: selectedComment.id,
-        }),
-        {
-          error: "Couldn't Reply",
-          pending: "Replying",
-          success: "Replied",
-        }
-      )
-      .then(() => {
-        void toast.promise(
+        })
+        .then(() =>
           utils.publicApi.getReplies.invalidate({
             commentId: selectedComment.id,
-          }),
-          {
-            error: "Couldn't Reload Replies",
-            pending: "Reloading Replies",
-            success: "Replies Reloaded",
-          }
-        );
-      });
+          })
+        ),
+      {
+        error: "Couldn't Reply",
+        pending: "Replying",
+        success: "Replied",
+      }
+    );
   };
   return (
     <>

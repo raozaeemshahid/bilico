@@ -34,13 +34,23 @@ const CreateComment: React.FC<{
     );
   const submitComment = () => {
     changeComment("");
-    toast
+    void toast
       .promise(
-        createComment.mutateAsync({
-          comment,
-          postId,
-          commentType: currentTab,
-        }),
+        createComment
+          .mutateAsync({
+            comment,
+            postId,
+            commentType: currentTab,
+          })
+          .then(() =>
+            Promise.all([
+              utils.publicApi.getCommentsCount.invalidate({ postId }),
+              utils.publicApi.getComments.invalidate({
+                postId,
+                commentType: currentTab,
+              }),
+            ])
+          ),
         {
           error: "Couldn't Comment",
           pending: "Commenting",
@@ -48,19 +58,7 @@ const CreateComment: React.FC<{
         }
       )
       .then(() => {
-        void utils.publicApi.getCommentsCount.invalidate({ postId });
         changeCommentCount((count) => count + 1);
-        void toast.promise(
-          utils.publicApi.getComments.invalidate({
-            postId,
-            commentType: currentTab,
-          }),
-          {
-            success: "Comments Reloaded",
-            pending: "Reloading",
-            error: "Couldn't Reload",
-          }
-        );
       });
   };
   return (

@@ -1,18 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 
 const DropDownBody: React.FC<{
   isOpen: boolean;
+  changeIsOpen: Dispatch<SetStateAction<boolean>>;
   options: { label: string; onClick: () => void }[];
-}> = ({ options, isOpen = false }) => {
+}> = ({ options, isOpen = false, changeIsOpen }) => {
   if (!isOpen) return <></>;
   return (
     <>
-      <div className="rounded-lg bg-gray-700 p-1 mt-1 shadow-lg shadow-gray-900">
+      <div className="mt-1 rounded-lg bg-gray-700 p-1 shadow-lg shadow-gray-900">
         {options.map((option) => (
           <div
             key={option.label}
-            onClick={option.onClick}
+            onClick={() => {
+              option.onClick();
+              changeIsOpen(false);
+            }}
             className="w-full rounded-md p-1 px-4 hover:cursor-pointer hover:bg-gray-800"
           >
             {option.label}
@@ -53,7 +57,11 @@ const DropDown: React.FC<{
           <BsThreeDots />
         </button>
         <div ref={BodyRef} className="absolute mt-2">
-          <DropDownBody isOpen={isOpen} options={options} />
+          <DropDownBody
+            isOpen={isOpen}
+            changeIsOpen={changeIsOpen}
+            options={options}
+          />
         </div>
       </div>
     </div>

@@ -28,7 +28,7 @@ const SmallTabs = <T extends string>({
                 onClick={() => changeCurrentTab(tab)}
                 className="whitespace-nowrap  px-5 py-1"
               >
-                {`${count[tab] ? count[tab] + " " : ""}${tab}`}
+                {`${count[tab] || ""} ${tab}`}
               </button>
             </div>
           );

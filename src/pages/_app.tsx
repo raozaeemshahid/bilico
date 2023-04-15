@@ -14,14 +14,16 @@ import Modal from "../components/Modal";
 
 interface Modal {
   text: string;
-  confirm: () => void;
+  confirm: (note: string) => void;
   confirmText?: string;
+  includeNote?: boolean;
+  noteText?: string;
 }
 
 export const ModalContext = createContext<{
   modal: Modal | undefined;
-  changeModal: Dispatch<SetStateAction<Modal | undefined>>;
-}>({ modal: undefined, changeModal: () => {} });
+  changeModal: (newModal: Modal | undefined) => void;
+}>({ changeModal(newModal) { newModal }, modal: undefined });
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -35,7 +37,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="description" content="A Social Media For Professionals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ModalContext.Provider value={{ modal, changeModal }}>
+      <ModalContext.Provider
+        value={{ modal, changeModal: (newModal) => changeModal(newModal) }}
+      >
         <Modal />
         <Component {...pageProps} />
       </ModalContext.Provider>

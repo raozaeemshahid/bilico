@@ -35,25 +35,24 @@ const CommentsComponent: React.FC<{
       confirmText: "Delete",
       confirm: () => {
         void toast
-          .promise(deleteCommentApi.mutateAsync({ commentId }), {
-            error: "Couldn't Delete Comment",
-            pending: "Deleting Comment",
-            success: "Comment Deleted Successfully",
-          })
+          .promise(
+            deleteCommentApi.mutateAsync({ commentId }).then(() =>
+              Promise.all([
+                utils.publicApi.getComments.invalidate({
+                  postId,
+                  commentType: tab,
+                }),
+                utils.publicApi.getCommentsCount.invalidate({ postId }),
+              ])
+            ),
+            {
+              error: "Couldn't Delete Comment",
+              pending: "Deleting Comment",
+              success: "Comment Deleted Successfully",
+            }
+          )
           .then(() => {
-            void utils.publicApi.getCommentsCount.invalidate({ postId });
             changeCommentCount((count) => count - 1);
-            void toast.promise(
-              utils.publicApi.getComments.invalidate({
-                postId,
-                commentType: tab,
-              }),
-              {
-                error: "Couldn't Reload Comments",
-                pending: "Reloading Comments",
-                success: "Comments Reloaded",
-              }
-            );
           });
       },
     });

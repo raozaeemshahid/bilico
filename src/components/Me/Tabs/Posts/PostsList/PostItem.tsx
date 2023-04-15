@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import BadWordsFilter from "../../../../../utils/BadWordFilter";
 import ReactionsAndComments from "../../../../CommentsAndReactions";
 import TopRightDropDown from "../../../../TopRightDropdown";
+import { useState } from "react";
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
@@ -24,6 +25,7 @@ const PostItem: React.FC<{
     isVerified: boolean | undefined;
   };
 }> = ({ post, userData, deletePost }) => {
+  const [commentCount, changeCommentCount] = useState(post._count.comments);
   return (
     <>
       <div className="w-full rounded-lg bg-gray-800 py-3 px-0 xs:px-4 sm:m-2">
@@ -68,7 +70,8 @@ const PostItem: React.FC<{
           </div>
           <div className="mt-3">
             <ReactionsAndComments
-              commentsCount={post._count.comments}
+              changeCommentCount={changeCommentCount}
+              commentsCount={commentCount}
               postId={post.id}
               reactionsCount={post._count.reactions}
             />

@@ -38,6 +38,7 @@ const Profile: React.FC = () => {
           trust={data.trust}
           following={data.following}
           relationWithVisitor={data.relationWithVisitor}
+          Gender={data.gender}
         />
         <div className="flex  flex-wrap sm:flex-nowrap">
           <Numbers _count={data._count} />

@@ -33,7 +33,7 @@ const Deactivated: NextPage = () => {
     return <LoadingFullScreen text="Getting Things Ready" />;
 
   const reactivate = () => {
-    toast
+    void toast
       .promise(reactivateApi.mutateAsync(), {
         error: "Couldn't Reactivate",
         pending: "Reactivating Account",

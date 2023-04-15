@@ -1,17 +1,11 @@
 import { api } from "../../../../../utils/api";
-import moment from "moment";
 import Loading from "../../../../Loading";
 import type { OrderOfDataByTime } from "../../../../../lib/common/names";
 import FetchMoreInfiniteComponent from "../../../../FetchMoreInfiniteQueryComponent";
-import dynamic from "next/dynamic";
 import PostItem from "./PostItem";
 import { toast } from "react-toastify";
 import { useContext } from "react";
 import { ModalContext } from "../../../../../pages/_app";
-
-const MdVerified = dynamic(() =>
-  import("react-icons/md").then((icons) => icons.MdVerified)
-);
 
 const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
   order,

@@ -56,7 +56,7 @@ const Deactivate: NextPage = () => {
       text: "Are you sure you want to deactivate your account?",
       confirmText: "Delete",
       confirm: () => {
-        toast
+        void toast
           .promise(deactivateApi.mutateAsync(), {
             error: "Couldn't Deactivated Account",
             pending: "Deactivating Account",

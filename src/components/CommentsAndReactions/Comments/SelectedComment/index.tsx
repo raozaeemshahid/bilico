@@ -1,17 +1,11 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction , useState } from "react";
 import type { SelectedComment } from "../";
 import { BiArrowBack } from "react-icons/bi";
-import { api } from "../../../../utils/api";
-import { toast } from "react-toastify";
-import Loading from "../../../Loading";
-import CommentItem from "../CommentItem";
 import Image from "next/image";
 import Link from "next/link";
 import PagesLinks from "../../../../lib/PagesLink";
 import BadWordsFilter from "../../../../utils/BadWordFilter";
 import dynamic from "next/dynamic";
-import { ModalContext } from "../../../../pages/_app";
-import FetchMoreInfiniteComponent from "../../../FetchMoreInfiniteQueryComponent";
 import {
   listOrderOfDataByTime,
   OrderOfDataByTime,

@@ -57,7 +57,7 @@ const Delete: NextPage = () => {
       text: "Are you sure you want to delete your account?",
       confirmText: "Delete",
       confirm: () => {
-        toast
+        void toast
           .promise(deleteMeApi.mutateAsync(), {
             error: "Couldn't Delete Account",
             pending: "Deleting Account",

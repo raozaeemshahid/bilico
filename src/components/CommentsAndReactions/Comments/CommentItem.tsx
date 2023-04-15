@@ -2,12 +2,12 @@ import Image from "next/image";
 import moment from "moment";
 import dynamic from "next/dynamic";
 import BadWordsFilter from "../../../utils/BadWordFilter";
-import DropDown from "./DropDown";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import PagesLinks from "../../../lib/PagesLink";
 import { Dispatch, SetStateAction } from "react";
 import { SelectedComment } from ".";
+import DropDown from "../../TopRightDropdown/InlineDropDown";
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
