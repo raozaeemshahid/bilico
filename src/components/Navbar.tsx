@@ -2,7 +2,6 @@ import { signIn, signOut } from "next-auth/react";
 import type { LinkType } from "../lib/NavbarLinkProvider";
 import Link from "next/link";
 import PagesLinks from "../lib/PagesLink";
-import { api } from "../utils/api";
 
 const NavbarLinks: React.FC<{ links?: LinkType[] }> = ({ links }) => {
   return (
@@ -47,7 +46,6 @@ const Navbar: React.FC<{
   links?: LinkType[];
   signedOut?: boolean;
 }> = ({ links, signedOut = false }) => {
-  const deleteMe = api.me.deleteMyAccount.useMutation();
 
   return (
     <header className="body-font bg-gray-800">

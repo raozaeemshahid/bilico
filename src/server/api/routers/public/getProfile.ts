@@ -43,12 +43,21 @@ export const getProfile = protectedProcedure
         BannedUntil: true,
         emailVerified: true,
 
-        Blocked: { where: { id: ctx.session.user.id}, select: { id: true } },
+        Blocked: { where: { id: ctx.session.user.id }, select: { id: true } },
         BlockedBy: { where: { id: ctx.session.user.id }, select: { id: true } },
-        ConnectedTo: { where: { id: ctx.session.user.id }, select: { id: true } },
-        ConnectedWith: { where: { id: ctx.session.user.id }, select: { id: true } },
+        ConnectedTo: {
+          where: { id: ctx.session.user.id },
+          select: { id: true },
+        },
+        ConnectedWith: {
+          where: { id: ctx.session.user.id },
+          select: { id: true },
+        },
         Follow: { where: { id: ctx.session.user.id }, select: { id: true } },
-        FollowedBy: { where: { id: ctx.session.user.id }, select: { id: true } },
+        FollowedBy: {
+          where: { id: ctx.session.user.id },
+          select: { id: true },
+        },
         ConnectionRequestsReceive: {
           where: { senderId: ctx.session.user.id },
           select: { id: true },
@@ -70,18 +79,19 @@ export const getProfile = protectedProcedure
     if (user.Blocked.length > 0) return { blocked: true };
 
     const relationWithVisitor:
-      | "Blocked By Vistor"
+      | "Blocked By Visitor"
       | "Request Sent"
       | "Request Recieved"
       | "Connected"
-      | "Strangers" = user.BlockedBy.length > 0
-        ? "Blocked By Vistor"
+      | "Strangers" =
+      user.BlockedBy.length > 0
+        ? "Blocked By Visitor"
         : user.ConnectedWith.length > 0 || user.ConnectedTo.length > 0
           ? "Connected"
-          : user.ConnectionRequestsReceive.length > 0
-            ? "Request Sent"
-            : user.ConnectionRequestsSent.length > 0
-              ? "Request Recieved"
+          : user.ConnectionRequestsSent.length > 0
+            ? "Request Recieved"
+            : user.ConnectionRequestsReceive.length > 0
+              ? "Request Sent"
               : "Strangers";
 
     return {

@@ -1,6 +1,6 @@
 import { signOut, useSession } from "next-auth/react";
 import { api } from "../../utils/api";
-import Loading, { LoadingFullScreen } from "../Loading";
+import { LoadingFullScreen } from "../Loading";
 import { useEffect, useState } from "react";
 import { zodName } from "../../lib/zod";
 import PagesLinks from "../../lib/PagesLink";

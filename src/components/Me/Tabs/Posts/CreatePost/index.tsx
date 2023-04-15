@@ -3,7 +3,6 @@ import PreviewNewPost from "./PreviewNewPost";
 import CreateNewPost from "./CreateNewPost";
 import { api } from "../../../../../utils/api";
 import type { Interest } from "@prisma/client";
-import Loading from "../../../../Loading";
 import { zodPost } from "../../../../../lib/zod";
 import { toast } from "react-toastify";
 

@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { useContext, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import type { SelectedComment } from "../";
 import { api } from "../../../../utils/api";
 import { toast } from "react-toastify";
@@ -6,7 +7,7 @@ import Loading from "../../../Loading";
 import CommentItem from "../CommentItem";
 import { ModalContext } from "../../../../pages/_app";
 import FetchMoreInfiniteComponent from "../../../FetchMoreInfiniteQueryComponent";
-import { OrderOfDataByTime } from "../../../../lib/common/names";
+import type { OrderOfDataByTime } from "../../../../lib/common/names";
 
 const Replies: React.FC<{
   selectedComment: SelectedComment;

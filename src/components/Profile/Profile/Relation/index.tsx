@@ -1,4 +1,4 @@
-import { Gender } from "@prisma/client";
+import type { Gender } from "@prisma/client";
 import Connect from "./Connect";
 import Follow from "./Follow";
 import InfoText from "./Text";
@@ -10,7 +10,7 @@ const Relation: React.FC<{
     isFollowedByVisitor: boolean;
   };
   relationWithVisitor:
-    | "Blocked By Vistor"
+    | "Blocked By Visitor"
     | "Request Sent"
     | "Request Recieved"
     | "Connected"
@@ -32,10 +32,10 @@ const Relation: React.FC<{
       />
       <div className="flex gap-2 text-sm">
         <Connect relationWithVisitor={relationWithVisitor} />
-        {relationWithVisitor !== "Blocked By Vistor" && (
+        {relationWithVisitor !== "Blocked By Visitor" && (
           <Follow following={following.isFollowedByVisitor} />
         )}
-        {relationWithVisitor !== "Blocked By Vistor" && (
+        {relationWithVisitor !== "Blocked By Visitor" && (
           <Trust trusts={trust.isTrustedByVisitor} />
         )}
       </div>

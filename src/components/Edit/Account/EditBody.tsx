@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { api } from "../../../utils/api";
 import Loading from "../../Loading";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Interest, Skill } from "@prisma/client";
 import Select from "react-select";
 import { toast } from "react-toastify";

@@ -1,6 +1,5 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
-import { CommentType } from "@prisma/client";
 
 export const replyComment = protectedProcedure
   .input(

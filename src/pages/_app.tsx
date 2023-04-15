@@ -4,7 +4,6 @@ import { SessionProvider } from "next-auth/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { createContext, useState } from "react";
-import type { Dispatch, SetStateAction } from "react";
 
 import { api } from "../utils/api";
 

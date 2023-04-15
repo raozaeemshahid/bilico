@@ -7,7 +7,7 @@ import Strangers from "./Strangers";
 
 const Connect: React.FC<{
   relationWithVisitor:
-    | "Blocked By Vistor"
+    | "Blocked By Visitor"
     | "Request Sent"
     | "Request Recieved"
     | "Connected"
@@ -16,7 +16,7 @@ const Connect: React.FC<{
   if (relationWithVisitor == "Strangers") return <Strangers />;
   if (relationWithVisitor == "Request Sent") return <RequestSent />;
   if (relationWithVisitor == "Request Recieved") return <RequestReceived />;
-  if (relationWithVisitor == "Blocked By Vistor") return <Blocked />;
+  if (relationWithVisitor == "Blocked By Visitor") return <Blocked />;
   return <ConnectComponent />;
 };
 export default memo(Connect);

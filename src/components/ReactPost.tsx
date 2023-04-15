@@ -1,5 +1,6 @@
 import { Reaction } from "@prisma/client";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { api } from "../utils/api";
 import { AiFillLike, AiFillDislike, AiFillHeart } from "react-icons/ai";
 
@@ -67,7 +68,7 @@ const ReactPostComponent: React.FC<{
   const [active, changeActive] = useState<Reaction>();
   useEffect(() => {
     if (reactionByVisitor) changeActive(reactionByVisitor.Reaction);
-  }, []);
+  }, [reactionByVisitor]);
 
   const reactPost = (newReaction: Reaction) => {
     if (confirming && confirming !== newReaction)

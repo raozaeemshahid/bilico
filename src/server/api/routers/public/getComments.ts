@@ -1,7 +1,7 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
-import { CommentType } from "@prisma/client";
-import { OrderOfDataByTime } from "../../../../lib/common/names";
+import type { CommentType } from "@prisma/client";
+import type { OrderOfDataByTime } from "../../../../lib/common/names";
 
 export const getComments = protectedProcedure
   .input(
@@ -57,7 +57,7 @@ export const getComments = protectedProcedure
     let nextCursor: typeof cursor | undefined = undefined;
     if (items.length > limit) {
       const nextItem = items.pop();
-      nextCursor = nextItem!.id;
+      nextCursor = nextItem?.id ?? undefined;
     }
 
     return {

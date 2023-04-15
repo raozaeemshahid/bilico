@@ -1,4 +1,4 @@
-import { CommentType } from "@prisma/client";
+import type { CommentType } from "@prisma/client";
 import type { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 import { api } from "../../../utils/api";

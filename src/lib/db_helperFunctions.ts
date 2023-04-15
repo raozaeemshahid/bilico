@@ -1,4 +1,3 @@
-import { Comment } from "@prisma/client";
 import { prisma } from "../server/db";
 
 export const deleteCommentsWithAllNestedReplies = async (

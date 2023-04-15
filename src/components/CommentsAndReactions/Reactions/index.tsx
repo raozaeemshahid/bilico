@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Reaction } from "@prisma/client";
+import type { Reaction } from "@prisma/client";
 import SmallTabs from "../SmallTabs";
 
 import ReactionsComponent from "./Reactions";
 import { api } from "../../../utils/api";
-import Loading from "../../Loading";
 
 export type AllReactions = "All" | Reaction;
 export const AllReactions: AllReactions[] = [

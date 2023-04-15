@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction , useState } from "react";
+import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import type { SelectedComment } from "../";
 import { BiArrowBack } from "react-icons/bi";
 import Image from "next/image";
@@ -6,10 +7,8 @@ import Link from "next/link";
 import PagesLinks from "../../../../lib/PagesLink";
 import BadWordsFilter from "../../../../utils/BadWordFilter";
 import dynamic from "next/dynamic";
-import {
-  listOrderOfDataByTime,
-  OrderOfDataByTime,
-} from "../../../../lib/common/names";
+import { listOrderOfDataByTime } from "../../../../lib/common/names";
+import type { OrderOfDataByTime } from "../../../../lib/common/names";
 import Select from "react-select";
 import Replies from "./Replies";
 

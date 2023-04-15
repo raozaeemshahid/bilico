@@ -1,4 +1,4 @@
-import { AllReactions } from ".";
+import type { AllReactions } from ".";
 import { api } from "../../../utils/api";
 import Loading from "../../Loading";
 import Image from "next/image";

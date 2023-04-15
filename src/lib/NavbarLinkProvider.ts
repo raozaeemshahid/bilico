@@ -8,9 +8,9 @@ import type { Session } from "next-auth";
 const VscAccount = dynamic(() =>
   import("react-icons/vsc").then((icons) => icons.VscAccount)
 );
-const MdForum = dynamic(() =>
-  import("react-icons/md").then((icons) => icons.MdForum)
-);
+// const MdForum = dynamic(() =>
+//   import("react-icons/md").then((icons) => icons.MdForum)
+// );
 const MdNotifications = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdNotifications)
 );

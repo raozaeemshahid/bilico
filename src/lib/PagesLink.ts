@@ -1,4 +1,4 @@
-import { NextRouter } from "next/router";
+import type { NextRouter } from "next/router";
 import { callbackUrl } from "./common/names";
 
 const PagesLinks = {

@@ -1,6 +1,6 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
-import { OrderOfDataByTime } from "../../../../lib/common/names";
+import type { OrderOfDataByTime } from "../../../../lib/common/names";
 
 export const getReplies = protectedProcedure
   .input(
@@ -47,7 +47,7 @@ export const getReplies = protectedProcedure
     let nextCursor: typeof cursor | undefined = undefined;
     if (items.length > limit) {
       const nextItem = items.pop();
-      nextCursor = nextItem!.id;
+      nextCursor = nextItem?.id ?? undefined;
     }
 
     return {

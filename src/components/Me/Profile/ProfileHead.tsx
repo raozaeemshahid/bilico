@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { api } from "../../../utils/api";
 import { zodBio } from "../../../lib/zod";
 import { useSession } from "next-auth/react";

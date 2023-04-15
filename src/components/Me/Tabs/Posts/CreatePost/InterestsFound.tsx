@@ -31,7 +31,7 @@ const InterestFound: React.FC<{
         interestsFound.includes(interest.title.toLowerCase())
       )
     );
-  }, [allInterests.isSuccess]);
+  }, [allInterests.isSuccess, allInterests.data?.interests]);
   if (!allInterests.isSuccess || interestsFoundInPost[0]?.id === "")
     return <Loading />;
   return (

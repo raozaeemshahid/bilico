@@ -1,5 +1,6 @@
 import type { CommentType } from "@prisma/client";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { useContext, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import type { SelectedComment } from ".";
 import Loading from "../../Loading";
 import { api } from "../../../utils/api";
@@ -7,10 +8,8 @@ import CommentItem from "./CommentItem";
 import { toast } from "react-toastify";
 import { ModalContext } from "../../../pages/_app";
 import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
-import {
-  listOrderOfDataByTime,
-  OrderOfDataByTime,
-} from "../../../lib/common/names";
+import { listOrderOfDataByTime } from "../../../lib/common/names";
+import type { OrderOfDataByTime } from "../../../lib/common/names";
 import Select from "react-select";
 
 const CommentsComponent: React.FC<{

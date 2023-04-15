@@ -5,8 +5,8 @@ import BadWordsFilter from "../../../utils/BadWordFilter";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import PagesLinks from "../../../lib/PagesLink";
-import { Dispatch, SetStateAction } from "react";
-import { SelectedComment } from ".";
+import type { Dispatch, SetStateAction } from "react";
+import type { SelectedComment } from ".";
 import DropDown from "../../TopRightDropdown/InlineDropDown";
 
 const MdVerified = dynamic(() =>

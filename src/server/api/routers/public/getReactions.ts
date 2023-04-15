@@ -1,6 +1,6 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
-import { AllReactions } from "../../../../components/CommentsAndReactions/Reactions";
+import type { AllReactions } from "../../../../components/CommentsAndReactions/Reactions";
 
 export const getReactions = protectedProcedure
   .input(
@@ -51,7 +51,7 @@ export const getReactions = protectedProcedure
     let nextCursor: typeof cursor | undefined = undefined;
     if (items.length > limit) {
       const nextItem = items.pop();
-      nextCursor = nextItem!.id;
+      nextCursor = nextItem?.id ?? undefined;
     }
 
     return {
