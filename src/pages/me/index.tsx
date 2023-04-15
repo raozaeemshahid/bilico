@@ -23,7 +23,8 @@ const MyProfile: NextPage = () => {
     enabled: status === "authenticated" && router.isReady,
     onSuccess(data) {
       if (data.banned) return void router.push(PagesLinks.BANNED_LINK);
-      if (data.deactivated) return void router.push(PagesLinks.DEACTIVATED_LINK);
+      if (data.deactivated)
+        return void router.push(PagesLinks.DEACTIVATED_LINK);
       if (data.notFound) {
         void signOut();
         return void router.push(PagesLinks.getLoginLink());
@@ -48,7 +49,7 @@ const MyProfile: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Bilico</title>
+        <title>{userInfo.data.name} - Bilico</title>
         <meta name="description" content="A Social Media For Professionals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

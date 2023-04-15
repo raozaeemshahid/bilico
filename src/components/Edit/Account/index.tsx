@@ -1,34 +1,13 @@
-import HomeLayout from "../../HomeLayout";
-import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { api } from "../../../utils/api";
 import { LoadingFullScreen } from "../../Loading";
 import EditBody from "./EditBody";
 
 const EditAccount: React.FC = () => {
-  const router = useRouter();
-  const { data: userSession, status } = useSession();
-
-  const userInfo = api.me.info.useQuery(undefined, {
-    enabled: status === "authenticated" && router.isReady,
-  });
+  const { data: userSession } = useSession();
 
   if (!userSession || !userSession.user)
     return <LoadingFullScreen text="Signing You In" />;
-  if (!userInfo.data || !userInfo.data.success)
-    return <LoadingFullScreen text="Getting Things Ready" />;
-  return (
-    <HomeLayout
-      userInfo={{
-        name: userInfo.data.name,
-        newMessages: userInfo.data.newMessages,
-        newNotifications: userInfo.data.newNotifications,
-        newRequests: userInfo.data.newRequests,
-      }}
-    >
-      <EditBody />
-    </HomeLayout>
-  );
+  return <EditBody />;
 };
 
 export default EditAccount;

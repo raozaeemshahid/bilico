@@ -73,7 +73,7 @@ const Deactivate: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Bilico</title>
+        <title>Deactivate Account - Bilico</title>
         <meta name="description" content="A Social Media For Professionals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

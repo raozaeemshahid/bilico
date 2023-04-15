@@ -48,7 +48,7 @@ const MyProfile: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Bilico</title>
+        <title>Peoples - Bilico</title>
         <meta name="description" content="A Social Media For Professionals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

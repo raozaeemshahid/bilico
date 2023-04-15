@@ -16,7 +16,7 @@ const Profile: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Bilico</title>
+        <title>Profile - Bilico</title>
         <meta name="description" content="A Social Media For Professionals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
