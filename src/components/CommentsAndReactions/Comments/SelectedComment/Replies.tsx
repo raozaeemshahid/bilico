@@ -31,24 +31,18 @@ const Replies: React.FC<{
       text: "Are you sure you want to delete this reply?",
       confirmText: "Delete",
       confirm: () => {
-        void toast
-          .promise(deleteReplyApi.mutateAsync({ commentId }), {
+        void toast.promise(
+          deleteReplyApi.mutateAsync({ commentId }).then(() =>
+            utils.publicApi.getReplies.invalidate({
+              commentId: selectedComment.id,
+            })
+          ),
+          {
             error: "Couldn't Delete Reply",
             pending: "Deleting Reply",
-            success: "Reply Deleted Successfully",
-          })
-          .then(() => {
-            void toast.promise(
-              utils.publicApi.getReplies.invalidate({
-                commentId: selectedComment.id,
-              }),
-              {
-                error: "Couldn't Reload Replies",
-                pending: "Reloading Replies",
-                success: "Replies Reloaded",
-              }
-            );
-          });
+            success: "Reply Deleted",
+          }
+        );
       },
     });
   };

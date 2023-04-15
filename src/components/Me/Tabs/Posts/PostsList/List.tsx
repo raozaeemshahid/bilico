@@ -28,19 +28,16 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
       text: "Are you sure you want to delete this Post?",
       confirmText: "Delete",
       confirm: () => {
-        void toast
-          .promise(deletePostApi.mutateAsync({ postId }), {
+        void toast.promise(
+          deletePostApi
+            .mutateAsync({ postId })
+            .then(() => utils.me.getPosts.invalidate({ order })),
+          {
             error: "Couldn't Delete Post",
             pending: "Deleting Post",
             success: "Post Deleted Successfully",
-          })
-          .then(() => {
-            void toast.promise(utils.me.getPosts.invalidate(), {
-              error: "Couldn't Reload Posts",
-              pending: "Reloading Posts",
-              success: "Posts Reloaded",
-            });
-          });
+          }
+        );
       },
     });
   };
