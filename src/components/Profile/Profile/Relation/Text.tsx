@@ -2,7 +2,7 @@ import { memo } from "react";
 const InfoText: React.FC<{
   userTrustsVisitor: boolean;
   doesFollowVisitor: boolean;
-  pronounciation: "He" | "She" | "They";
+  pronounciation: string;
 }> = ({ doesFollowVisitor, userTrustsVisitor, pronounciation }) => {
   const text: string[] = [];
   if (doesFollowVisitor) text.push("follows you");

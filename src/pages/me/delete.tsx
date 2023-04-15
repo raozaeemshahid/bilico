@@ -91,12 +91,18 @@ const Delete: NextPage = () => {
           <p className="text-gray-300">
             Deleting your account means deleting all your data on bilico at
             once, this isn&apos;t scheduling to delete instead it&apos;ll delete
-            everything the moment you click on delete next. Hence this action
-            can&apos;t be undone, are you sure?
+            your everything on bilico the moment you click on confirm deletion.
+            Hence this action can&apos;t be undone, are you sure?
           </p>
           <p className="text-gray-300">
-            If you want to take a break for while, consider
-            <Link href={PagesLinks.DEACTIVATED_ME_LINK}>deactivating</Link>.
+            If you want to take a break for while, consider{" "}
+            <Link
+              className="bg-text-600 cursor-pointer hover:underline"
+              href={PagesLinks.DEACTIVATED_ME_LINK}
+            >
+              deactivation
+            </Link>
+            .
           </p>
           <div className="flex min-w-fit flex-row-reverse flex-wrap justify-start">
             <button

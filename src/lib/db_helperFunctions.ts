@@ -25,7 +25,9 @@ export const deleteUserPermanently = async (id: string) => {
     comments.map((comment) => deleteCommentsWithAllNestedReplies(comment.id))
   );
   await prisma.connectionRequest.deleteMany({ where: { senderId: id } });
-  await prisma.message.deleteMany({ where: { senderId: id } });
+  await prisma.message.deleteMany({
+    where: { OR: [{ senderId: id }, { receiverId: id }] },
+  });
   await prisma.notification.deleteMany({ where: { userId: id } });
   await prisma.post.deleteMany({ where: { userId: id } });
   await prisma.reactPost.deleteMany({ where: { userId: id } });

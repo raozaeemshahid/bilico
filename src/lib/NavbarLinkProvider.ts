@@ -17,6 +17,9 @@ const MdNotifications = dynamic(() =>
 const TbMessage = dynamic(() =>
   import("react-icons/tb").then((icons) => icons.TbMessage)
 );
+const MdSearch = dynamic(() =>
+  import("react-icons/md").then((icons) => icons.MdSearch)
+);
 const FaHome = dynamic(() =>
   import("react-icons/fa").then((icons) => icons.FaHome)
 );
@@ -77,11 +80,18 @@ export const NavbarLinkCreator = {
       icon: TbMessage,
     };
   },
+  RequestsLink: (): LinkType => {
+    return {
+      Text: "Requests",
+      href: PagesLinks.REQUESTS_LINK,
+      icon: IoIosPeople,
+    };
+  },
   PeoplesLink: (): LinkType => {
     return {
       Text: "Peoples",
       href: PagesLinks.getPeoplesLink(),
-      icon: IoIosPeople,
+      icon: MdSearch,
     };
   },
 };

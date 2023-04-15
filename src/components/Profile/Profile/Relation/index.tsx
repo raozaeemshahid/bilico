@@ -20,12 +20,17 @@ const Relation: React.FC<{
     isTrustedByVisitor: boolean;
   };
   Gender: Gender | null;
-}> = ({ Gender, trust, following, relationWithVisitor }) => {
+  userName: string;
+}> = ({ Gender, trust, following, relationWithVisitor, userName }) => {
   return (
     <div className="flex flex-col items-center justify-center gap-2">
       <InfoText
         pronounciation={
-          Gender == "Male" ? "He" : Gender == "Female" ? "She" : "They"
+          Gender == "Male"
+            ? "He"
+            : Gender == "Female"
+            ? "She"
+            : userName.split(" ")[0] || "They"
         }
         userTrustsVisitor={trust.userTrustsVisitor}
         doesFollowVisitor={following.doesFollowVisitor}

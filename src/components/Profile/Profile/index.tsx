@@ -45,6 +45,7 @@ const Profile: React.FC = () => {
             following={data.following}
             relationWithVisitor={data.relationWithVisitor}
             Gender={data.gender}
+            userName={data.name}
           />
         )}
         <div className="flex  flex-wrap sm:flex-nowrap">

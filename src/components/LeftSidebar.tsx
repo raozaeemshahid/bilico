@@ -73,9 +73,13 @@ const Sidebar: React.FC<{
             isActive={router.route == PagesLinks.getMessageLink()}
           />
           <SidebarLink
-            count={userInfo.newRequests}
             link={NavbarLinkCreator.PeoplesLink()}
             isActive={router.route == PagesLinks.getPeoplesLink()}
+          />
+          <SidebarLink
+            count={userInfo.newRequests}
+            link={NavbarLinkCreator.RequestsLink()}
+            isActive={router.route == PagesLinks.REQUESTS_LINK}
           />
           <SidebarLink
             count={userInfo.newNotifications}

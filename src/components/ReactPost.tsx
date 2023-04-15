@@ -38,7 +38,7 @@ const ReactComponent: React.FC<{
   );
 };
 
-// stack of requests to not overload or confust server, and send request in sequence to mutate.
+// stack of requests to not to overload or confuse server, and send mutation requests in sequence.
 const stackOfMutationsToReact: (Reaction | undefined)[] = [];
 
 const ReactPostComponent: React.FC<{
