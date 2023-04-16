@@ -3,7 +3,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { deleteCommentsWithAllNestedReplies } from "../../../../lib/db_helperFunctions";
 
-export const DeletePost = protectedProcedure
+export const deletePost = protectedProcedure
   .input(z.object({ postId: z.string().uuid() }))
   .mutation(async ({ ctx, input }) => {
     const post = await ctx.prisma.post.findUniqueOrThrow({

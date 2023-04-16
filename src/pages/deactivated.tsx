@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 const Deactivated: NextPage = () => {
   const router = useRouter();
-  const reactivateApi = api.me.ReactivateAccount.useMutation();
+  const reactivateApi = api.me.reactivateAccount.useMutation();
 
   const { data: userSession, status } = useSession({
     required: true,

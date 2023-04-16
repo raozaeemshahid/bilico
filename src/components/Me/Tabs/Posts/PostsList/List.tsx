@@ -18,7 +18,7 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
     }
   );
   const utils = api.useContext();
-  const deletePostApi = api.me.DeletePost.useMutation();
+  const deletePostApi = api.me.deletePost.useMutation();
   const controlModal = useContext(ModalContext);
 
   if (!getPosts.data || !userData.data) return <Loading />;

@@ -20,7 +20,7 @@ const Deactivate: NextPage = () => {
       void router.push(PagesLinks.getLoginLink());
     },
   });
-  const deactivateApi = api.me.DeactivateAccount.useMutation();
+  const deactivateApi = api.me.deactivateAccount.useMutation();
 
   const userInfo = api.me.info.useQuery(undefined, {
     enabled: router.isReady && status === "authenticated",

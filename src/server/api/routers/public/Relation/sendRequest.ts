@@ -1,9 +1,10 @@
 import { protectedProcedure } from "../../../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
+import { zodNote } from "../../../../../lib/zod";
 
 export const sendRequest = protectedProcedure
-  .input(z.object({ receiverId: z.string().uuid(), message: z.string() }))
+  .input(z.object({ receiverId: z.string().uuid(), message: zodNote }))
   .mutation(async ({ input, ctx }) => {
     if (ctx.session.user.id == input.receiverId)
       throw new TRPCError({
