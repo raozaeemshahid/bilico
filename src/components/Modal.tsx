@@ -49,6 +49,7 @@ const Modal: React.FC = () => {
                 }
                 if (modalControl.modal) modalControl.modal.confirm(note);
                 modalControl.changeModal(undefined);
+                changeNote("")
               }}
             >
               {modalControl.modal.confirmText}

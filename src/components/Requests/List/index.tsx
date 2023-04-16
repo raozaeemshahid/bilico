@@ -15,7 +15,7 @@ const PostsListComponent: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col">
         {getConnectionRequests.data.pages.map((page) =>
           page.items.map((request) => (
             <Request

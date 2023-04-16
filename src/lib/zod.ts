@@ -39,7 +39,6 @@ export const zodBio = z
 export const zodNote = z
   .string()
   .trim()
-  .min(3, { message: "Your note can't be so short" })
   .max(1000, { message: "Your note can't be so long" })
   .transform((bio) => ({
     bio,
