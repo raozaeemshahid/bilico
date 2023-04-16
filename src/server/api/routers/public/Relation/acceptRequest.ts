@@ -22,10 +22,15 @@ export const acceptRequest = protectedProcedure
         message: "No request found, unable to accept",
       });
 
-    await ctx.prisma.connectionRequest.delete({ where: { id: request.id } });
-    await ctx.prisma.user.update({
-      where: { id: input.senderId },
-      data: { ConnectedTo: { connect: { id: ctx.session.user.id } } },
-    });
+    await Promise.all([
+      ctx.prisma.connectionRequest.delete({ where: { id: request.id } }),
+      ctx.prisma.user.update({
+        where: { id: ctx.session.user.id },
+        data: {
+          ConnectedWith: { connect: { id: input.senderId } },
+          Follow: { connect: { id: input.senderId } },
+        },
+      }),
+    ]);
     return { success: true };
   });

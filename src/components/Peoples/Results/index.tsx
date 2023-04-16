@@ -12,7 +12,7 @@ const SearchResults: React.FC<{
       limit: 10,
       requiredSkills: searchQuery.requiredSkills,
       searchKeywords: searchQuery.searchKeywords,
-      inConnections: searchQuery.inConnections,
+      searchIn: searchQuery.searchIn,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,

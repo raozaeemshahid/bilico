@@ -15,6 +15,7 @@ export const removeConnection = protectedProcedure
       data: {
         ConnectedTo: { disconnect: { id: input.otherUserId } },
         ConnectedWith: { disconnect: { id: input.otherUserId } },
+        Follow: { disconnect: { id: input.otherUserId } },
       },
     });
     return { success: true };

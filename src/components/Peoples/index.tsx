@@ -2,14 +2,14 @@ import { api } from "../../utils/api";
 import { useSession } from "next-auth/react";
 import { LoadingFullScreen } from "../Loading";
 import { useRouter } from "next/router";
-import SearchBox from "./SearchBox";
+import SearchBox, { SearchInTab } from "./SearchBox";
 import { useState } from "react";
 import SearchResults from "./Results";
 
 export interface PeopleSearchQuery {
   searchKeywords: string;
   requiredSkills: string[];
-  inConnections: boolean;
+  searchIn: SearchInTab;
 }
 const Peoples: React.FC = () => {
   const router = useRouter();

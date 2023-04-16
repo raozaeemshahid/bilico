@@ -1,4 +1,4 @@
-import {  useContext } from "react";
+import { useContext } from "react";
 import { toast } from "react-toastify";
 import { UserIdContext } from "../../..";
 import { ModalContext } from "../../../../../pages/_app";
@@ -11,7 +11,7 @@ const Blocked: React.FC = () => {
   const modalControl = useContext(ModalContext);
   const utils = api.useContext();
   return (
-    <div className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3">
+    <div className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3 shadow-md shadow-gray-900">
       <h3>Blocked</h3>
       <DropDown
         options={[

@@ -12,7 +12,7 @@ const RequestReceived: React.FC = () => {
   const modalControl = useContext(ModalContext);
   const userId = useContext(UserIdContext);
   return (
-    <div className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3">
+    <div className="flex items-center justify-center gap-1 rounded-lg bg-blue-600  p-1 px-3 shadow-md shadow-gray-900">
       <h3>Request Received</h3>
       <DropDown
         options={[

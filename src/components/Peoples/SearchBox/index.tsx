@@ -8,8 +8,8 @@ import SearchBar from "./SearchBar";
 import Tabs from "../../Tabs";
 import type { PeopleSearchQuery } from "..";
 
-type Tab = "All" | "Your Connections";
-const tabList: Tab[] = ["All", "Your Connections"];
+export type SearchInTab = "All" | "Connections" | "Trusted";
+const tabList: SearchInTab[] = ["All", "Connections", "Trusted"];
 
 const SearchBox: React.FC<{
   searchQuery: PeopleSearchQuery | undefined;
@@ -28,13 +28,13 @@ const SearchBox: React.FC<{
     { id: "", title: "" },
   ]);
   const [searchKeywords, changeSearchKeywords] = useState("");
-  const [currentTab, changeCurrentTab] = useState<Tab>("All");
+  const [currentTab, changeCurrentTab] = useState<SearchInTab>("All");
 
   const runQuery = () => {
     changeSearchQuery({
       requiredSkills: selectedSkills.map((skill) => skill.id),
       searchKeywords: searchKeywords,
-      inConnections: currentTab == "Your Connections",
+      searchIn: currentTab,
     });
   };
   useEffect(() => {
@@ -71,7 +71,7 @@ const SearchBox: React.FC<{
           </div>
         </div>
       </div>
-      <Tabs<Tab>
+      <Tabs<SearchInTab>
         changeCurrentTab={(tab) => changeCurrentTab(tab)}
         currentTab={currentTab}
         tabList={tabList}

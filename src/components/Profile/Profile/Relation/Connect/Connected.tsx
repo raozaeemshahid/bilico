@@ -6,12 +6,13 @@ import { api } from "../../../../../utils/api";
 import DropDown from "../../../../TopRightDropdown/InlineDropDown";
 
 const Connected: React.FC = () => {
-  const removeConnnectionApi = api.publicApi.Relation.removeConnection.useMutation();
+  const removeConnnectionApi =
+    api.publicApi.Relation.removeConnection.useMutation();
   const utils = api.useContext();
   const modalControl = useContext(ModalContext);
   const userId = useContext(UserIdContext);
   return (
-    <div className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3">
+    <div className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3 shadow-md shadow-gray-900">
       <h3>Connected</h3>
       <DropDown
         options={[

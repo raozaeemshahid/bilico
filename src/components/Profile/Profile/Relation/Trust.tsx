@@ -37,14 +37,14 @@ const Trust: React.FC<{
             },
           });
         }}
-        className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3"
+        className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 shadow-md shadow-gray-900 p-1 px-3"
       >
         Trust
       </button>
     );
   }
   return (
-    <div className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3">
+    <div className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 shadow-md shadow-gray-900 p-1 px-3">
       <h3>Trusted</h3>
       <DropDown
         options={[

@@ -37,14 +37,14 @@ const Follow: React.FC<{
             },
           });
         }}
-        className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3"
+        className="flex items-center shadow-md shadow-gray-900 justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3"
       >
         Follow
       </button>
     );
   }
   return (
-    <div className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3">
+    <div className="flex items-center justify-center gap-1 shadow-md shadow-gray-900 rounded-lg bg-blue-600 p-1 px-3">
       <h3>Following</h3>
       <DropDown
         options={[

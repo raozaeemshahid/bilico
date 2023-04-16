@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SearchInTab } from "../../../../components/Peoples/SearchBox";
 import { protectedProcedure } from "../../trpc";
 
 export const searchPeoples = protectedProcedure
@@ -8,7 +9,11 @@ export const searchPeoples = protectedProcedure
       requiredSkills: z.array(z.string()),
       limit: z.number().min(1).max(100).nullish(),
       cursor: z.string().nullish(), // <-- "cursor" needs to exist, but can be any type
-      inConnections: z.boolean().default(false),
+      searchIn: z.union([
+        z.literal<SearchInTab>("All"),
+        z.literal<SearchInTab>("Connections"),
+        z.literal<SearchInTab>("Trusted"),
+      ]),
     })
   )
   .query(async ({ input, ctx }) => {
@@ -22,12 +27,17 @@ export const searchPeoples = protectedProcedure
         isDeactivated: false,
         emailVerified: { not: null },
 
-        ...(input.inConnections
+        ...(input.searchIn == "Connections"
           ? {
               OR: [
                 { ConnectedTo: { some: { id: ctx.session.user.id } } },
                 { ConnectedWith: { some: { id: ctx.session.user.id } } },
               ],
+            }
+          : {}),
+        ...(input.searchIn == "Trusted"
+          ? {
+              TrustedBy: { some: { id: ctx.session.user.id } },
             }
           : {}),
         ...(input.searchKeywords.length > 0

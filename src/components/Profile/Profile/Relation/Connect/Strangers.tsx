@@ -33,7 +33,7 @@ const Strangers: React.FC = () => {
           },
         });
       }}
-      className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3"
+      className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3 shadow-md shadow-gray-900"
     >
       Connect
     </button>

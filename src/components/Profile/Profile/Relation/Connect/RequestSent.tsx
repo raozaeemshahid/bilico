@@ -6,13 +6,13 @@ import { api } from "../../../../../utils/api";
 import DropDown from "../../../../TopRightDropdown/InlineDropDown";
 
 const RequestSent: React.FC = () => {
-  const cancelRequestApi = api.publicApi.Relation.cancelRequest.useMutation()
-  const utils = api.useContext()
-  const modalControl = useContext(ModalContext)
-  const userId = useContext(UserIdContext)
-  
+  const cancelRequestApi = api.publicApi.Relation.cancelRequest.useMutation();
+  const utils = api.useContext();
+  const modalControl = useContext(ModalContext);
+  const userId = useContext(UserIdContext);
+
   return (
-    <div className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3">
+    <div className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3 shadow-md shadow-gray-900">
       <h3>Request Sent</h3>
       <DropDown
         options={[
@@ -25,7 +25,7 @@ const RequestSent: React.FC = () => {
                 confirmText: "Confirm",
                 confirm: () => {
                   void toast.promise(
-                    cancelRequestApi 
+                    cancelRequestApi
                       .mutateAsync({ otherUserId: userId })
                       .then(() =>
                         utils.publicApi.getProfile.invalidate({ userId })

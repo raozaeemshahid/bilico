@@ -10,11 +10,11 @@ const Relation: React.FC<{
     isFollowedByVisitor: boolean;
   };
   relationWithVisitor:
-    | "Blocked By Visitor"
-    | "Request Sent"
-    | "Request Recieved"
-    | "Connected"
-    | "Strangers";
+  | "Blocked By Visitor"
+  | "Request Sent"
+  | "Request Recieved"
+  | "Connected"
+  | "Strangers";
   trust: {
     userTrustsVisitor: boolean;
     isTrustedByVisitor: boolean;
@@ -23,14 +23,14 @@ const Relation: React.FC<{
   userName: string;
 }> = ({ Gender, trust, following, relationWithVisitor, userName }) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-2">
+    <div className="mt-1 flex flex-col items-center justify-center gap-2">
       <InfoText
         pronounciation={
           Gender == "Male"
             ? "He"
             : Gender == "Female"
-            ? "She"
-            : userName.split(" ")[0] || "They"
+              ? "She"
+              : userName.split(" ")[0] || "They"
         }
         userTrustsVisitor={trust.userTrustsVisitor}
         doesFollowVisitor={following.doesFollowVisitor}
