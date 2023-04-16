@@ -1,6 +1,53 @@
-import Filter from "bad-words"
+import Filter from "bad-words";
 
-const BadWordsFilter = new Filter()
+const BadWordsFilter = new Filter();
 
+BadWordsFilter.removeWords(
+  "balls",
+  "Shit",
+  "ballbag",
+  "balls",
+  "ballsack",
+  "goddamned",
+  "crap",
+  "damn",
+  "breasts",
+  "crap",
+  "damn",
+  "God",
+  "lust",
+  "lusting",
+  "n1gga",
+  "xxx",
+  "sadist",
+  "vagina",
+  "sex",
+  "masterbate",
+  "masterbation",
+  "masterbations",
+  "masturbate",
+  "god-dam",
+  "god-damned",
+  "goddamn",
+  "goddamned",
+  "hell",
+  "heshe",
+  "hoare",
+  "hoer",
+  "homo",
+  "jism",
+  "jiz",
+  "jizm",
+  "jizz",
+  "kawk",
+  "knob",
+  "muther",
+  "p0rn",
+  "pawn",
+  "porn",
+  "pornograph",
+  "god - dam",
+  "god - damned"
+);
 
-export default BadWordsFilter
+export default BadWordsFilter;
