@@ -1,11 +1,12 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
+import zodReply from "../../../../lib/zod/zodReply";
 
 export const replyComment = protectedProcedure
   .input(
     z.object({
       replyToCommentId: z.string().uuid(),
-      comment: z.string().min(1),
+      comment: zodReply,
     })
   )
   .mutation(async ({ ctx, input }) => {

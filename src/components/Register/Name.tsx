@@ -1,9 +1,9 @@
 import { useSession } from "next-auth/react";
-import { type Dispatch, type SetStateAction } from "react";
-import { zodName } from "../../lib/zod";
+import type { Dispatch, SetStateAction } from "react";
 
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
+import zodName from "../../lib/zod/zodName";
 
 const IoMdDoneAll = dynamic(() =>
   import("react-icons/io").then((icons) => icons.IoMdDoneAll)

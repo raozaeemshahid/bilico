@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import { api } from "../../../utils/api";
-import { zodBio } from "../../../lib/zod";
 import { useSession } from "next-auth/react";
 import Loading from "../../Loading";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
+import zodBio from "../../../lib/zod/zodBio";
 
 const FiEdit3 = dynamic(() =>
   import("react-icons/fi").then((icons) => icons.FiEdit3)

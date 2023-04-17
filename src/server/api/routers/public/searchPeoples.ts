@@ -5,7 +5,7 @@ import { protectedProcedure } from "../../trpc";
 export const searchPeoples = protectedProcedure
   .input(
     z.object({
-      searchKeywords: z.string(),
+      searchKeywords: z.string().max(30),
       requiredSkills: z.array(z.string()),
       limit: z.number().min(1).max(100).nullish(),
       cursor: z.string().nullish(), // <-- "cursor" needs to exist, but can be any type

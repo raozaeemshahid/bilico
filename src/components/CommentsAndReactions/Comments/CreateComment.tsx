@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 import { api } from "../../../utils/api";
 import { useState } from "react";
+import zodComment from "../../../lib/zod/zodComment";
 
 const CreateComment: React.FC<{
   comment: string;
@@ -92,9 +93,11 @@ const CreateComment: React.FC<{
         <button
           className="m-2 flex rounded bg-green-600 py-2 px-4 text-sm font-bold text-white shadow-sm shadow-green-600 hover:bg-green-600"
           onClick={() => {
-            if (comment.length == 0) {
-              toast.error("Comment can't be empty");
-              return;
+            const parsedComment = zodComment.safeParse(comment);
+            if (!parsedComment.success) {
+              return parsedComment.error.errors.forEach((err) =>
+                toast.error(err.message)
+              );
             }
             submitComment();
             changeISCommenting(false);

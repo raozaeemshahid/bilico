@@ -8,6 +8,7 @@ import CommentItem from "../CommentItem";
 import { ModalContext } from "../../../../pages/_app";
 import FetchMoreInfiniteComponent from "../../../FetchMoreInfiniteQueryComponent";
 import type { OrderOfDataByTime } from "../../../../lib/common/names";
+import zodReply from "../../../../lib/zod/zodReply";
 
 const Replies: React.FC<{
   selectedComment: SelectedComment;
@@ -103,9 +104,11 @@ const Replies: React.FC<{
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            if (reply.length == 0) {
-              toast.error("Reply can't be empty");
-              return;
+            const parsedReply = zodReply.safeParse(reply);
+            if (!parsedReply.success) {
+              return parsedReply.error.errors.forEach((err) =>
+                toast.error(err.message)
+              );
             }
             submitReply();
           }}

@@ -1,6 +1,7 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import { CommentType } from "@prisma/client";
+import zodComment from "../../../../lib/zod/zodComment";
 
 const ZReaction = z.union([
   z.literal(CommentType.Appreciation),
@@ -12,7 +13,7 @@ export const createComment = protectedProcedure
   .input(
     z.object({
       commentType: ZReaction.nullish(),
-      comment: z.string().min(1),
+      comment: zodComment,
       postId: z.string().uuid(),
     })
   )

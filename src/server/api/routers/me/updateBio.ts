@@ -1,6 +1,6 @@
-import { zodBio } from "../../../../lib/zod";
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
+import zodBio from "../../../../lib/zod/zodBio";
 
 export const updateBio = protectedProcedure
   .input(z.object({ bio: zodBio }))

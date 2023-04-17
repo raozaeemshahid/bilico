@@ -2,7 +2,6 @@ import { signOut, useSession } from "next-auth/react";
 import { api } from "../../utils/api";
 import { LoadingFullScreen } from "../Loading";
 import { useEffect, useState } from "react";
-import { zodName } from "../../lib/zod";
 import PagesLinks from "../../lib/PagesLink";
 import { useRouter } from "next/router";
 import NameComponent from "./Name";
@@ -15,6 +14,7 @@ import type { Moment } from "moment";
 import DateOfBirthComponent, { MINIMUM_AGE_REQUIREMENT } from "./DateOfBirth";
 import CountryComponent from "./Country";
 import { toast } from "react-toastify";
+import zodName from "../../lib/zod/zodName";
 
 const Register: React.FC = () => {
   const { data: userSession, status } = useSession();

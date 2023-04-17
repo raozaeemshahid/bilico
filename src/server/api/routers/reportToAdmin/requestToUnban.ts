@@ -1,9 +1,10 @@
 import { z } from "zod";
 import { protectedProcedure } from "../../trpc";
 import PagesLinks from "../../../../lib/PagesLink";
+import zodNote from "../../../../lib/zod/zodNote";
 
 export const requestToUnban = protectedProcedure
-  .input(z.object({ message: z.string() }))
+  .input(z.object({ message: zodNote }))
   .mutation(async ({ input, ctx }) => {
     const previousReport = await ctx.prisma.reportToAdmin.findFirst({
       where: {

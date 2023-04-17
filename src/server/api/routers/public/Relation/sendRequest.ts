@@ -1,7 +1,7 @@
 import { protectedProcedure } from "../../../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { zodNote } from "../../../../../lib/zod";
+import zodNote from "../../../../../lib/zod/zodNote";
 
 export const sendRequest = protectedProcedure
   .input(z.object({ receiverId: z.string().uuid(), message: zodNote }))

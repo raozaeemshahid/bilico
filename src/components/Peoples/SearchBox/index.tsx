@@ -1,12 +1,14 @@
 import { api } from "../../../utils/api";
 import Loading from "../../Loading";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import type { Skill } from "@prisma/client";
 import SkilledIn from "./SkilledIn";
 import SearchBar from "./SearchBar";
 import Tabs from "../../Tabs";
 import type { PeopleSearchQuery } from "..";
+import { z } from "zod";
+import { toast } from "react-toastify";
 
 export type SearchInTab = "All" | "Connections" | "Trusted";
 const tabList: SearchInTab[] = ["All", "Connections", "Trusted"];
@@ -31,6 +33,15 @@ const SearchBox: React.FC<{
   const [currentTab, changeCurrentTab] = useState<SearchInTab>("All");
 
   const runQuery = () => {
+    const parsedKeywords = z
+      .string()
+      .max(30, { message: "Search keywords can't be so long" })
+      .safeParse(searchKeywords);
+    if (!parsedKeywords.success) {
+      return parsedKeywords.error.errors.forEach((err) =>
+        toast.error(err.message)
+      );
+    }
     changeSearchQuery({
       requiredSkills: selectedSkills.map((skill) => skill.id),
       searchKeywords: searchKeywords,

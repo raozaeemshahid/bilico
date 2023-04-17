@@ -1,6 +1,6 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
-import { zodPost } from "../../../../lib/zod";
+import zodPost from "../../../../lib/zod/zodPost";
 
 export const createPost = protectedProcedure
   .input(

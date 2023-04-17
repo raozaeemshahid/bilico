@@ -9,6 +9,8 @@ import { api } from "../utils/api";
 import { getCallbackUrlFromRouter } from "../lib/helperFunctions";
 import Head from "next/head";
 import moment from "moment";
+import zodNote from "../lib/zod/zodNote";
+import { toast } from "react-toastify";
 
 const Banned: NextPage = ({}) => {
   const router = useRouter();
@@ -43,6 +45,12 @@ const Banned: NextPage = ({}) => {
   const SendRequest = () => {
     if (!messageInputRef || !messageInputRef.current || !IsEligibleToApply)
       return;
+    const parsedMessage = zodNote.safeParse(messageInputRef);
+    if (!parsedMessage.success) {
+      return parsedMessage.error.errors.forEach((err) =>
+        toast.error(err.message)
+      );
+    }
     reportToAdmin.mutate({
       message: messageInputRef.current.value,
     });
@@ -70,7 +78,8 @@ const Banned: NextPage = ({}) => {
           )}
           {amIBanned.data.bannedUntil && (
             <p className="title-font text-base leading-relaxed">
-              You&apos;ll be unbanned {moment(amIBanned.data.bannedUntil).fromNow()}
+              You&apos;ll be unbanned{" "}
+              {moment(amIBanned.data.bannedUntil).fromNow()}
             </p>
           )}
         </div>

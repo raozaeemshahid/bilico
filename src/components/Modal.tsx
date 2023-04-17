@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { toast } from "react-toastify";
-import { zodNote } from "../lib/zod";
+import zodNote from "../lib/zod/zodNote";
 import { ModalContext } from "../pages/_app";
 
 const Modal: React.FC = () => {

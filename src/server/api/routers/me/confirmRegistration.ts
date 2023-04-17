@@ -1,11 +1,11 @@
 import { protectedProcedure } from "../../trpc";
 import { prisma } from "../../../db";
 import { z } from "zod";
-import { zodName } from "../../../../lib/zod";
 import { countries } from "countries-list";
 import { TRPCError } from "@trpc/server";
 import moment from "moment";
 import { MINIMUM_AGE_REQUIREMENT } from "../../../../components/Register/DateOfBirth";
+import zodName from "../../../../lib/zod/zodName";
 
 export const countriesNamesList = Object.values(countries)
   .map((country) => country.name)
