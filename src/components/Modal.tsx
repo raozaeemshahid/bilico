@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import zodNote from "../lib/zod/zodNote";
 import { ModalContext } from "../pages/_app";
@@ -6,17 +6,27 @@ import { ModalContext } from "../pages/_app";
 const Modal: React.FC = () => {
   const modalControl = useContext(ModalContext);
   const [note, changeNote] = useState("");
+  const BodyRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (!BodyRef.current) return;
+      if (!BodyRef.current.contains(e.target as Node)) {
+        modalControl.changeModal(undefined);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
   if (!modalControl.modal) return <></>;
   return (
     <>
-      <div
-        className="fixed top-0 left-0 z-[49] h-screen w-screen bg-gray-100 opacity-[0.15]"
-        onClick={() => {
-          modalControl.changeModal(undefined);
-        }}
-      ></div>
+      <div className="fixed top-0 left-0 z-[49] h-screen w-screen bg-gray-100 opacity-[0.15]"></div>
       <div className="fixed top-0 left-0 z-50 flex h-screen w-screen items-center justify-center">
-        <div className="flex flex-col items-center gap-2 rounded-lg bg-gray-900 p-10 shadow-xl shadow-gray-800">
+        <div
+          ref={BodyRef}
+          className="flex flex-col items-center gap-2 rounded-lg bg-gray-900 p-10 shadow-xl shadow-gray-800"
+        >
           <h2 className="text-lg text-gray-300">{modalControl.modal.text}</h2>
           {!!modalControl.modal.includeNote && (
             <input
@@ -49,7 +59,7 @@ const Modal: React.FC = () => {
                 }
                 if (modalControl.modal) modalControl.modal.confirm(note);
                 modalControl.changeModal(undefined);
-                changeNote("")
+                changeNote("");
               }}
             >
               {modalControl.modal.confirmText}
