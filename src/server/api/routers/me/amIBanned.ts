@@ -1,7 +1,7 @@
 import moment from "moment";
-import { unbanUser } from "../../../../lib/db_helperFunctions";
 import { protectedProcedure } from "../../trpc";
 import { isAlreadyPast } from "../../../../lib/helperFunctions";
+import { unbanUser } from "../../../../lib/db_helperfunctions/unbanUser";
 
 export const amIBanned = protectedProcedure.query(async ({ ctx }) => {
   const user = await ctx.prisma.user.findUnique({

@@ -1,5 +1,5 @@
 import moment from "moment";
-import { unbanUser } from "../../../../lib/db_helperFunctions";
+import { unbanUser } from "../../../../lib/db_helperfunctions/unbanUser";
 import { isAlreadyPast } from "../../../../lib/helperFunctions";
 import { protectedProcedure } from "../../trpc";
 

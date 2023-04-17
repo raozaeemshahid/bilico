@@ -1,7 +1,7 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { deleteCommentsWithAllNestedReplies } from "../../../../lib/db_helperFunctions";
+import { deleteCommentWithAllNestedReplies } from "../../../../lib/db_helperfunctions/deleteComment";
 
 export const deleteComment = protectedProcedure
   .input(z.object({ commentId: z.string().uuid() }))
@@ -20,7 +20,7 @@ export const deleteComment = protectedProcedure
         message: "You're not the author of comment",
       });
 
-    await deleteCommentsWithAllNestedReplies(input.commentId);
+    await deleteCommentWithAllNestedReplies(input.commentId);
 
     return { success: true };
   });
