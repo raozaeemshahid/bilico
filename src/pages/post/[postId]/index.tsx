@@ -9,6 +9,8 @@ import HomeLayout from "../../../components/HomeLayout";
 import { api } from "../../../utils/api";
 import { signOut } from "next-auth/react";
 import { z } from "zod";
+import FailedFullBodyComponent from "../../../components/FailedFullBodyComponent";
+import Post from '../../../components/Post'
 
 const Profile: NextPage = () => {
   const router = useRouter();
@@ -26,7 +28,8 @@ const Profile: NextPage = () => {
     enabled: status === "authenticated" && router.isReady,
     onSuccess(data) {
       if (data.banned) return void router.push(PagesLinks.BANNED_LINK);
-      if (data.deactivated) return void router.push(PagesLinks.DEACTIVATED_LINK);
+      if (data.deactivated)
+        return void router.push(PagesLinks.DEACTIVATED_LINK);
       if (data.notFound) {
         void signOut();
         return void router.push(PagesLinks.getLoginLink());
@@ -36,6 +39,12 @@ const Profile: NextPage = () => {
       if (data.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
     },
   });
+  const getPost = api.publicApi.getPost.useQuery(
+    { postId: !!postId ? postId : "" },
+    {
+      enabled: !!postId,
+    }
+  );
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -69,7 +78,11 @@ const Profile: NextPage = () => {
     void router.push(PagesLinks.getLoginLink());
     return <LoadingFullScreen />;
   }
-  if (!postId) return <LoadingFullScreen text="Getting Things Ready" />;
+  if (!postId || !getPost.data)
+    return <LoadingFullScreen text="Getting Things Ready" />;
+  if (getPost.data.notFound)
+    return <FailedFullBodyComponent text="User not found" />;
+
 
   return (
     <>
@@ -86,7 +99,7 @@ const Profile: NextPage = () => {
           newRequests: userInfo.data.newRequests,
         }}
       >
-      
+        <Post postId={postId} />
       </HomeLayout>
     </>
   );

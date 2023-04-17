@@ -12,6 +12,7 @@ import { deleteComment } from "./deleteComment";
 import { getReactionsCount } from "./getReactionsCount";
 import { getCommentsCount } from "./getCommentsCount";
 import { replyComment } from "./replyComment";
+import { getPost } from "./getPost";
 
 export const publicApi = createTRPCRouter({
   getProfile,
@@ -27,4 +28,5 @@ export const publicApi = createTRPCRouter({
   getCommentsCount,
   replyComment,
   Relation,
+  getPost,
 });
