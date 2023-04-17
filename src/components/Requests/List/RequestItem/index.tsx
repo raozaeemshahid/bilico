@@ -64,11 +64,13 @@ const Request: React.FC<{
                   )}
                 </div>
               </div>
-              <h4 className="ml-1 mt-2 text-sm text-gray-200">
-                {BadWordsFilter.clean(request.message)}
-              </h4>
+              {request.message.length > 0 && (
+                <h4 className="ml-1 mt-2 text-sm text-gray-200">
+                  {BadWordsFilter.clean(request.message)}
+                </h4>
+              )}
             </div>
-            <ActionButtons userId={userData.id}  />
+            <ActionButtons userId={userData.id} />
           </div>
           <h3 className="flex w-full justify-end text-sm text-gray-100 opacity-80">
             {moment(request.createdAt).fromNow()}

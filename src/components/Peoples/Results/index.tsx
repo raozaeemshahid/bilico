@@ -36,7 +36,7 @@ const SearchResults: React.FC<{
           ))
         )}
         <FetchMoreInfiniteComponent
-          endingMsg="You're all caught up!"
+          endingMsg=""
           fetchNextPage={() => void apiResults.fetchNextPage()}
           hasNextPage={apiResults.hasNextPage}
           isFetchingNextPage={apiResults.isFetchingNextPage}

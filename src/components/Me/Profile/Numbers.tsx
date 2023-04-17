@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react";
 import { api } from "../../../utils/api";
+import CompactNumberFormatter from "../../../utils/CompactNumberFormatter";
 import Loading from "../../Loading";
 
 const InfoBox: React.FC<{ number: number; text: string }> = ({
@@ -9,7 +10,7 @@ const InfoBox: React.FC<{ number: number; text: string }> = ({
   return (
     <>
       <div className="flex flex-col items-center rounded bg-gray-800 p-1 py-2">
-        <h2 className="text-md">{number}</h2>
+        <h2 className="text-md">{CompactNumberFormatter.format(number)}</h2>
         <h4 className="text-xs font-bold opacity-70">{text}</h4>
       </div>
     </>

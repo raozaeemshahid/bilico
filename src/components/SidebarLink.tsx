@@ -10,7 +10,7 @@ const SidebarLink: React.FC<{
     return (
       <div className="flex items-center whitespace-nowrap rounded-lg bg-gray-700 p-1 pl-2 text-lg">
         <link.icon />
-        {!!count && count > 0 && <h3 className="pl-2">{count}</h3>}
+        {!!count && count > 0 && <h3 className="pl-2">{count > 9 ? "9+" : count}</h3>}
         <h3 className="pl-2">{link.Text}</h3>
       </div>
     );
