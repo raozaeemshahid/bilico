@@ -17,7 +17,14 @@ const CommentsComponent: React.FC<{
   tab: CommentType;
   changeCommentCount: Dispatch<SetStateAction<number>>;
   changeSelectedComment: Dispatch<SetStateAction<SelectedComment | undefined>>;
-}> = ({ tab, postId, changeSelectedComment, changeCommentCount }) => {
+  highlightedComment: SelectedComment | undefined;
+}> = ({
+  tab,
+  postId,
+  changeSelectedComment,
+  changeCommentCount,
+  highlightedComment,
+}) => {
   const [order, changeOrder] = useState<OrderOfDataByTime>("Oldest");
   const getComments = api.publicApi.getComments.useInfiniteQuery(
     { limit: 10, postId, commentType: tab, order },
@@ -25,6 +32,7 @@ const CommentsComponent: React.FC<{
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
+
   const deleteCommentApi = api.publicApi.deleteComment.useMutation();
   const utils = api.useContext();
   const controlModal = useContext(ModalContext);
@@ -85,27 +93,54 @@ const CommentsComponent: React.FC<{
         />
       </div>
       <div className="flex flex-col gap-1">
-        {getComments.data.pages.map((page) =>
-          page.items.map((comment) => (
+        {!!highlightedComment && (
+          <div className="rounded-lg bg-gray-600 p-1">
             <CommentItem
-              key={comment.id}
+              key={highlightedComment.id}
               deleteComment={deleteComment}
               comment={{
-                _count: { replies: comment._count.Replies },
-                body: comment.Comment,
-                createdAt: comment.CreatedAt,
-                id: comment.id,
+                _count: { replies: highlightedComment._count.Replies },
+                body: highlightedComment.Comment,
+                createdAt: highlightedComment.CreatedAt,
+                id: highlightedComment.id,
               }}
               userData={{
-                id: comment.CreatedBy.id,
-                image: comment.CreatedBy.image,
-                isVerified: comment.CreatedBy.isVerified,
-                name: comment.CreatedBy.name,
+                id: highlightedComment.CreatedBy.id,
+                image: highlightedComment.CreatedBy.image,
+                isVerified: highlightedComment.CreatedBy.isVerified,
+                name: highlightedComment.CreatedBy.name,
               }}
               changeSelectedComment={changeSelectedComment}
               theme="Dark"
+              highlightedComment={highlightedComment}
             />
-          ))
+          </div>
+        )}
+        {getComments.data.pages.map((page) =>
+          page.items.map((comment) => {
+            if (highlightedComment && highlightedComment.id == comment.id)
+              return null;
+            return (
+              <CommentItem
+                key={comment.id}
+                deleteComment={deleteComment}
+                comment={{
+                  _count: { replies: comment._count.Replies },
+                  body: comment.Comment,
+                  createdAt: comment.CreatedAt,
+                  id: comment.id,
+                }}
+                userData={{
+                  id: comment.CreatedBy.id,
+                  image: comment.CreatedBy.image,
+                  isVerified: comment.CreatedBy.isVerified,
+                  name: comment.CreatedBy.name,
+                }}
+                changeSelectedComment={changeSelectedComment}
+                theme="Dark"
+              />
+            );
+          })
         )}
       </div>
       <FetchMoreInfiniteComponent

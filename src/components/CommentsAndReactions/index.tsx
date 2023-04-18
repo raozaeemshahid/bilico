@@ -16,9 +16,10 @@ const ReactionsAndComments: React.FC<{
   commentsCount: number;
   postId: string;
   changeCommentCount: Dispatch<SetStateAction<number>>;
-}> = ({ commentsCount, changeCommentCount, postId, reactionsCount }) => {
+  highlightedCommentId?: string;
+}> = ({ commentsCount, changeCommentCount, postId, reactionsCount, highlightedCommentId }) => {
   const [isReactionsPanelOpen, changeIsReactionsPanelOpen] = useState(false);
-  const [isCommentsPanelOpen, changeIsCommentsPanelOpen] = useState(false);
+  const [isCommentsPanelOpen, changeIsCommentsPanelOpen] = useState(!!highlightedCommentId);
 
   return (
     <>
@@ -54,6 +55,7 @@ const ReactionsAndComments: React.FC<{
               postId={postId}
               commentsCount={commentsCount}
               changeCommentCount={changeCommentCount}
+              highlightedCommentId={highlightedCommentId}
             />
           </div>
         )}

@@ -71,28 +71,65 @@ const Replies: React.FC<{
   };
   return (
     <>
-      {getReplies.data.pages.map((page) =>
-        page.items.map((comment) => (
+      {!!selectedComment.highlightedComment && (
+        <div className="rounded-lg bg-gray-600 p-1">
           <CommentItem
-            key={comment.id}
+            key={selectedComment.highlightedComment.id}
             deleteComment={deleteComment}
             comment={{
-              _count: { replies: comment._count.Replies },
-              body: comment.Comment,
-              createdAt: comment.CreatedAt,
-              id: comment.id,
+              _count: {
+                replies: selectedComment.highlightedComment._count.Replies,
+              },
+              body: selectedComment.highlightedComment.Comment,
+              createdAt: selectedComment.highlightedComment.CreatedAt,
+              id: selectedComment.highlightedComment.id,
             }}
             userData={{
-              id: comment.CreatedBy.id,
-              image: comment.CreatedBy.image,
-              isVerified: comment.CreatedBy.isVerified,
-              name: comment.CreatedBy.name,
+              id: selectedComment.highlightedComment.CreatedBy.id,
+              image: selectedComment.highlightedComment.CreatedBy.image,
+              isVerified:
+                selectedComment.highlightedComment.CreatedBy.isVerified,
+              name: selectedComment.highlightedComment.CreatedBy.name,
             }}
             changeSelectedComment={changeSelectedComment}
             ReplyTo={selectedComment}
             theme="Dark"
+            highlightedComment={{
+              ...selectedComment.highlightedComment,
+              ReplyTo: selectedComment,
+            }}
           />
-        ))
+        </div>
+      )}
+      {getReplies.data.pages.map((page) =>
+        page.items.map((comment) => {
+          if (
+            selectedComment.highlightedComment &&
+            comment.id == selectedComment.highlightedComment.id
+          )
+            return null;
+          return (
+            <CommentItem
+              key={comment.id}
+              deleteComment={deleteComment}
+              comment={{
+                _count: { replies: comment._count.Replies },
+                body: comment.Comment,
+                createdAt: comment.CreatedAt,
+                id: comment.id,
+              }}
+              userData={{
+                id: comment.CreatedBy.id,
+                image: comment.CreatedBy.image,
+                isVerified: comment.CreatedBy.isVerified,
+                name: comment.CreatedBy.name,
+              }}
+              changeSelectedComment={changeSelectedComment}
+              ReplyTo={selectedComment}
+              theme="Dark"
+            />
+          );
+        })
       )}
       <FetchMoreInfiniteComponent
         fetchNextPage={() => void getReplies.fetchNextPage()}

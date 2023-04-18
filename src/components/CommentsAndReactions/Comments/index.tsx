@@ -14,6 +14,7 @@ export interface SelectedComment {
   };
   id: string;
   ReplyTo?: SelectedComment | undefined;
+  highlightedComment?: SelectedComment | undefined;
   CreatedBy: {
     id: string;
     name: string;
@@ -23,13 +24,36 @@ export interface SelectedComment {
   CreatedAt: Date;
 }
 
+let isSelectedHighlightedComment = false;
+
 const Comments: React.FC<{
   postId: string;
   commentsCount: number;
   changeCommentCount: Dispatch<SetStateAction<number>>;
-}> = ({ postId, commentsCount, changeCommentCount }) => {
+  highlightedCommentId?: string;
+}> = ({ postId, commentsCount, changeCommentCount, highlightedCommentId }) => {
   const [currentTab, changeCurrentTab] = useState<CommentType>("Opinion");
   const [selectedComment, changeSelectedComment] = useState<SelectedComment>();
+  const [highlightedComment, changeHighlightedComment] =
+    useState<SelectedComment>();
+
+  api.publicApi.getHighlightedComment.useQuery(
+    { commentId: highlightedCommentId || "" },
+    {
+      enabled: !!highlightedCommentId,
+      onSuccess: (data) => {
+        if (isSelectedHighlightedComment) return;
+        isSelectedHighlightedComment = true;
+        changeSelectedComment(data.selectedComment);
+      },
+    }
+  );
+  useEffect(() => {
+    // set highlighted comment when user go back from all replies
+    // to keep comment highlighted among all other comments
+    if (!selectedComment) return;
+    if (!selectedComment.ReplyTo) changeHighlightedComment(selectedComment);
+  }, [selectedComment]);
 
   const [comment, changeComment] = useState("");
   useEffect(() => {
@@ -78,6 +102,7 @@ const Comments: React.FC<{
                   postId={postId}
                   tab={currentTab}
                   changeSelectedComment={changeSelectedComment}
+                  highlightedComment={highlightedComment}
                 />
               )}
             </div>
