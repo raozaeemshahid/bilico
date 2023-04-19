@@ -2,14 +2,27 @@ import Request from "./RequestItem";
 import { api } from "../../../utils/api";
 import Loading from "../../Loading";
 import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
+import { useEffect } from "react";
 
 const PostsListComponent: React.FC = () => {
+  const userInfo = api.me.info.useQuery();
   const getConnectionRequests = api.me.getConnectionRequests.useInfiniteQuery(
     { limit: 20 },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
+  const hasSeenRequestsApi = api.me.hasSeenConnectionRequests.useMutation();
+
+  useEffect(() => {
+    if (!userInfo.data || !userInfo.data.success) return;
+    if (!getConnectionRequests) return;
+    if (userInfo.data.newRequests > 0) {
+      setTimeout(() => {
+        hasSeenRequestsApi.mutate();
+      }, 1000);
+    }
+  }, [getConnectionRequests.isSuccess, userInfo.isSuccess]);
 
   if (!getConnectionRequests.data) return <Loading />;
 

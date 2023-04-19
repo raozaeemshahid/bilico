@@ -42,16 +42,6 @@ export const getConnectionRequests = protectedProcedure
       nextCursor = nextItem?.id ?? undefined;
     }
 
-    void ctx.prisma.connectionRequest.updateMany({
-      where: {
-        receiverId: ctx.session.user.id,
-        isSeen: false,
-      },
-      data: {
-        isSeen: true,
-      },
-    });
-
     return {
       items,
       nextCursor,
