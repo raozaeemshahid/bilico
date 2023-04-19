@@ -11,7 +11,7 @@ const PostsListComponent: React.FC = () => {
     }
   );
 
-  if (!getConnectionRequests.data) return <Loading text="Loading Data" />;
+  if (!getConnectionRequests.data) return <Loading />;
 
   return (
     <>

@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from "react";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
+import zodPost from "../../../../../lib/zod/zodPost";
 
 const CreateNewPost: React.FC<{
   postBody: string;
@@ -24,10 +25,11 @@ const CreateNewPost: React.FC<{
             <button
               className="m-2 flex rounded bg-green-600 py-2 px-4 font-bold text-white shadow-sm shadow-green-600 hover:bg-green-600"
               onClick={() => {
-                if (postBody.length == 0) {
-                  toast.error("Post can't be empty")
-                  return;
-                }
+                const parsedPost = zodPost.safeParse(postBody);
+                if (!parsedPost.success)
+                  return parsedPost.error.errors.forEach((err) =>
+                    toast.error(err.message)
+                  );
                 changeIsInPreview(true);
               }}
             >

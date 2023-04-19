@@ -32,8 +32,8 @@ export const getConnectionRequests = protectedProcedure
             isVerified: true,
             name: true,
             image: true,
-          }
-        }
+          },
+        },
       },
     });
     let nextCursor: typeof cursor | undefined = undefined;
@@ -41,6 +41,16 @@ export const getConnectionRequests = protectedProcedure
       const nextItem = items.pop();
       nextCursor = nextItem?.id ?? undefined;
     }
+
+    void ctx.prisma.connectionRequest.updateMany({
+      where: {
+        receiverId: ctx.session.user.id,
+        isSeen: false,
+      },
+      data: {
+        isSeen: true,
+      },
+    });
 
     return {
       items,

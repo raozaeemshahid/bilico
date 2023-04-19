@@ -3,19 +3,17 @@ import { z } from "zod";
 import zodPost from "../../../../lib/zod/zodPost";
 
 export const createPost = protectedProcedure
-  .input(
-    z.object({ interests: z.array(z.string()), postBody: zodPost })
-  )
+  .input(z.object({ interests: z.array(z.string()), postBody: zodPost }))
   .mutation(async ({ ctx, input }) => {
-    await ctx.prisma.user.update({
-      where: { id: ctx.session.user.id },
+    await ctx.prisma.post.create({
       data: {
-        Posts: {
-          create: {
-            Body: input.postBody,
-            Interests: {
-              connect: input.interests.map((interest) => ({ id: interest })),
-            },
+        Body: input.postBody,
+        Interests: {
+          connect: input.interests.map((interest) => ({ id: interest })),
+        },
+        CreatedBy: {
+          connect: {
+            id: ctx.session.user.id,
           },
         },
       },
