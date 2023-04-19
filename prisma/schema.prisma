@@ -120,6 +120,16 @@ model Post {
   @@index([userId])
 }
 
+model Work {
+  id        String   @id @default(uuid())
+  Body      String   @db.Text
+  CreatedBy User     @relation(fields: [userId], references: [id])
+  userId    String
+  CreatedAt DateTime @default(now())
+
+  @@index([userId])
+}
+
 model Notification {
   id        String           @id @default(uuid())
   title     String
@@ -179,6 +189,7 @@ model User {
   Skills    Skill[]
 
   Posts         Post[]
+  Work          Work[]
   Notifications Notification[] @relation("Notification For")
 
   ConnectedTo   User[] @relation("Connect")
@@ -241,8 +252,7 @@ enum Gender {
 enum NotificationType {
   REACTION
   COMMENT
-  REPLY
-  REPORT
+  PERSON
 }
 
 enum Reaction {
