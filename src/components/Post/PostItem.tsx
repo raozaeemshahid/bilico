@@ -2,7 +2,7 @@ import Image from "next/image";
 import moment from "moment";
 import dynamic from "next/dynamic";
 import type { Reaction } from "@prisma/client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import PagesLinks from "../../lib/PagesLink";
@@ -11,6 +11,10 @@ import ReactPostComponent from "../ReactPost";
 import ReactionsAndComments from "../CommentsAndReactions";
 import TopRightDropDown from "../TopRightDropdown";
 import { copyUrlToClipboard } from "../../lib/copyUrl";
+import { ModalContext } from "../../pages/_app";
+import { useRouter } from "next/router";
+import { api } from "../../utils/api";
+import { toast } from "react-toastify";
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
@@ -35,8 +39,29 @@ const Post: React.FC<{
   const [reactionsCount, changeReactionCount] = useState(post._count.reactions);
   const [commentCount, changeCommentCount] = useState(post._count.comments);
   const { data: userSession } = useSession();
+  const controlModal = useContext(ModalContext);
+  const router = useRouter();
+  const deletePostApi = api.me.deletePost.useMutation();
 
   if (!userSession || !userSession.user) return <></>;
+  const deletePost = (postId: string) => {
+    controlModal.changeModal({
+      text: "Are you sure you want to delete this Post?",
+      confirmText: "Delete",
+      confirm: () => {
+        void toast.promise(
+          deletePostApi.mutateAsync({ postId }).then(() => {
+            void router.push(PagesLinks.HOME_Link);
+          }),
+          {
+            error: "Couldn't Delete Post",
+            pending: "Deleting Post",
+            success: "Post Deleted Successfully",
+          }
+        );
+      },
+    });
+  };
   return (
     <>
       <div key={post.id} className="w-full rounded-lg py-3 px-0 xs:px-4">
@@ -48,6 +73,14 @@ const Post: React.FC<{
                 copyUrlToClipboard(PagesLinks.getPostLink(post.id));
               },
             },
+            ...(userSession.user.id == userData.id
+              ? [
+                {
+                  label: "Delete",
+                  onClick: () => deletePost(post.id),
+                },
+              ]
+              : []),
           ]}
         />
         <div className="">

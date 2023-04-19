@@ -67,7 +67,6 @@ const Comments: React.FC<{
 
   const [comment, changeComment] = useState("");
   useEffect(() => {
-    changeComment("");
     changeHighlightedComment(undefined)
   }, [currentTab]);
 
