@@ -18,12 +18,14 @@ const CommentsComponent: React.FC<{
   changeCommentCount: Dispatch<SetStateAction<number>>;
   changeSelectedComment: Dispatch<SetStateAction<SelectedComment | undefined>>;
   highlightedComment: SelectedComment | undefined;
+  changeHighlightedComment: Dispatch<SetStateAction<SelectedComment | undefined>>;
 }> = ({
   tab,
   postId,
   changeSelectedComment,
   changeCommentCount,
   highlightedComment,
+  changeHighlightedComment
 }) => {
   const [order, changeOrder] = useState<OrderOfDataByTime>("Oldest");
   const getComments = api.publicApi.getComments.useInfiniteQuery(
@@ -59,6 +61,7 @@ const CommentsComponent: React.FC<{
             }
           )
           .then(() => {
+            if (highlightedComment && highlightedComment.id == commentId) changeHighlightedComment(undefined)
             changeCommentCount((count) => count - 1);
           });
       },

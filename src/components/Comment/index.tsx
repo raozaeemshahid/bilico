@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { api } from "../../utils/api";
 import Loading from "../Loading";
 import PostItem from "./PostItem";
@@ -13,6 +14,12 @@ const CommentComponnet: React.FC<{ commentId: string }> = ({ commentId }) => {
   const post = comment.post;
   return (
     <>
+      <Head>
+        <title>
+          {`${comment.selectedComment.CreatedBy.name.split(" ")[0] || ""}${comment.selectedComment.CreatedBy.name.split(" ")[0] && "'s"
+            } Comment`}
+        </title>
+      </Head>
       <div className="my-3 flex justify-center">
         <h2 className="text-3xl font-bold">{`${comment.selectedComment.CreatedBy.name.split(" ")[0] || ""
           }${comment.selectedComment.CreatedBy.name.split(" ")[0] && "'s"

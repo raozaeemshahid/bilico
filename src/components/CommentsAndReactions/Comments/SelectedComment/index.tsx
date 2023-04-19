@@ -11,6 +11,9 @@ import { listOrderOfDataByTime } from "../../../../lib/common/names";
 import type { OrderOfDataByTime } from "../../../../lib/common/names";
 import Select from "react-select";
 import Replies from "./Replies";
+import { useSession } from "next-auth/react";
+import DropDown from "../../../TopRightDropdown/InlineDropDown";
+import moment from "moment";
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
@@ -21,6 +24,8 @@ const SelectedCommentComponent: React.FC<{
   changeSelectedComment: Dispatch<SetStateAction<SelectedComment | undefined>>;
 }> = ({ changeSelectedComment, selectedComment }) => {
   const [order, changeOrder] = useState<OrderOfDataByTime>("Oldest");
+  const { data: userSession } = useSession();
+  if (!userSession || !userSession.user) return <></>;
 
   return (
     <>
@@ -67,6 +72,13 @@ const SelectedCommentComponent: React.FC<{
               {BadWordsFilter.clean(selectedComment.Comment)}
             </h4>
           </div>
+        </div>
+        <div className="m-1 flex items-center gap-2">
+          <Link href={PagesLinks.getCommentLink(selectedComment.id)}>
+            <h2 className="text-xs hover:underline opacity-70">
+              {moment(selectedComment.CreatedAt).fromNow()}
+            </h2>
+          </Link>
         </div>
         <div className="flex items-center gap-2">
           <h2>Order by</h2>

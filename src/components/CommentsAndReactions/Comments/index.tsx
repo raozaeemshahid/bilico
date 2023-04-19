@@ -15,6 +15,7 @@ export interface SelectedComment {
   id: string;
   ReplyTo?: SelectedComment | undefined;
   highlightedComment?: SelectedComment | undefined;
+  CommentType?: CommentType | null;
   CreatedBy: {
     id: string;
     name: string;
@@ -25,6 +26,7 @@ export interface SelectedComment {
 }
 
 let isSelectedHighlightedComment = false;
+let isSelectedMainHighlightedComment = false;
 
 const Comments: React.FC<{
   postId: string;
@@ -48,16 +50,25 @@ const Comments: React.FC<{
       },
     }
   );
+
   useEffect(() => {
     // set highlighted comment when user go back from all replies
     // to keep comment highlighted among all other comments
     if (!selectedComment) return;
-    if (!selectedComment.ReplyTo) changeHighlightedComment(selectedComment);
+    if (selectedComment.CommentType)
+      changeCurrentTab(selectedComment.CommentType);
+    if (!selectedComment.ReplyTo) {
+      if (highlightedComment) changeHighlightedComment(undefined);
+      if (isSelectedMainHighlightedComment) return;
+      isSelectedMainHighlightedComment = true;
+      changeHighlightedComment(selectedComment);
+    }
   }, [selectedComment]);
 
   const [comment, changeComment] = useState("");
   useEffect(() => {
     changeComment("");
+    changeHighlightedComment(undefined)
   }, [currentTab]);
 
   const count = api.publicApi.getCommentsCount.useQuery(
@@ -103,6 +114,7 @@ const Comments: React.FC<{
                   tab={currentTab}
                   changeSelectedComment={changeSelectedComment}
                   highlightedComment={highlightedComment}
+                  changeHighlightedComment={changeHighlightedComment}
                 />
               )}
             </div>

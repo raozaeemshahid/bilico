@@ -32,18 +32,27 @@ const Replies: React.FC<{
       text: "Are you sure you want to delete this reply?",
       confirmText: "Delete",
       confirm: () => {
-        void toast.promise(
-          deleteReplyApi.mutateAsync({ commentId }).then(() =>
-            utils.publicApi.getReplies.invalidate({
-              commentId: selectedComment.id,
-            })
-          ),
-          {
-            error: "Couldn't Delete Reply",
-            pending: "Deleting Reply",
-            success: "Reply Deleted",
-          }
-        );
+        void toast
+          .promise(
+            deleteReplyApi.mutateAsync({ commentId }).then(() =>
+              utils.publicApi.getReplies.invalidate({
+                commentId: selectedComment.id,
+              })
+            ),
+            {
+              error: "Couldn't Delete Reply",
+              pending: "Deleting Reply",
+              success: "Reply Deleted",
+            }
+          )
+          .then(() => {
+            if (
+              selectedComment.highlightedComment &&
+              (commentId == selectedComment.id ||
+                commentId == selectedComment.highlightedComment.id)
+            )
+              changeSelectedComment(undefined);
+          });
       },
     });
   };

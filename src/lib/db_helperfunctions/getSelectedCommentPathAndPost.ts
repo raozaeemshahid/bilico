@@ -47,6 +47,7 @@ export const getSelectedCommentPathAndPost = async (input: {
       CreatedAt: comment.CreatedAt,
       _count: comment._count,
       Comment: comment.Comment,
+      CommentType: comment.CommentType,
       highlightedComment: currentComment.highlightedComment,
     };
     if (comment.OnPost) {
@@ -65,9 +66,9 @@ export const getSelectedCommentPathAndPost = async (input: {
           Interests: comment.OnPost.Interests,
           reactionByVisitor: reactionByVisitor
             ? {
-                id: reactionByVisitor.id,
-                Reaction: reactionByVisitor.Reaction,
-              }
+              id: reactionByVisitor.id,
+              Reaction: reactionByVisitor.Reaction,
+            }
             : undefined,
         },
       };

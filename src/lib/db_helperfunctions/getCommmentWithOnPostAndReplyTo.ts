@@ -13,6 +13,7 @@ export const getCommentWithOnPostAndReplyTo = async (input: {
       id: true,
       Comment: true,
       _count: { select: { Replies: true } },
+      CommentType: true,
       CreatedBy: {
         select: {
           id: true,

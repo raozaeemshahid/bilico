@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { api } from "../../utils/api";
 import Loading from "../Loading";
 import PostItem from "./PostItem";
@@ -12,6 +13,12 @@ const PostComponent: React.FC<{ postId: string }> = ({ postId }) => {
   const post = getPost.data;
   return (
     <>
+      <Head>
+        <title>
+          {`${post.createdBy.name.split(" ")[0] || ""}${post.createdBy.name.split(" ")[0] && "'s"
+            } Post`}
+        </title>
+      </Head>
       <div className="my-3 flex justify-center">
         <h2 className="text-3xl font-bold">{`${post.createdBy.name.split(" ")[0] || ""
           }${post.createdBy.name.split(" ")[0] && "'s"} Post`}</h2>

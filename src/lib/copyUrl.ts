@@ -7,5 +7,5 @@ const getBaseUrl = () => {
 
 export const copyUrlToClipboard = (path: string) => {
   navigator.clipboard.writeText(getBaseUrl() + path)
-  toast.info("Copied url: " + getBaseUrl())
+  toast.info("Copied")
 }

@@ -8,23 +8,33 @@ import Numbers from "./Numbers";
 import TopRightDropDown from "../../TopRightDropdown";
 import { useRouter } from "next/router";
 import PagesLinks from "../../../lib/PagesLink";
+import { copyUrlToClipboard } from "../../../lib/copyUrl";
 
 const Profile: React.FC = () => {
   const router = useRouter();
-  const { status } = useSession();
+  const { data: userSession, status } = useSession();
 
   const userData = api.me.data.useQuery(undefined, {
     enabled: status === "authenticated",
   });
 
+  if (!userSession || !userSession.user) return <></>;
+
   if (!userData.data || !userData.data.success)
     return <Loading text="Loading Data" />;
-
   return (
     <>
       <div className="flex flex-col">
         <TopRightDropDown
           options={[
+            {
+              label: "Copy Link",
+              onClick: () => {
+                copyUrlToClipboard(
+                  PagesLinks.getProfileLink(!!userSession.user ? userSession.user.id : "")
+                );
+              },
+            },
             {
               label: "Edit Account",
               onClick: () => {
