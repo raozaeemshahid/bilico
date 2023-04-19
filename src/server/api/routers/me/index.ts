@@ -13,6 +13,8 @@ import { createPost } from "./createPost";
 import { getPosts } from "./getPosts";
 import { deletePost } from "./deletePost";
 import { getConnectionRequests } from "./getConnectionRequests";
+import { createWork } from "./createWork";
+import { deleteWork } from "./deleteWork";
 
 export const me = createTRPCRouter({
   amIBanned,
@@ -29,4 +31,6 @@ export const me = createTRPCRouter({
   getPosts,
   deletePost,
   getConnectionRequests,
+  createWork,
+  deleteWork,
 });
