@@ -58,7 +58,7 @@ const Comments: React.FC<{
     if (selectedComment.CommentType)
       changeCurrentTab(selectedComment.CommentType);
     if (!selectedComment.ReplyTo) {
-      if (highlightedComment) changeHighlightedComment(undefined);
+      if (highlightedComment && highlightedComment !== selectedComment) changeHighlightedComment(undefined);
       if (isSelectedMainHighlightedComment) return;
       isSelectedMainHighlightedComment = true;
       changeHighlightedComment(selectedComment);

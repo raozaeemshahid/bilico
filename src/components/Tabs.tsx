@@ -1,6 +1,6 @@
 interface Props<T> {
   tabList: T[];
-  currentTab: T;
+  currentTab?: T;
   changeCurrentTab: (id: T) => void;
 }
 

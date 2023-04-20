@@ -1,7 +1,4 @@
 import { protectedProcedure } from "../../trpc";
-import { z } from "zod";
-import { TRPCError } from "@trpc/server";
-import { deletePostCompletely } from "../../../../lib/db_helperfunctions/deletePost";
 
 export const hasSeenConnectionRequests = protectedProcedure.mutation(
   async ({ ctx }) => {

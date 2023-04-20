@@ -42,6 +42,12 @@ const Profile: React.FC = () => {
               },
             },
             {
+              label: "Activity Log",
+              onClick: () => {
+                void router.push(PagesLinks.ACTIVITY_LOG)
+              },
+            },
+            {
               label: "Deactive Account",
               onClick: () => {
                 void router.push(PagesLinks.DEACTIVATED_ME_LINK);

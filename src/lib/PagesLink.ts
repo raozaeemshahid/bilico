@@ -25,6 +25,7 @@ const PagesLinks = {
   DELETE_ME_LINK: "/me/delete",
   NOTIFICATION_LINK: "/notification",
   REQUESTS_LINK: "/requests",
+  ACTIVITY_LOG: "/me/activity",
 };
 
 export default PagesLinks;

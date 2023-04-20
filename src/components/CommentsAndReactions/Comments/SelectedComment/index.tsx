@@ -56,18 +56,19 @@ const SelectedCommentComponent: React.FC<{
             )}
           </div>
           <div className="p-2">
-            <Link
-              href={PagesLinks.getProfileLink(selectedComment.CreatedBy.id)}
-            >
-              <div className="flex items-center gap-1 text-sm hover:underline">
+            <div className="flex w-fit items-center gap-1 text-sm hover:underline">
+              <Link
+                href={PagesLinks.getProfileLink(selectedComment.CreatedBy.id)}
+                className="w-min"
+              >
                 <h3 className="whitespace-nowrap font-semibold">
                   {selectedComment.CreatedBy.name}
                 </h3>
                 <h3>
                   {selectedComment.CreatedBy.isVerified && <MdVerified />}
                 </h3>
-              </div>
-            </Link>
+              </Link>
+            </div>
             <h4 className="text-sm text-gray-100 opacity-95">
               {BadWordsFilter.clean(selectedComment.Comment)}
             </h4>
@@ -75,7 +76,7 @@ const SelectedCommentComponent: React.FC<{
         </div>
         <div className="m-1 flex items-center gap-2">
           <Link href={PagesLinks.getCommentLink(selectedComment.id)}>
-            <h2 className="text-xs hover:underline opacity-70">
+            <h2 className="text-xs opacity-70 hover:underline">
               {moment(selectedComment.CreatedAt).fromNow()}
             </h2>
           </Link>

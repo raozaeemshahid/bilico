@@ -16,6 +16,8 @@ import { getConnectionRequests } from "./getConnectionRequests";
 import { createWork } from "./createWork";
 import { deleteWork } from "./deleteWork";
 import { hasSeenConnectionRequests } from "./hasSeenRequests";
+import { getCommentsActivity } from "./getCommentsActivity";
+import { getReactionsActivity } from "./getReactionsActivity";
 
 export const me = createTRPCRouter({
   amIBanned,
@@ -34,5 +36,7 @@ export const me = createTRPCRouter({
   getConnectionRequests,
   createWork,
   deleteWork,
-  hasSeenConnectionRequests
+  hasSeenConnectionRequests,
+  getCommentsActivity,
+  getReactionsActivity,
 });
