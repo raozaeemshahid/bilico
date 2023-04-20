@@ -4,11 +4,13 @@ import type { OrderOfDataByTime } from "../../../lib/common/names";
 import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
 import CommentItem from "./CommentItem";
 import type { AllCommentType } from "../../../server/api/routers/me/getCommentsActivity";
+import { useSession } from "next-auth/react";
 
 const CommentListComponent: React.FC<{
   order: OrderOfDataByTime;
   filter: AllCommentType;
 }> = ({ order, filter }) => {
+  const {data: userSession} = useSession()
   const getComments = api.me.getCommentsActivity.useInfiniteQuery(
     { limit: 20, order, filter },
     {
@@ -16,7 +18,7 @@ const CommentListComponent: React.FC<{
     }
   );
 
-  if (!getComments.data) return <Loading />;
+  if (!getComments.data || !userSession || !userSession.user) return <Loading />;
 
   return (
     <>
@@ -25,6 +27,7 @@ const CommentListComponent: React.FC<{
           page.items.map((comment) => (
             <CommentItem
               key={comment.id}
+              image={userSession.user?.image}
               comment={{
                 body: comment.Comment,
                 createdAt: comment.CreatedAt,

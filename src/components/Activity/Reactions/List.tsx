@@ -4,11 +4,13 @@ import type { OrderOfDataByTime } from "../../../lib/common/names";
 import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
 import ReactionItem from "./ReactionItem";
 import { AllReactions } from "../../CommentsAndReactions/Reactions";
+import { useSession } from "next-auth/react";
 
 const ReactionListComponent: React.FC<{
   order: OrderOfDataByTime;
   filter: AllReactions;
 }> = ({ order, filter }) => {
+  const {data: userSession} = useSession()
   const getReactions = api.me.getReactionsActivity.useInfiniteQuery(
     { limit: 20, order, filter },
     {
@@ -16,7 +18,7 @@ const ReactionListComponent: React.FC<{
     }
   );
 
-  if (!getReactions.data) return <Loading />;
+  if (!getReactions.data || !userSession || !userSession.user) return <Loading />;
 
   return (
     <>
@@ -33,6 +35,7 @@ const ReactionListComponent: React.FC<{
                 postId: reaction.ToPost.id,
                 type: reaction.Reaction,
               }}
+              image={userSession.user?.image}
             />
           })
         )}
