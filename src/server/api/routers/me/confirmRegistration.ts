@@ -6,6 +6,7 @@ import { TRPCError } from "@trpc/server";
 import moment from "moment";
 import { MINIMUM_AGE_REQUIREMENT } from "../../../../components/Register/DateOfBirth";
 import zodName from "../../../../lib/zod/zodName";
+import PagesLinks from "../../../../lib/PagesLink";
 
 export const countriesNamesList = Object.values(countries)
   .map((country) => country.name)
@@ -58,6 +59,17 @@ export const confirmRegistration = protectedProcedure
         Gender: input.gender,
         Country: input.country,
         DateOfBirth: input.dateOfBirth,
+      },
+    });
+
+    await ctx.prisma.notification.create({
+      data: {
+        link: PagesLinks.ME,
+        title: "Welcome to Bilico - A Social Media for Professionals",
+        ForUser: { connect: { id: ctx.session.user.id } },
+        byUserId: ctx.session.user.id,
+        byUserImage: ctx.session.user.image,
+        byUserName: ctx.session.user.name,
       },
     });
 

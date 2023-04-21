@@ -101,6 +101,8 @@ model Comment {
   ReplyTo          Comment?     @relation("Replies", fields: [replyToCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   Replies          Comment[]    @relation("Replies")
 
+  Notification Notification[]
+
   @@index([postId])
   @@index([CommenterUserId])
   @@index([replyToCommentId])
@@ -117,6 +119,8 @@ model Post {
   Reactions   ReactPost[]
   GetReported ReportToAdmin[]
 
+  Notification Notification[]
+
   @@index([userId])
 }
 
@@ -131,16 +135,28 @@ model Work {
 }
 
 model Notification {
-  id        String           @id @default(uuid())
+  id        String   @id @default(uuid())
   title     String
-  forUser   User             @relation("Notification For", fields: [userId], references: [id])
-  userId    String
-  isSeen    Boolean          @default(false)
-  createdAt DateTime         @default(now())
   link      String
-  type      NotificationType
+  ForUser   User     @relation("Notification For", fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  isSeen    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  byUserImage String?
+  byUserName  String?
+  byUserId    String?
+
+  subText String? @db.Text
+
+  Post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  Comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  postId    String?
+  commentId String?
 
   @@index([userId])
+  @@index([postId])
+  @@index([commentId])
 }
 
 model Message {
@@ -247,12 +263,6 @@ enum Gender {
   Male
   Female
   Other
-}
-
-enum NotificationType {
-  REACTION
-  COMMENT
-  PERSON
 }
 
 enum Reaction {

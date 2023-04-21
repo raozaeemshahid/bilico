@@ -4,7 +4,7 @@ import Loading from "../../Loading";
 import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
 import { useEffect } from "react";
 
-const PostsListComponent: React.FC = () => {
+const RequestsListComponent: React.FC = () => {
   const userInfo = api.me.info.useQuery();
   const getConnectionRequests = api.me.getConnectionRequests.useInfiniteQuery(
     { limit: 20 },
@@ -60,4 +60,4 @@ const PostsListComponent: React.FC = () => {
   );
 };
 
-export default PostsListComponent;
+export default RequestsListComponent;

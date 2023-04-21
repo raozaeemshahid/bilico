@@ -1,4 +1,4 @@
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 
 const getBaseUrl = () => {
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
@@ -6,6 +6,12 @@ const getBaseUrl = () => {
 };
 
 export const copyUrlToClipboard = (path: string) => {
-  navigator.clipboard.writeText(getBaseUrl() + path)
-  toast.info("Copied")
-}
+  navigator.clipboard
+    .writeText(getBaseUrl() + path)
+    .then(() => {
+      toast.info("Copied");
+    })
+    .catch(() => {
+      toast.error("Couln't Copy");
+    });
+};

@@ -27,6 +27,7 @@ export interface SelectedComment {
 
 let isSelectedHighlightedComment = false;
 let isSelectedMainHighlightedComment = false;
+let lastHighlightedCommentId = "";
 
 const Comments: React.FC<{
   postId: string;
@@ -44,6 +45,13 @@ const Comments: React.FC<{
     {
       enabled: !!highlightedCommentId,
       onSuccess: (data) => {
+        if (
+          highlightedCommentId &&
+          highlightedCommentId !== lastHighlightedCommentId
+        ) {
+          isSelectedHighlightedComment = false;
+          lastHighlightedCommentId = highlightedCommentId;
+        }
         if (isSelectedHighlightedComment) return;
         isSelectedHighlightedComment = true;
         changeSelectedComment(data.selectedComment);
@@ -58,7 +66,8 @@ const Comments: React.FC<{
     if (selectedComment.CommentType)
       changeCurrentTab(selectedComment.CommentType);
     if (!selectedComment.ReplyTo) {
-      if (highlightedComment && highlightedComment !== selectedComment) changeHighlightedComment(undefined);
+      if (highlightedComment && highlightedComment !== selectedComment)
+        changeHighlightedComment(undefined);
       if (isSelectedMainHighlightedComment) return;
       isSelectedMainHighlightedComment = true;
       changeHighlightedComment(selectedComment);
@@ -67,7 +76,7 @@ const Comments: React.FC<{
 
   const [comment, changeComment] = useState("");
   useEffect(() => {
-    changeHighlightedComment(undefined)
+    changeHighlightedComment(undefined);
   }, [currentTab]);
 
   const count = api.publicApi.getCommentsCount.useQuery(

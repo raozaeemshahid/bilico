@@ -15,13 +15,14 @@ const PostComponent: React.FC<{ postId: string }> = ({ postId }) => {
     <>
       <Head>
         <title>
-          {`${post.createdBy.name.split(" ")[0] || ""}${post.createdBy.name.split(" ")[0] && "'s"
-            } Post`}
+          {`${post.createdBy.name.split(" ")[0] || ""}
+          ${!!post.createdBy.name.split(" ")[0]  ? "'s" : "" } Post`}
         </title>
       </Head>
       <div className="my-3 flex justify-center">
-        <h2 className="text-3xl font-bold">{`${post.createdBy.name.split(" ")[0] || ""
-          }${post.createdBy.name.split(" ")[0] && "'s"} Post`}</h2>
+        <h2 className="text-3xl font-bold">{`
+        ${post.createdBy.name.split(" ")[0] || ""}
+        ${!!post.createdBy.name.split(" ")[0] ? "'s" : ""} Post`}</h2>
       </div>
       <div className="m-2 rounded-lg py-3 md:px-3">
         <PostItem

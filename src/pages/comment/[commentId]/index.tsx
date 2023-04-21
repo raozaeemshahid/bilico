@@ -43,6 +43,7 @@ const Profile: NextPage = () => {
     { commentId: !!commentId ? commentId : "" },
     {
       enabled: !!commentId,
+      retry: false,
     }
   );
 
@@ -78,6 +79,8 @@ const Profile: NextPage = () => {
     void router.push(PagesLinks.getLoginLink());
     return <LoadingFullScreen />;
   }
+  if (getHighlightedComment.isError)
+    return <FailedFullBodyComponent text="Comment Not Found" />;
   if (!commentId || !getHighlightedComment.data)
     return <LoadingFullScreen text="Getting Things Ready" />;
 

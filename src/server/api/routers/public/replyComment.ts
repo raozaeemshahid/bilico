@@ -1,6 +1,7 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import zodReply from "../../../../lib/zod/zodReply";
+import PagesLinks from "../../../../lib/PagesLink";
 
 export const replyComment = protectedProcedure
   .input(
@@ -10,7 +11,7 @@ export const replyComment = protectedProcedure
     })
   )
   .mutation(async ({ ctx, input }) => {
-    return ctx.prisma.comment.create({
+    const comment = await ctx.prisma.comment.create({
       data: {
         Comment: input.comment,
         ReplyTo: {
@@ -18,5 +19,29 @@ export const replyComment = protectedProcedure
         },
         CreatedBy: { connect: { id: ctx.session.user.id } },
       },
+      select: {
+        id: true,
+        ReplyTo: {
+          select: {
+            CommenterUserId: true,
+          },
+        },
+      },
     });
+    if (comment.ReplyTo) {
+      await ctx.prisma.notification
+        .create({
+          data: {
+            title: `replied to your comment`,
+            link: PagesLinks.getCommentLink(comment.id),
+            byUserId: ctx.session.user.id,
+            byUserImage: ctx.session.user.image,
+            byUserName: ctx.session.user.name,
+            ForUser: { connect: { id: comment.ReplyTo.CommenterUserId } },
+            subText: input.comment,
+            Comment: { connect: { id: comment.id } },
+          },
+        })
+    }
+    return { success: true };
   });

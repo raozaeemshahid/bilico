@@ -16,14 +16,17 @@ const CommentComponnet: React.FC<{ commentId: string }> = ({ commentId }) => {
     <>
       <Head>
         <title>
-          {`${comment.selectedComment.CreatedBy.name.split(" ")[0] || ""}${comment.selectedComment.CreatedBy.name.split(" ")[0] && "'s"
-            } Comment`}
+          {`
+          ${comment.selectedComment.CreatedBy.name.split(" ")[0] || ""}
+          ${!!comment.selectedComment.CreatedBy.name.split(" ")[0] ? "'s" : ""}
+          Comment`}
         </title>
       </Head>
       <div className="my-3 flex justify-center">
-        <h2 className="text-3xl font-bold">{`${comment.selectedComment.CreatedBy.name.split(" ")[0] || ""
-          }${comment.selectedComment.CreatedBy.name.split(" ")[0] && "'s"
-          } Comment`}</h2>
+        <h2 className="text-3xl font-bold">{`
+        ${comment.selectedComment.CreatedBy.name.split(" ")[0] || ""}
+        ${!!comment.selectedComment.CreatedBy.name.split(" ")[0] ? "'s" : ""}
+        Comment`}</h2>
       </div>
       <div className="m-2 w-full rounded-lg px-0 py-3 xs:px-4 md:px-7">
         <div className="m-2 rounded-lg py-3 md:px-3">

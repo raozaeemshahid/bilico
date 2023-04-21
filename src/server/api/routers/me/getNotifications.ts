@@ -2,7 +2,7 @@ import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import type { OrderOfDataByTime } from "../../../../lib/common/names";
 
-export const getConnectionRequests = protectedProcedure
+export const getNotifications = protectedProcedure
   .input(
     z.object({
       limit: z.number().min(1).max(100).nullish(),
@@ -18,29 +18,27 @@ export const getConnectionRequests = protectedProcedure
   .query(async ({ input, ctx }) => {
     const limit = input.limit ?? 50;
     const { cursor } = input;
-    const items = await ctx.prisma.connectionRequest.findMany({
+    const items = await ctx.prisma.notification.findMany({
       take: limit + 1, // get an extra item at the end which we'll use as next cursor
       where: {
-        receiverId: ctx.session.user.id,
+        userId: ctx.session.user.id,
       },
       cursor: cursor ? { id: cursor } : undefined,
       orderBy: {
-        createdAt: input.order == "Newest" ? "desc" : "asc",
+         createdAt: input.order == "Newest" ? "desc" : "asc",
       },
       select: {
         id: true,
         createdAt: true,
         isSeen: true,
-        message: true,
-        Sender: {
-          select: {
-            id: true,
-            Bio: true,
-            isVerified: true,
-            name: true,
-            image: true,
-          },
-        },
+        byUserId: true,
+        byUserImage: true,
+        byUserName: true,
+        commentId: true,
+        postId: true,
+        link: true,
+        subText: true,
+        title: true,
       },
     });
     let nextCursor: typeof cursor | undefined = undefined;
