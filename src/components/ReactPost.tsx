@@ -48,21 +48,18 @@ const ReactPostComponent: React.FC<{
 }> = ({ reactionByVisitor, postId, changeReactionCount }) => {
   const reactPostApi = api.publicApi.reactPost.useMutation({
     onSuccess(data) {
-      if (data) {
-        changeReaction({ Reaction: data.Reaction, id: data.id });
-      }
+      changeReaction(data?.Reaction);
       const nextReaction = stackOfMutationsToReact.shift();
       // if there's another request pending....
       if (nextReaction)
         reactPostApi.mutate({
           postId,
-          previousReactionId: data?.id,
           reaction: nextReaction,
         });
     },
   });
 
-  const [reaction, changeReaction] = useState(reactionByVisitor);
+  const [reaction, changeReaction] = useState(reactionByVisitor?.Reaction);
 
   const [confirming, changeConfirming] = useState<Reaction>();
   const [active, changeActive] = useState<Reaction>();
@@ -98,7 +95,6 @@ const ReactPostComponent: React.FC<{
     }
     reactPostApi.mutate({
       postId,
-      previousReactionId: reaction?.id,
       reaction: nextReaction,
     });
   };

@@ -12,43 +12,40 @@ export const reactPost = protectedProcedure
   .input(
     z.object({
       reaction: ZReaction.nullish(),
-      previousReactionId: z.string().default(""),
       postId: z.string().uuid(),
     })
   )
   .mutation(async ({ ctx, input }) => {
+    if (!input.reaction) {
+      await ctx.prisma.reactPost.deleteMany({
+        where: {
+          postId: input.postId,
+          userId: ctx.session.user.id,
+        },
+      });
+      return;
+    }
     const previousReaction = await ctx.prisma.reactPost.findFirst({
       where: { postId: input.postId, userId: ctx.session.user.id },
     });
-    if (
-      previousReaction &&
-      input.previousReactionId.length > 0 &&
-      previousReaction.id !== input.previousReactionId
-    ) {
-      throw new TRPCError({ code: "UNAUTHORIZED" });
-    }
-    if (!input.reaction) {
-      return void (await ctx.prisma.post.update({
-        where: { id: input.postId },
+    if (!previousReaction) {
+      return ctx.prisma.reactPost.create({
         data: {
-          Reactions: {
-            delete: { id: input.previousReactionId },
-          },
+          Reaction: input.reaction,
+          FromUser: { connect: { id: ctx.session.user.id } },
+          ToPost: { connect: { id: input.postId } },
         },
-      }));
+        select: {
+          Reaction: true,
+        },
+      });
     }
-    return ctx.prisma.reactPost.upsert({
-      where: { id: input.previousReactionId },
-      create: {
-        Reaction: input.reaction,
-        FromUser: { connect: { id: ctx.session.user.id } },
-        ToPost: { connect: { id: input.postId } },
-      },
-      update: {
+    return ctx.prisma.reactPost.update({
+      where: { id: previousReaction.id },
+      data: {
         Reaction: input.reaction,
       },
       select: {
-        id: true,
         Reaction: true,
       },
     });
