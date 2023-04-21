@@ -38,16 +38,17 @@ export const createComment = protectedProcedure
     if (comment.OnPost && comment.OnPost.userId !== ctx.session.user.id) {
       await ctx.prisma.notification.create({
         data: {
-          title: `${input.commentType == "Opinion"
+          title: `${
+            input.commentType == "Opinion"
               ? "gave a opinion on your post"
               : input.commentType == "Question"
-                ? "asked a question on your post"
-                : input.commentType == "Suggestion"
-                  ? "gave a suggestion on your post"
-                  : input.commentType == "Appreciation"
-                    ? "appreciated your post"
-                    : "commented on your post"
-            }`,
+              ? "asked a question on your post"
+              : input.commentType == "Suggestion"
+              ? "gave a suggestion on your post"
+              : input.commentType == "Appreciation"
+              ? "appreciated your post"
+              : "commented on your post"
+          }`,
           link: PagesLinks.getCommentLink(comment.id),
           byUserId: ctx.session.user.id,
           byUserImage: ctx.session.user.image,

@@ -58,6 +58,11 @@ const Comments: React.FC<{
       },
     }
   );
+  useEffect(() => {
+    return () => {
+      isSelectedHighlightedComment = false;
+    };
+  }, []);
 
   useEffect(() => {
     // set highlighted comment when user go back from all replies

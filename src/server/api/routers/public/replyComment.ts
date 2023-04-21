@@ -28,20 +28,22 @@ export const replyComment = protectedProcedure
         },
       },
     });
-    if (comment.ReplyTo) {
-      await ctx.prisma.notification
-        .create({
-          data: {
-            title: `replied to your comment`,
-            link: PagesLinks.getCommentLink(comment.id),
-            byUserId: ctx.session.user.id,
-            byUserImage: ctx.session.user.image,
-            byUserName: ctx.session.user.name,
-            ForUser: { connect: { id: comment.ReplyTo.CommenterUserId } },
-            subText: input.comment,
-            Comment: { connect: { id: comment.id } },
-          },
-        })
+    if (
+      comment.ReplyTo &&
+      comment.ReplyTo.CommenterUserId !== ctx.session.user.id
+    ) {
+      await ctx.prisma.notification.create({
+        data: {
+          title: `replied to your comment`,
+          link: PagesLinks.getCommentLink(comment.id),
+          byUserId: ctx.session.user.id,
+          byUserImage: ctx.session.user.image,
+          byUserName: ctx.session.user.name,
+          ForUser: { connect: { id: comment.ReplyTo.CommenterUserId } },
+          subText: input.comment,
+          Comment: { connect: { id: comment.id } },
+        },
+      });
     }
     return { success: true };
   });
