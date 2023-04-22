@@ -1,66 +1,14 @@
-import { api } from "../../../utils/api";
-import { useSession } from "next-auth/react";
-import Loading from "../../Loading";
 import ProfileHead from "./ProfileHead";
 import BioData from "./BioData";
 import InterestAndSKill from "./InterestAndSkills";
 import Numbers from "./Numbers";
-import TopRightDropDown from "../../TopRightDropdown";
-import { useRouter } from "next/router";
-import PagesLinks from "../../../lib/PagesLink";
-import { copyUrlToClipboard } from "../../../lib/copyUrl";
+import MyProfileDropDown from "../../TopRightDropdown/MyProfileDropDown";
 
 const Profile: React.FC = () => {
-  const router = useRouter();
-  const { data: userSession, status } = useSession();
-
-  const userData = api.me.data.useQuery(undefined, {
-    enabled: status === "authenticated",
-  });
-
-  if (!userSession || !userSession.user) return <></>;
-
-  if (!userData.data || !userData.data.success)
-    return <Loading text="Loading Data" />;
   return (
     <>
       <div className="flex flex-col">
-        <TopRightDropDown
-          options={[
-            {
-              label: "Copy Link",
-              onClick: () => {
-                copyUrlToClipboard(
-                  PagesLinks.getProfileLink(!!userSession.user ? userSession.user.id : "")
-                );
-              },
-            },
-            {
-              label: "Edit Account",
-              onClick: () => {
-                void router.push(PagesLinks.EDIT_ACCOUNT_LINK);
-              },
-            },
-            {
-              label: "Activity Log",
-              onClick: () => {
-                void router.push(PagesLinks.ACTIVITY_LOG)
-              },
-            },
-            {
-              label: "Deactive Account",
-              onClick: () => {
-                void router.push(PagesLinks.DEACTIVATED_ME_LINK);
-              },
-            },
-            {
-              label: "Delete Account",
-              onClick: () => {
-                void router.push(PagesLinks.DELETE_ME_LINK);
-              },
-            },
-          ]}
-        />
+        <MyProfileDropDown />
         <ProfileHead />
         <div className="flex  flex-wrap sm:flex-nowrap">
           <Numbers />

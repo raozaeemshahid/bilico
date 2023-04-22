@@ -9,9 +9,7 @@ import Numbers from "./Numbers";
 import { UserIdContext } from "..";
 import { useContext } from "react";
 import Relation from "./Relation";
-import TopRightDropDown from "../../TopRightDropdown";
-import { copyUrlToClipboard } from "../../../lib/copyUrl";
-import PagesLinks from "../../../lib/PagesLink";
+import ProfileDropDown from "../../TopRightDropdown/ProfileDropDown";
 
 const Profile: React.FC = () => {
   const userId = useContext(UserIdContext);
@@ -36,16 +34,7 @@ const Profile: React.FC = () => {
   return (
     <>
       <div className="flex flex-col">
-        <TopRightDropDown
-          options={[
-            {
-              label: "Copy Link",
-              onClick: () => {
-                copyUrlToClipboard(PagesLinks.getProfileLink(data.id));
-              },
-            },
-          ]}
-        />
+        <ProfileDropDown />
         <ProfileHead
           bio={data.bio}
           image={data.image}

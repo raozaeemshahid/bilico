@@ -9,12 +9,11 @@ import PagesLinks from "../../lib/PagesLink";
 import BadWordsFilter from "../../utils/BadWordFilter";
 import ReactPostComponent from "../ReactPost";
 import ReactionsAndComments from "../CommentsAndReactions";
-import TopRightDropDown from "../TopRightDropdown";
-import { copyUrlToClipboard } from "../../lib/copyUrl";
 import { ModalContext } from "../../pages/_app";
 import { useRouter } from "next/router";
 import { api } from "../../utils/api";
 import { toast } from "react-toastify";
+import PostDropDown from "../TopRightDropdown/PostDropDown";
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
@@ -65,23 +64,11 @@ const Post: React.FC<{
   return (
     <>
       <div key={post.id} className="w-full rounded-lg py-3 px-0 xs:px-4">
-        <TopRightDropDown
-          options={[
-            {
-              label: "Coply Link",
-              onClick: () => {
-                copyUrlToClipboard(PagesLinks.getPostLink(post.id));
-              },
-            },
-            ...(userSession.user.id == userData.id
-              ? [
-                  {
-                    label: "Delete",
-                    onClick: () => deletePost(post.id),
-                  },
-                ]
-              : []),
-          ]}
+        <PostDropDown
+          userDataId={userData.id}
+          userSessionId={userSession.user.id}
+          deletePost={deletePost}
+          postId={post.id}
         />
         <div className="">
           <div className="flex flex-wrap items-center gap-3">

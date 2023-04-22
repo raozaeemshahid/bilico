@@ -15,6 +15,7 @@ import { ModalContext } from "../../pages/_app";
 import { toast } from "react-toastify";
 import { api } from "../../utils/api";
 import { useRouter } from "next/router";
+import PostDropDown from "../TopRightDropdown/PostDropDown";
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
@@ -67,23 +68,11 @@ const Post: React.FC<{
   return (
     <>
       <div key={post.id} className="w-full rounded-lg py-3 px-0 xs:px-4">
-        <TopRightDropDown
-          options={[
-            {
-              label: "Coply Link",
-              onClick: () => {
-                copyUrlToClipboard(PagesLinks.getPostLink(post.id));
-              },
-            },
-            ...(userSession.user.id == userData.id
-              ? [
-                  {
-                    label: "Delete",
-                    onClick: () => deletePost(post.id),
-                  },
-                ]
-              : []),
-          ]}
+        <PostDropDown
+          postId={post.id}
+          userDataId={userData.id}
+          userSessionId={userSession.user.id}
+          deletePost={deletePost}
         />
         <div className="">
           <div className="flex flex-wrap items-center gap-3">

@@ -10,6 +10,7 @@ import type { SelectedComment } from ".";
 import DropDown from "../../TopRightDropdown/InlineDropDown";
 import CompactNumberFormatter from "../../../utils/CompactNumberFormatter";
 import { copyUrlToClipboard } from "../../../lib/copyUrl";
+import CommentDropDown from "../../TopRightDropdown/CommentDropDown";
 
 const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
@@ -77,22 +78,11 @@ const CommentItem: React.FC<{
             </h4>
           </div>
         </div>
-        <DropDown
-          options={[
-            {
-              label: "Copy Link",
-              onClick: () =>
-                copyUrlToClipboard(PagesLinks.getCommentLink(comment.id)),
-            },
-            ...(userSession.user.id == userData.id
-              ? [
-                  {
-                    label: "Delete",
-                    onClick: () => deleteComment(comment.id),
-                  },
-                ]
-              : []),
-          ].reverse()}
+        <CommentDropDown
+          deleteComment={deleteComment}
+          commentId={comment.id}
+          userSessionId={userSession.user.id}
+          userDataId={userData.id}
         />
       </div>
       <div className="m-1 flex items-center gap-2">
