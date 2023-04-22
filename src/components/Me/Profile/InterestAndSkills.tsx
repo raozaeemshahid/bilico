@@ -7,9 +7,6 @@ import { FiEdit3 } from "react-icons/fi";
 
 const InterestAndSKill: React.FC = () => {
   const { status } = useSession();
-  // const userInfo = api.me.info.useQuery(undefined, {
-  //   enabled: status === "authenticated" && router.isReady,
-  // });
   const userData = api.me.data.useQuery(undefined, {
     enabled: status === "authenticated",
   });
@@ -19,7 +16,7 @@ const InterestAndSKill: React.FC = () => {
 
   return (
     <>
-      <div className="m-2 w-full rounded-lg bg-gray-800 border-2 border-b-0 border-gray-400 p-3">
+      <div className="w-full rounded-lg bg-gray-800 border-2 border-b-0 border-gray-400 p-3">
         <div className="flex justify-end">
           <Link href={PagesLinks.EDIT_ACCOUNT_LINK} className="">
             <FiEdit3 className="text-sm hover:scale-110 active:scale-90" />

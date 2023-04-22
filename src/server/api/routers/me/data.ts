@@ -15,9 +15,9 @@ export const data = protectedProcedure.query(async ({ ctx }) => {
           FollowedBy: true,
           Posts: true,
           TrustedBy: true,
+          Trust: true,
         },
       },
-
       name: true,
       Country: true,
       createdAt: true,

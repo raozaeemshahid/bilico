@@ -20,8 +20,10 @@ import { hasSeenNotifications } from "./hasSeenNotifications";
 import { getCommentsActivity } from "./getCommentsActivity";
 import { getReactionsActivity } from "./getReactionsActivity";
 import { getNotifications } from "./getNotifications";
+import { getList } from "./getList";
 
 export const me = createTRPCRouter({
+  getList,
   amIBanned,
   confirmRegistration,
   info,
