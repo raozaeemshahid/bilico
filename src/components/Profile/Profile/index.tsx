@@ -34,7 +34,12 @@ const Profile: React.FC = () => {
   return (
     <>
       <div className="flex flex-col">
-        <ProfileDropDown />
+        <ProfileDropDown
+          userName={userData.data.name}
+          isBlockedByVisitor={
+            userData.data.relationWithVisitor == "Blocked By Visitor"
+          }
+        />
         <ProfileHead
           bio={data.bio}
           image={data.image}

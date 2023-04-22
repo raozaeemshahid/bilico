@@ -2,10 +2,14 @@ import type { Dispatch, SetStateAction} from 'react'
 import { useEffect, useRef, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 
+export interface DropDownOption {
+  label: string;
+  onClick: () => void;
+}
 const DropDownBody: React.FC<{
   isOpen: boolean;
   changeIsOpen: Dispatch<SetStateAction<boolean>>;
-  options: { label: string; onClick: () => void }[];
+  options: DropDownOption[];
 }> = ({ options, isOpen = false, changeIsOpen }) => {
   if (!isOpen) return <></>;
   return (
@@ -29,7 +33,7 @@ const DropDownBody: React.FC<{
 };
 
 const TopRightDropDown: React.FC<{
-  options: { label: string; onClick: () => void }[];
+  options: DropDownOption[];
 }> = ({ options }) => {
   const [isOpen, changeIsOpen] = useState(false);
   const BodyRef = useRef<HTMLDivElement>(null);

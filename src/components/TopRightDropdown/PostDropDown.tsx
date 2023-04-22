@@ -1,11 +1,7 @@
-import TopRightDropDown from ".";
+import TopRightDropDown, { DropDownOption } from ".";
 import { copyUrlToClipboard } from "../../lib/copyUrl";
 import PagesLinks from "../../lib/PagesLink";
 
-interface DropDownOption {
-  label: string;
-  onClick: () => void;
-}
 
 const PostDropDown: React.FC<{
   userSessionId: string;

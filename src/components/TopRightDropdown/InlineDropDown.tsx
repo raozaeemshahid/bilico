@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import { BsThreeDots } from "react-icons/bs";
+import { DropDownOption } from ".";
 
 const DropDownBody: React.FC<{
   isOpen: boolean;
   changeIsOpen: Dispatch<SetStateAction<boolean>>;
-  options: { label: string; onClick: () => void }[];
+  options: DropDownOption[];
 }> = ({ options, isOpen = false, changeIsOpen }) => {
   if (!isOpen) return <></>;
   return (
@@ -29,7 +30,7 @@ const DropDownBody: React.FC<{
 };
 
 const DropDown: React.FC<{
-  options: { label: string; onClick: () => void }[];
+  options: DropDownOption[];
 }> = ({ options }) => {
   const [isOpen, changeIsOpen] = useState(false);
   const BodyRef = useRef<HTMLDivElement>(null);
