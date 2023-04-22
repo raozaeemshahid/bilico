@@ -3,11 +3,14 @@ import { api } from "../../../utils/api";
 import Loading from "../../Loading";
 import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
 import { useEffect } from "react";
+import { OrderOfDataByTime } from "../../../lib/common/names";
 
-const RequestsListComponent: React.FC = () => {
+const RequestsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
+  order,
+}) => {
   const userInfo = api.me.info.useQuery();
   const getConnectionRequests = api.me.getConnectionRequests.useInfiniteQuery(
-    { limit: 20 },
+    { limit: 20, order },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
