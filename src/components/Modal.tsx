@@ -48,12 +48,12 @@ const Modal: React.FC = () => {
                 confirm();
               }}
             >
-              <input
-                type="text"
-                className="block w-full rounded-lg border border-gray-600 bg-gray-900 px-3 py-2 text-sm text-gray-200 placeholder-gray-400 shadow-sm shadow-gray-800 focus:border-blue-500 focus:ring-blue-500"
-                placeholder={modalControl.modal.noteText || `Write a note`}
+              <textarea
                 value={note}
                 onChange={(e) => changeNote(e.target.value)}
+                id="large-input"
+                className="sm:text-md block w-full rounded-lg border border-gray-600 bg-gray-900 px-3 py-2 text-sm text-gray-200 placeholder-gray-400 shadow-lg shadow-gray-800 focus:border-blue-500 focus:ring-blue-500"
+                placeholder={modalControl.modal.noteText || `Write a note`}
               />
             </form>
           )}

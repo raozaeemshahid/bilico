@@ -25,7 +25,7 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
 
   const deletePost = (postId: string) => {
     controlModal.changeModal({
-      text: "Are you sure you want to delete this Post?",
+      text: "Delete this Post?",
       confirmText: "Delete",
       confirm: () => {
         void toast.promise(

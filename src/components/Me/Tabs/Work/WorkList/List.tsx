@@ -25,7 +25,7 @@ const WorkListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
 
   const deleteWork = (workId: string) => {
     controlModal.changeModal({
-      text: "Are you sure you want to delete this work?",
+      text: "Delete this work?",
       confirmText: "Delete",
       confirm: () => {
         void toast.promise(

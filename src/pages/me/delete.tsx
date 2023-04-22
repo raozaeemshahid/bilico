@@ -54,7 +54,7 @@ const Delete: NextPage = () => {
   }
   const deleteMe = () => {
     controlModal.changeModal({
-      text: "Are you sure you want to delete your account?",
+      text: "Delete your account?",
       confirmText: "Delete",
       confirm: () => {
         void toast

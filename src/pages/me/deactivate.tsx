@@ -53,7 +53,7 @@ const Deactivate: NextPage = () => {
   }
   const deactivate = () => {
     controlModal.changeModal({
-      text: "Are you sure you want to deactivate your account?",
+      text: "Deactivate your account?",
       confirmText: "Delete",
       confirm: () => {
         void toast

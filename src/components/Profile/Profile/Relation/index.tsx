@@ -10,11 +10,11 @@ const Relation: React.FC<{
     isFollowedByVisitor: boolean;
   };
   relationWithVisitor:
-  | "Blocked By Visitor"
-  | "Request Sent"
-  | "Request Recieved"
-  | "Connected"
-  | "Strangers";
+    | "Blocked By Visitor"
+    | "Request Sent"
+    | "Request Recieved"
+    | "Connected"
+    | "Strangers";
   trust: {
     userTrustsVisitor: boolean;
     isTrustedByVisitor: boolean;
@@ -29,19 +29,25 @@ const Relation: React.FC<{
           Gender == "Male"
             ? "He"
             : Gender == "Female"
-              ? "She"
-              : userName.split(" ")[0] || "They"
+            ? "She"
+            : userName.split(" ")[0] || "They"
         }
         userTrustsVisitor={trust.userTrustsVisitor}
         doesFollowVisitor={following.doesFollowVisitor}
       />
       <div className="flex gap-2 text-sm">
-        <Connect relationWithVisitor={relationWithVisitor} />
+        <Connect
+          relationWithVisitor={relationWithVisitor}
+          userName={userName}
+        />
         {relationWithVisitor !== "Blocked By Visitor" && (
-          <Follow following={following.isFollowedByVisitor} />
+          <Follow
+            following={following.isFollowedByVisitor}
+            userName={userName}
+          />
         )}
         {relationWithVisitor !== "Blocked By Visitor" && (
-          <Trust trusts={trust.isTrustedByVisitor} />
+          <Trust trusts={trust.isTrustedByVisitor} userName={userName} />
         )}
       </div>
     </div>

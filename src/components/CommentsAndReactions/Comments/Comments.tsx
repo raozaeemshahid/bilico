@@ -18,14 +18,16 @@ const CommentsComponent: React.FC<{
   changeCommentCount: Dispatch<SetStateAction<number>>;
   changeSelectedComment: Dispatch<SetStateAction<SelectedComment | undefined>>;
   highlightedComment: SelectedComment | undefined;
-  changeHighlightedComment: Dispatch<SetStateAction<SelectedComment | undefined>>;
+  changeHighlightedComment: Dispatch<
+    SetStateAction<SelectedComment | undefined>
+  >;
 }> = ({
   tab,
   postId,
   changeSelectedComment,
   changeCommentCount,
   highlightedComment,
-  changeHighlightedComment
+  changeHighlightedComment,
 }) => {
   const [order, changeOrder] = useState<OrderOfDataByTime>("Oldest");
   const getComments = api.publicApi.getComments.useInfiniteQuery(
@@ -40,7 +42,7 @@ const CommentsComponent: React.FC<{
   const controlModal = useContext(ModalContext);
   const deleteComment = (commentId: string) => {
     controlModal.changeModal({
-      text: "Are you sure you want to delete this comment?",
+      text: "Delete this comment?",
       confirmText: "Delete",
       confirm: () => {
         void toast
@@ -61,7 +63,8 @@ const CommentsComponent: React.FC<{
             }
           )
           .then(() => {
-            if (highlightedComment && highlightedComment.id == commentId) changeHighlightedComment(undefined)
+            if (highlightedComment && highlightedComment.id == commentId)
+              changeHighlightedComment(undefined);
             changeCommentCount((count) => count - 1);
           });
       },

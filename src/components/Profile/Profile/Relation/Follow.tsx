@@ -7,7 +7,8 @@ import DropDown from "../../../TopRightDropdown/InlineDropDown";
 
 const Follow: React.FC<{
   following: boolean;
-}> = ({ following }) => {
+  userName: string;
+}> = ({ following, userName }) => {
   const followApi = api.publicApi.Relation.follow.useMutation();
   const unfollowApi = api.publicApi.Relation.unfollow.useMutation();
   const utils = api.useContext();
@@ -19,7 +20,7 @@ const Follow: React.FC<{
         onClick={() => {
           if (followApi.isLoading) return;
           modalControl.changeModal({
-            text: "",
+            text: `Follow ${userName}?`,
             confirmText: "Follow",
             confirm: () => {
               void toast.promise(
@@ -53,7 +54,7 @@ const Follow: React.FC<{
             onClick: () => {
               if (unfollowApi.isLoading) return;
               modalControl.changeModal({
-                text: "",
+                text: `Unfollow ${userName}?`,
                 confirmText: "unfollow",
                 confirm: () => {
                   void toast.promise(

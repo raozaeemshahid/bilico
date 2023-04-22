@@ -5,7 +5,9 @@ import { ModalContext } from "../../../../../pages/_app";
 import { api } from "../../../../../utils/api";
 import DropDown from "../../../../TopRightDropdown/InlineDropDown";
 
-const Blocked: React.FC = () => {
+const Blocked: React.FC<{
+  userName: string;
+}> = ({userName}) => {
   const userId = useContext(UserIdContext);
   const unblockApi = api.publicApi.Relation.unblock.useMutation();
   const modalControl = useContext(ModalContext);
@@ -20,7 +22,7 @@ const Blocked: React.FC = () => {
             onClick: () => {
               if (unblockApi.isLoading) return;
               modalControl.changeModal({
-                text: "",
+                text: `Unblock ${userName}?`,
                 confirmText: "Unblock",
                 confirm: () => {
                   void toast.promise(

@@ -5,7 +5,9 @@ import { ModalContext } from "../../../../../pages/_app";
 import { api } from "../../../../../utils/api";
 import DropDown from "../../../../TopRightDropdown/InlineDropDown";
 
-const RequestReceived: React.FC = () => {
+const RequestReceived: React.FC<{
+  userName: string;
+}> = ({ userName }) => {
   const acceptRequestApi = api.publicApi.Relation.acceptRequest.useMutation();
   const rejectRequestApi = api.publicApi.Relation.rejectRequest.useMutation();
   const utils = api.useContext();
@@ -21,7 +23,7 @@ const RequestReceived: React.FC = () => {
             onClick: () => {
               if (acceptRequestApi.isLoading) return;
               modalControl.changeModal({
-                text: "Accept Request",
+                text: `Accept ${userName}'s Request?`,
                 confirmText: "Accept",
                 confirm: () => {
                   void toast.promise(
@@ -45,7 +47,7 @@ const RequestReceived: React.FC = () => {
             onClick: () => {
               if (acceptRequestApi.isLoading) return;
               modalControl.changeModal({
-                text: "Reject Request",
+                text: `Reject ${userName}'s Request?`,
                 confirmText: "Reject",
                 confirm: () => {
                   void toast.promise(

@@ -46,7 +46,7 @@ const Post: React.FC<{
   if (!userSession || !userSession.user) return <></>;
   const deletePost = (postId: string) => {
     controlModal.changeModal({
-      text: "Are you sure you want to delete this Post?",
+      text: "Delete this Post?",
       confirmText: "Delete",
       confirm: () => {
         void toast.promise(
@@ -56,7 +56,7 @@ const Post: React.FC<{
           {
             error: "Couldn't Delete Post",
             pending: "Deleting Post",
-            success: "Post Deleted Successfully",
+            success: "Post Deleted",
           }
         );
       },
@@ -75,11 +75,11 @@ const Post: React.FC<{
             },
             ...(userSession.user.id == userData.id
               ? [
-                {
-                  label: "Delete",
-                  onClick: () => deletePost(post.id),
-                },
-              ]
+                  {
+                    label: "Delete",
+                    onClick: () => deletePost(post.id),
+                  },
+                ]
               : []),
           ]}
         />

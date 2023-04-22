@@ -5,7 +5,9 @@ import { ModalContext } from "../../../../../pages/_app";
 import { api } from "../../../../../utils/api";
 import DropDown from "../../../../TopRightDropdown/InlineDropDown";
 
-const RequestSent: React.FC = () => {
+const RequestSent: React.FC<{
+  userName: string;
+}> = ({ userName }) => {
   const cancelRequestApi = api.publicApi.Relation.cancelRequest.useMutation();
   const utils = api.useContext();
   const modalControl = useContext(ModalContext);
@@ -21,7 +23,7 @@ const RequestSent: React.FC = () => {
             onClick: () => {
               if (cancelRequestApi.isLoading) return;
               modalControl.changeModal({
-                text: "Cancel Request",
+                text: `Cancel ${userName}'s Request?`,
                 confirmText: "Confirm",
                 confirm: () => {
                   void toast.promise(

@@ -4,7 +4,9 @@ import { UserIdContext } from "../../..";
 import { ModalContext } from "../../../../../pages/_app";
 import { api } from "../../../../../utils/api";
 
-const Strangers: React.FC = () => {
+const Strangers: React.FC<{
+  userName: string;
+}> = ({userName}) => {
   const controlModal = useContext(ModalContext);
   const sendRequestApi = api.publicApi.Relation.sendRequest.useMutation();
   const utils = api.useContext();
@@ -15,7 +17,7 @@ const Strangers: React.FC = () => {
       onClick={() => {
         if (sendRequestApi.isLoading) return;
         controlModal.changeModal({
-          text: "Send Request",
+          text: `Requesting ${userName}`,
           confirmText: "Send",
           includeNote: true,
           noteText: "Write them a note",

@@ -5,7 +5,9 @@ import { ModalContext } from "../../../../../pages/_app";
 import { api } from "../../../../../utils/api";
 import DropDown from "../../../../TopRightDropdown/InlineDropDown";
 
-const Connected: React.FC = () => {
+const Connected: React.FC<{
+  userName: string;
+}> = ({userName}) => {
   const removeConnnectionApi =
     api.publicApi.Relation.removeConnection.useMutation();
   const utils = api.useContext();
@@ -21,7 +23,7 @@ const Connected: React.FC = () => {
             onClick: () => {
               if (removeConnnectionApi.isLoading) return;
               modalControl.changeModal({
-                text: "Remove Connection",
+                text: `Remove ${userName} from connections?`,
                 confirmText: "Remove",
                 confirm: () => {
                   void toast.promise(

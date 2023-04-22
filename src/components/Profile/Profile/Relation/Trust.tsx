@@ -7,7 +7,8 @@ import DropDown from "../../../TopRightDropdown/InlineDropDown";
 
 const Trust: React.FC<{
   trusts: boolean;
-}> = ({ trusts }) => {
+  userName: string;
+}> = ({ trusts, userName }) => {
   const trustApi = api.publicApi.Relation.trust.useMutation();
   const removeTrustApi = api.publicApi.Relation.removeTrust.useMutation();
   const utils = api.useContext();
@@ -19,7 +20,7 @@ const Trust: React.FC<{
         onClick={() => {
           if (trustApi.isLoading) return;
           modalControl.changeModal({
-            text: "",
+            text: `Trust ${userName}?`,
             confirmText: "Trust",
             confirm: () => {
               void toast.promise(
@@ -37,14 +38,14 @@ const Trust: React.FC<{
             },
           });
         }}
-        className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 shadow-md shadow-gray-900 p-1 px-3"
+        className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3 shadow-md shadow-gray-900"
       >
         Trust
       </button>
     );
   }
   return (
-    <div className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 shadow-md shadow-gray-900 p-1 px-3">
+    <div className="flex items-center justify-center gap-1 rounded-lg bg-blue-600 p-1 px-3 shadow-md shadow-gray-900">
       <h3>Trusted</h3>
       <DropDown
         options={[
@@ -53,7 +54,7 @@ const Trust: React.FC<{
             onClick: () => {
               if (removeTrustApi.isLoading) return;
               modalControl.changeModal({
-                text: "",
+                text: `Untrust ${userName}?`,
                 confirmText: "Remove Trust",
                 confirm: () => {
                   void toast.promise(

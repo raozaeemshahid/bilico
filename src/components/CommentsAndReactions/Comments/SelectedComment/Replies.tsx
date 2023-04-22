@@ -29,7 +29,7 @@ const Replies: React.FC<{
   if (!getReplies.data) return <Loading />;
   const deleteComment = (commentId: string) => {
     controlModal.changeModal({
-      text: "Are you sure you want to delete this reply?",
+      text: "Delete this reply?",
       confirmText: "Delete",
       confirm: () => {
         void toast
