@@ -7,12 +7,6 @@ export const getNotifications = protectedProcedure
     z.object({
       limit: z.number().min(1).max(100).nullish(),
       cursor: z.string().nullish(), // <-- "cursor" needs to exist, but can be any type
-      order: z
-        .union([
-          z.literal<OrderOfDataByTime>("Newest"),
-          z.literal<OrderOfDataByTime>("Oldest"),
-        ])
-        .default("Newest"),
     })
   )
   .query(async ({ input, ctx }) => {
@@ -25,7 +19,7 @@ export const getNotifications = protectedProcedure
       },
       cursor: cursor ? { id: cursor } : undefined,
       orderBy: {
-         createdAt: input.order == "Newest" ? "desc" : "asc",
+         createdAt:  "desc",
       },
       select: {
         id: true,

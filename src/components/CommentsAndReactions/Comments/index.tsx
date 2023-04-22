@@ -27,7 +27,6 @@ export interface SelectedComment {
 
 let isSelectedHighlightedComment = false;
 let isSelectedMainHighlightedComment = false;
-let lastHighlightedCommentId = "";
 
 const Comments: React.FC<{
   postId: string;
@@ -43,15 +42,8 @@ const Comments: React.FC<{
   api.publicApi.getHighlightedComment.useQuery(
     { commentId: highlightedCommentId || "" },
     {
-      enabled: !!highlightedCommentId,
+      enabled: !!highlightedCommentId && !isSelectedHighlightedComment,
       onSuccess: (data) => {
-        if (
-          highlightedCommentId &&
-          highlightedCommentId !== lastHighlightedCommentId
-        ) {
-          isSelectedHighlightedComment = false;
-          lastHighlightedCommentId = highlightedCommentId;
-        }
         if (isSelectedHighlightedComment) return;
         isSelectedHighlightedComment = true;
         changeSelectedComment(data.selectedComment);
@@ -61,6 +53,7 @@ const Comments: React.FC<{
   useEffect(() => {
     return () => {
       isSelectedHighlightedComment = false;
+      isSelectedMainHighlightedComment = false;
     };
   }, []);
 
