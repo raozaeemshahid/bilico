@@ -12,21 +12,19 @@ const CommentComponnet: React.FC<{ commentId: string }> = ({ commentId }) => {
 
   const comment = getHighlightedComment.data;
   const post = comment.post;
+  const userName = comment.selectedComment.highlightedComment
+    ? comment.selectedComment.highlightedComment.CreatedBy.name.split(" ")[0]
+    : comment.selectedComment.CreatedBy.name.split(" ")[0];
+  console.log("selectedComment", comment.selectedComment);
+  const title = (userName ? `${userName}'s ` : "") + "Comment";
+
   return (
     <>
       <Head>
-        <title>
-          {`
-          ${comment.selectedComment.CreatedBy.name.split(" ")[0] || ""}
-          ${!!comment.selectedComment.CreatedBy.name.split(" ")[0] ? "'s" : ""}
-          Comment`}
-        </title>
+        <title>{title}</title>
       </Head>
       <div className="my-3 flex justify-center">
-        <h2 className="text-3xl font-bold">{`
-        ${comment.selectedComment.CreatedBy.name.split(" ")[0] || ""}
-        ${!!comment.selectedComment.CreatedBy.name.split(" ")[0] ? "'s" : ""}
-        Comment`}</h2>
+        <h2 className="text-3xl font-bold">{title}</h2>
       </div>
       <div className="m-2 w-full rounded-lg px-0 py-3 xs:px-4 md:px-7">
         <div className="m-2 rounded-lg py-3 md:px-3">
