@@ -55,13 +55,25 @@ const NotificationItem: React.FC<{
         <div className="flex flex-nowrap items-center gap-3">
           {!!byUserImage && (
             <div>
-              <Image
-                alt="Profile Pic"
-                className="rounded-full"
-                width={40}
-                height={40}
-                src={byUserImage}
-              />
+              {byUserId ? (
+                <Link href={PagesLinks.getProfileLink(byUserId)}>
+                  <Image
+                    alt="Profile Pic"
+                    className="rounded-full"
+                    width={40}
+                    height={40}
+                    src={byUserImage}
+                  />
+                </Link>
+              ) : (
+                <Image
+                  alt="Profile Pic"
+                  className="rounded-full"
+                  width={40}
+                  height={40}
+                  src={byUserImage}
+                />
+              )}
             </div>
           )}
           <div className="w-full">
@@ -77,7 +89,7 @@ const NotificationItem: React.FC<{
                     </Link>
                   ) : (
                     <span className="font-semibold">{byUserName}</span>
-                  )}
+                  )}{" "}
                   {title}
                 </h2>
               </div>
