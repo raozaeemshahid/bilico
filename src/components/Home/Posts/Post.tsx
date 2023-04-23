@@ -30,7 +30,8 @@ const Post: React.FC<{
     name: string | undefined;
     isVerified: boolean | undefined;
   };
-}> = ({ post, userData }) => {
+  deletePost: (postId: string) => void;
+}> = ({ post, userData, deletePost }) => {
   const [reactionsCount, changeReactionCount] = useState(post._count.reactions);
   const [commentCount, changeCommentCount] = useState(post._count.comments);
   const { data: userSession } = useSession();
@@ -44,7 +45,7 @@ const Post: React.FC<{
       >
         <PostDropDown
           postId={post.id}
-          deletePost={() => {}}
+          deletePost={deletePost}
           userDataId={userData.id}
           userSessionId={userSession.user.id}
         />

@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { toast } from "react-toastify";
+import { ModalContext } from "../../../pages/_app";
 import { api } from "../../../utils/api";
 import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
 import Loading from "../../Loading";
@@ -11,8 +14,32 @@ const Posts: React.FC<{ postsInTab: PostsInTab }> = ({ postsInTab }) => {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
+  const utils = api.useContext();
+  const deletePostApi = api.me.deletePost.useMutation();
+  const controlModal = useContext(ModalContext);
 
   if (!getHomePosts.data) return <Loading />;
+
+  const deletePost = (postId: string) => {
+    controlModal.changeModal({
+      text: "Delete this Post?",
+      confirmText: "Delete",
+      confirm: () => {
+        void toast.promise(
+          deletePostApi
+            .mutateAsync({ postId })
+            .then(() =>
+              utils.publicApi.getHomePosts.invalidate({ postsIn: postsInTab })
+            ),
+          {
+            error: "Couldn't Delete Post",
+            pending: "Deleting Post",
+            success: "Post Deleted Successfully",
+          }
+        );
+      },
+    });
+  };
 
   return (
     <>
@@ -38,6 +65,7 @@ const Posts: React.FC<{ postsInTab: PostsInTab }> = ({ postsInTab }) => {
                 isVerified: post.CreatedBy.isVerified,
                 name: post.CreatedBy.name,
               }}
+              deletePost={deletePost}
             />
           ))
         )}
