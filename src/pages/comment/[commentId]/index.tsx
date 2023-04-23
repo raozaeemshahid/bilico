@@ -41,7 +41,6 @@ const Profile: NextPage = () => {
     { commentId: !!commentId ? commentId : "" },
     {
       enabled: !!commentId,
-      retry: false,
     }
   );
 

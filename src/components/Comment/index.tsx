@@ -15,7 +15,6 @@ const CommentComponnet: React.FC<{ commentId: string }> = ({ commentId }) => {
   const userName = comment.selectedComment.highlightedComment
     ? comment.selectedComment.highlightedComment.CreatedBy.name.split(" ")[0]
     : comment.selectedComment.CreatedBy.name.split(" ")[0];
-  console.log("selectedComment", comment.selectedComment);
   const title = (userName ? `${userName}'s ` : "") + "Comment";
 
   return (

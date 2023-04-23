@@ -30,7 +30,7 @@ const BioData: React.FC = () => {
 
   return (
     <>
-      <div className="roudned flex min-w-fit w-full flex-col gap-1 border-2 sm:border-r-0 sm:border-t-0 border-gray-400 rounded-lg bg-gray-800 p-3">
+      <div className="flex min-w-fit w-full flex-col gap-1 border-2 sm:border-r-0 sm:border-t-0 border-gray-400 rounded-lg bg-gray-800 p-3">
         <h3 className="flex items-center gap-2">
           <AiOutlineUser /> Joined {moment(userData.data.createdAt).fromNow()}
         </h3>
