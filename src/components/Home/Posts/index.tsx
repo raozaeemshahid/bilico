@@ -73,7 +73,7 @@ const Posts: React.FC<{ postsInTab: PostsInTab }> = ({ postsInTab }) => {
           fetchNextPage={() => void getHomePosts.fetchNextPage()}
           hasNextPage={getHomePosts.hasNextPage}
           isFetchingNextPage={getHomePosts.isFetchingNextPage}
-          endingMsg=""
+          endingMsg="You're all caught up!"
         />
       </div>
     </>
