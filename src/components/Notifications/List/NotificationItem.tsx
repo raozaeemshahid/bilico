@@ -9,8 +9,6 @@ import { toast } from "react-toastify";
 import { api } from "../../../utils/api";
 
 const NotificationItem: React.FC<{
-  postId: string | null;
-  id: string;
   createdAt: Date;
   link: string;
   title: string;
@@ -21,11 +19,9 @@ const NotificationItem: React.FC<{
   subText: string | null;
   commentId: string | null;
 }> = ({
-  id,
   link,
   title,
   isSeen,
-  postId,
   subText,
   byUserId,
   commentId,

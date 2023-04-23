@@ -3,7 +3,7 @@ import Image from "next/image";
 import { MdVerified } from "react-icons/md";
 import Link from "next/link";
 import { api } from "../../../utils/api";
-import { ProfileNumbersListTexts } from ".";
+import type { ProfileNumbersListTexts } from ".";
 import PagesLinks from "../../../lib/PagesLink";
 import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
 import type { Dispatch, SetStateAction } from "react";

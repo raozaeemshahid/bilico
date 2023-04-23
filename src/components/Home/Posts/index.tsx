@@ -4,7 +4,7 @@ import { ModalContext } from "../../../pages/_app";
 import { api } from "../../../utils/api";
 import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
 import Loading from "../../Loading";
-import { PostsInTab } from "../Home";
+import type { PostsInTab } from "../Home";
 import Post from "./Post";
 
 const Posts: React.FC<{ postsInTab: PostsInTab }> = ({ postsInTab }) => {

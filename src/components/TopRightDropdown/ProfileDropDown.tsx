@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { toast } from "react-toastify";
-import TopRightDropDown, { DropDownOption } from ".";
+import TopRightDropDown from '.'
+import type { DropDownOption } from ".";
 import { copyUrlToClipboard } from "../../lib/copyUrl";
 import PagesLinks from "../../lib/PagesLink";
 import { ModalContext } from "../../pages/_app";

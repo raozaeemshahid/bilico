@@ -9,8 +9,6 @@ import PagesLinks from "../../lib/PagesLink";
 import BadWordsFilter from "../../utils/BadWordFilter";
 import ReactPostComponent from "../ReactPost";
 import ReactionsAndComments from "../CommentsAndReactions";
-import TopRightDropDown from "../TopRightDropdown";
-import { copyUrlToClipboard } from "../../lib/copyUrl";
 import { ModalContext } from "../../pages/_app";
 import { toast } from "react-toastify";
 import { api } from "../../utils/api";

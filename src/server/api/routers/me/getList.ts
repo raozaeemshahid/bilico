@@ -1,6 +1,6 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
-import { ProfileNumbersListTexts } from "../../../../components/Me/Profile";
+import type { ProfileNumbersListTexts } from "../../../../components/Me/Profile";
 
 export const getList = protectedProcedure
   .input(

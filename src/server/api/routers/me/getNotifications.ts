@@ -1,6 +1,5 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
-import type { OrderOfDataByTime } from "../../../../lib/common/names";
 
 export const getNotifications = protectedProcedure
   .input(

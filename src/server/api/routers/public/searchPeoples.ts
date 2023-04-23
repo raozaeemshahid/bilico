@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SearchInTab } from "../../../../components/Peoples/SearchBox";
+import type { SearchInTab } from "../../../../components/Peoples/SearchBox";
 import { protectedProcedure } from "../../trpc";
 
 export const searchPeoples = protectedProcedure

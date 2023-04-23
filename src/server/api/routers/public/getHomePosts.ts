@@ -1,7 +1,6 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
-import type { OrderOfDataByTime } from "../../../../lib/common/names";
-import { PostsInTab } from "../../../../components/Home/Home";
+import type { PostsInTab } from "../../../../components/Home/Home";
 
 export const getHomePosts = protectedProcedure
   .input(

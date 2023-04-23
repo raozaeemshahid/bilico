@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import { BsThreeDots } from "react-icons/bs";
-import { DropDownOption } from ".";
+import type { DropDownOption } from ".";
 
 const DropDownBody: React.FC<{
   isOpen: boolean;

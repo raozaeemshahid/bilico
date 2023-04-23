@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { ProfileNumbersListTexts } from ".";
+import type { ProfileNumbersListTexts } from ".";
 import { api } from "../../../utils/api";
 import CompactNumberFormatter from "../../../utils/CompactNumberFormatter";
 import Loading from "../../Loading";

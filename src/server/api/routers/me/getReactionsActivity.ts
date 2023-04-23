@@ -1,7 +1,7 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import type { OrderOfDataByTime } from "../../../../lib/common/names";
-import { AllReactions } from "../../../../components/CommentsAndReactions/Reactions";
+import type { AllReactions } from "../../../../components/CommentsAndReactions/Reactions";
 
 export const getReactionsActivity = protectedProcedure
   .input(

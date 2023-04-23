@@ -3,7 +3,7 @@ import { api } from "../../../utils/api";
 import Loading from "../../Loading";
 import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
 import { useEffect } from "react";
-import { OrderOfDataByTime } from "../../../lib/common/names";
+import type { OrderOfDataByTime } from "../../../lib/common/names";
 
 const RequestsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
   order,

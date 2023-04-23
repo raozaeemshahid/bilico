@@ -1,11 +1,8 @@
 import DropDown from "./InlineDropDown";
 import { copyUrlToClipboard } from "../../lib/copyUrl";
 import PagesLinks from "../../lib/PagesLink";
+import type { DropDownOption } from ".";
 
-interface DropDownOption {
-  label: string;
-  onClick: () => void;
-}
 
 const CommentDropDown: React.FC<{
   userSessionId: string;

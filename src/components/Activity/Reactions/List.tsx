@@ -3,7 +3,7 @@ import Loading from "../../Loading";
 import type { OrderOfDataByTime } from "../../../lib/common/names";
 import FetchMoreInfiniteComponent from "../../FetchMoreInfiniteQueryComponent";
 import ReactionItem from "./ReactionItem";
-import { AllReactions } from "../../CommentsAndReactions/Reactions";
+import type { AllReactions } from "../../CommentsAndReactions/Reactions";
 import { useSession } from "next-auth/react";
 
 const ReactionListComponent: React.FC<{

@@ -1,7 +1,6 @@
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
 import { Reaction } from "@prisma/client";
-import { TRPCError } from "@trpc/server";
 
 const ZReaction = z.union([
   z.literal(Reaction.Agree),

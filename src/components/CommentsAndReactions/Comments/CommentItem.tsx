@@ -7,9 +7,7 @@ import Link from "next/link";
 import PagesLinks from "../../../lib/PagesLink";
 import type { Dispatch, SetStateAction } from "react";
 import type { SelectedComment } from ".";
-import DropDown from "../../TopRightDropdown/InlineDropDown";
 import CompactNumberFormatter from "../../../utils/CompactNumberFormatter";
-import { copyUrlToClipboard } from "../../../lib/copyUrl";
 import CommentDropDown from "../../TopRightDropdown/CommentDropDown";
 
 const MdVerified = dynamic(() =>
