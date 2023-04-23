@@ -23,8 +23,8 @@ export const acceptRequest = protectedProcedure
         message: "No request found, unable to accept",
       });
 
-    await ctx.prisma.notification
-      .create({
+    void (async () => {
+      await ctx.prisma.notification.create({
         data: {
           link: PagesLinks.getProfileLink(ctx.session.user.id),
           title: `accepted your connection request`,
@@ -33,7 +33,9 @@ export const acceptRequest = protectedProcedure
           byUserImage: ctx.session.user.image,
           byUserName: ctx.session.user.name,
         },
-      })
+      });
+    })();
+
     await Promise.all([
       ctx.prisma.connectionRequest.delete({ where: { id: request.id } }),
       ctx.prisma.user.update({

@@ -15,8 +15,8 @@ export const follow = protectedProcedure
       where: { id: ctx.session.user.id },
       data: { Follow: { connect: { id: input.otherUserId } } },
     });
-    await ctx.prisma.notification
-      .create({
+    void (async () => {
+      await ctx.prisma.notification.create({
         data: {
           link: PagesLinks.getProfileLink(ctx.session.user.id),
           title: `started following you`,
@@ -25,6 +25,8 @@ export const follow = protectedProcedure
           byUserImage: ctx.session.user.image,
           byUserName: ctx.session.user.name,
         },
-      })
+      });
+    })();
+
     return { success: true };
   });

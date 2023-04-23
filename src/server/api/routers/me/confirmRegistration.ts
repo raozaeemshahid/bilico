@@ -62,16 +62,18 @@ export const confirmRegistration = protectedProcedure
       },
     });
 
-    await ctx.prisma.notification.create({
-      data: {
-        link: PagesLinks.ME,
-        title: "Welcome to Bilico - A Social Media for Professionals",
-        ForUser: { connect: { id: ctx.session.user.id } },
-        byUserId: ctx.session.user.id,
-        byUserImage: ctx.session.user.image,
-        byUserName: ctx.session.user.name,
-      },
-    });
+    void (async () => {
+      await ctx.prisma.notification.create({
+        data: {
+          link: PagesLinks.ME,
+          title: "Welcome to Bilico - A Social Media for Professionals",
+          ForUser: { connect: { id: ctx.session.user.id } },
+          byUserId: ctx.session.user.id,
+          byUserImage: ctx.session.user.image,
+          byUserName: ctx.session.user.name,
+        },
+      });
+    })();
 
     return { success: true, name: updatedUser.name };
   });

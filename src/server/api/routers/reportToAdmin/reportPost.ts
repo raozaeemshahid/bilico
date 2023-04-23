@@ -11,17 +11,19 @@ export const reportPost = protectedProcedure
       },
     });
     if (previousReport) return { success: true };
-
-    await ctx.prisma.reportToAdmin.create({
-      data: {
-        link: PagesLinks.getPostLink(input.postId),
-        type: "POST",
-        ReportedPost: {
-          connect: {
-            id: input.postId,
+    void (async () => {
+      await ctx.prisma.reportToAdmin.create({
+        data: {
+          link: PagesLinks.getPostLink(input.postId),
+          type: "POST",
+          ReportedPost: {
+            connect: {
+              id: input.postId,
+            },
           },
         },
-      },
-    });
+      });
+    })();
+
     return { success: true };
   });

@@ -19,8 +19,8 @@ export const removeConnection = protectedProcedure
         Follow: { disconnect: { id: input.otherUserId } },
       },
     });
-    await ctx.prisma.notification
-      .create({
+    void (async () => {
+      await ctx.prisma.notification.create({
         data: {
           link: PagesLinks.getProfileLink(ctx.session.user.id),
           title: `removed connection with you`,
@@ -29,6 +29,8 @@ export const removeConnection = protectedProcedure
           byUserImage: ctx.session.user.image,
           byUserName: ctx.session.user.name,
         },
-      })
+      });
+    })();
+
     return { success: true };
   });

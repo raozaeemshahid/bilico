@@ -15,15 +15,18 @@ export const trust = protectedProcedure
       where: { id: ctx.session.user.id },
       data: { Trust: { connect: { id: input.otherUserId } } },
     });
-    await ctx.prisma.notification.create({
-      data: {
-        link: PagesLinks.getProfileLink(ctx.session.user.id),
-        title: `started trusting you`,
-        ForUser: { connect: { id: input.otherUserId } },
-        byUserId: ctx.session.user.id,
-        byUserImage: ctx.session.user.image,
-        byUserName: ctx.session.user.name,
-      },
-    });
+    void (async () => {
+      await ctx.prisma.notification.create({
+        data: {
+          link: PagesLinks.getProfileLink(ctx.session.user.id),
+          title: `started trusting you`,
+          ForUser: { connect: { id: input.otherUserId } },
+          byUserId: ctx.session.user.id,
+          byUserImage: ctx.session.user.image,
+          byUserName: ctx.session.user.name,
+        },
+      });
+    })();
+
     return { success: true };
   });
