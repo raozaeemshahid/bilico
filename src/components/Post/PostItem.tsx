@@ -92,9 +92,11 @@ const Post: React.FC<{
                   <h3>{userData.isVerified && <MdVerified />}</h3>
                 </div>
               </Link>
-              <h3 className="text-sm text-gray-100 opacity-80">
-                {moment(post.createdAt).fromNow()}
-              </h3>
+              <Link href={PagesLinks.getPostLink(post.id)}>
+                <h3 className="text-sm hover:underline text-gray-100 opacity-80">
+                  {moment(post.createdAt).fromNow()}
+                </h3>
+              </Link>
             </div>
           </div>
           <h4 className="m-2 my-4 flex flex-col gap-2 text-base">

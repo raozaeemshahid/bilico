@@ -45,7 +45,7 @@ const WorkItem: React.FC<{
                 <h3 className="whitespace-nowrap">{userData.name}</h3>
                 <h3>{userData.isVerified && <MdVerified />}</h3>
               </div>
-              <h3 className="text-sm text-gray-100 opacity-80 hover:underline">
+              <h3 className="text-sm text-gray-100 opacity-80">
                 {moment(work.createdAt).fromNow()}
               </h3>
             </div>
