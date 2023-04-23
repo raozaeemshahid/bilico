@@ -54,7 +54,7 @@ const SelectedCommentComponent: React.FC<{
               </Link>
             )}
           </div>
-          <div className="p-2">
+          <div className="p-2 flex flex-col gap-1">
             <div className="flex w-fit items-center gap-1 text-sm hover:underline">
               <Link
                 href={PagesLinks.getProfileLink(selectedComment.CreatedBy.id)}
@@ -68,8 +68,15 @@ const SelectedCommentComponent: React.FC<{
                 </h3>
               </Link>
             </div>
-            <h4 className="text-sm text-gray-100 opacity-95">
-              {BadWordsFilter.clean(selectedComment.Comment)}
+            <h4 className="flex flex-col gap-2 text-sm text-gray-100 opacity-95">
+              {selectedComment.Comment.split("\n").map((paragaraph) => {
+                if (paragaraph.length == 0) return null;
+                return (
+                  <span key={`${Math.random()}`}>
+                    {BadWordsFilter.clean(paragaraph)}
+                  </span>
+                );
+              })}
             </h4>
           </div>
         </div>

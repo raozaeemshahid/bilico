@@ -101,8 +101,15 @@ const NotificationItem: React.FC<{
                     isSeen ? "border-gray-700" : "border-gray-800"
                   }  p-2 hover:${isSeen ? "bg-gray-700" : "bg-gray-800"}`}
                 >
-                  <h4 className="text-sm text-gray-100  opacity-95">
-                    {BadWordsFilter.clean(subText)}
+                  <h4 className="flex flex-col gap-2 text-sm text-gray-100  opacity-95">
+                    {subText.split("\n").map((paragaraph) => {
+                      if (paragaraph.length == 0) return null;
+                      return (
+                        <span key={`${Math.random()}`}>
+                          {BadWordsFilter.clean(paragaraph)}
+                        </span>
+                      );
+                    })}
                   </h4>
                 </div>
               </Link>

@@ -62,7 +62,7 @@ const CommentItem: React.FC<{
               />
             </Link>
           )}
-          <div className="p-2">
+          <div className="p-2 flex flex-col gap-1">
             <Link href={PagesLinks.getProfileLink(userData.id)}>
               <div className="flex items-center gap-1 text-sm hover:underline">
                 <h3 className="whitespace-nowrap font-semibold">
@@ -71,8 +71,15 @@ const CommentItem: React.FC<{
                 <h3>{userData.isVerified && <MdVerified />}</h3>
               </div>
             </Link>
-            <h4 className="text-sm text-gray-100 opacity-95">
-              {BadWordsFilter.clean(comment.body)}
+            <h4 className="flex flex-col gap-2 text-sm text-gray-100 opacity-95">
+              {comment.body.split("\n").map((paragaraph) => {
+                if (paragaraph.length == 0) return null;
+                return (
+                  <span key={`${Math.random()}`}>
+                    {BadWordsFilter.clean(paragaraph)}
+                  </span>
+                );
+              })}
             </h4>
           </div>
         </div>

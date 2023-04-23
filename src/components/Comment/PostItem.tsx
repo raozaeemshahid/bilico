@@ -101,8 +101,15 @@ const Post: React.FC<{
               </Link>
             </div>
           </div>
-          <h4 className="m-2 my-4 text-base">
-            {BadWordsFilter.clean(post.body)}
+          <h4 className="m-2 my-4 flex flex-col gap-2 text-base">
+            {post.body.split("\n").map((paragaraph) => {
+              if (paragaraph.length == 0) return null;
+              return (
+                <span key={`${Math.random()}`}>
+                  {BadWordsFilter.clean(paragaraph)}
+                </span>
+              );
+            })}
           </h4>
           <div className="flex flex-wrap gap-1">
             {post.interests.map((interest) => (

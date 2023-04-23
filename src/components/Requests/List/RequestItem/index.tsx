@@ -65,8 +65,15 @@ const Request: React.FC<{
                 </div>
               </div>
               {request.message.length > 0 && (
-                <h4 className="ml-1 mt-2 text-sm text-gray-200">
-                  {BadWordsFilter.clean(request.message)}
+                <h4 className="ml-1 mt-2 flex flex-col gap-2 text-sm text-gray-200">
+                  {request.message.split("\n").map((paragaraph) => {
+                    if (paragaraph.length == 0) return null;
+                    return (
+                      <span key={`${Math.random()}`}>
+                        {BadWordsFilter.clean(paragaraph)}
+                      </span>
+                    );
+                  })}
                 </h4>
               )}
             </div>

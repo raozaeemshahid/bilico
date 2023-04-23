@@ -45,8 +45,15 @@ const WorkItem: React.FC<{
               </h3>
             </div>
           </div>
-          <h4 className="m-2 my-4 text-base">
-            {BadWordsFilter.clean(work.body)}
+          <h4 className="m-2 my-4 flex flex-col gap-2 text-base">
+            {work.body.split("\n").map((paragaraph) => {
+              if (paragaraph.length == 0) return null;
+              return (
+                <span key={`${Math.random()}`}>
+                  {BadWordsFilter.clean(paragaraph)}
+                </span>
+              );
+            })}
           </h4>
         </div>
       </div>
