@@ -67,11 +67,13 @@ const Sidebar: React.FC<{
             link={NavbarLinkCreator.HomeLink()}
             isActive={router.route === "/"}
           />
-          <SidebarLink
-            count={userInfo.newMessages}
-            link={NavbarLinkCreator.MessageLink()}
-            isActive={router.route == PagesLinks.getMessageLink()}
-          />
+          {
+            // <SidebarLink
+            //   count={userInfo.newMessages}
+            //   link={NavbarLinkCreator.MessageLink()}
+            //   isActive={router.route == PagesLinks.getMessageLink()}
+            // />
+          }
           <SidebarLink
             link={NavbarLinkCreator.PeoplesLink()}
             isActive={router.route == PagesLinks.getPeoplesLink()}
