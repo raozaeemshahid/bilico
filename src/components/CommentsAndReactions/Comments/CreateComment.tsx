@@ -4,6 +4,10 @@ import { toast } from "react-toastify";
 import { api } from "../../../utils/api";
 import { useState } from "react";
 import zodComment from "../../../lib/zod/zodComment";
+import type { Moment } from "moment";
+import moment from "moment";
+
+let lastCommentedAt: Moment | undefined = undefined;
 
 const CreateComment: React.FC<{
   comment: string;
@@ -27,14 +31,23 @@ const CreateComment: React.FC<{
             {currentTab == "Question"
               ? "Ask"
               : currentTab == "Appreciation"
-              ? "Appreciate"
-              : "Comment"}
+                ? "Appreciate"
+                : "Comment"}
           </button>
         </div>
       </div>
     );
   const submitComment = () => {
+    if (createComment.isLoading) return void toast.error("Wait");
+    if (lastCommentedAt) {
+      const diffLastComment = moment().diff(lastCommentedAt, "seconds");
+      if (diffLastComment < 10) {
+        return void toast.error(`Wait ${10 - diffLastComment} Seconds`);
+      }
+    }
+    lastCommentedAt = moment();
     changeComment("");
+    changeISCommenting(false);
     void toast
       .promise(
         createComment
@@ -74,11 +87,9 @@ const CreateComment: React.FC<{
           onChange={(e) => changeComment(e.target.value)}
           id="large-input"
           className="sm:text-md block w-full rounded-lg border border-gray-600 bg-gray-900 px-3 py-2 text-lg text-gray-200 placeholder-gray-400 shadow-lg shadow-gray-800 focus:border-blue-500 focus:ring-blue-500"
-          placeholder={`${
-            currentTab == "Question" ? "What's your Question?" : ""
-          }${currentTab == "Suggestion" ? "What's your Suggestion?" : ""}${
-            currentTab == "Opinion" ? "What's your Opinion?" : ""
-          }${currentTab == "Appreciation" ? "Write your Appreciation?" : ""}`}
+          placeholder={`${currentTab == "Question" ? "What's your Question?" : ""
+            }${currentTab == "Suggestion" ? "What's your Suggestion?" : ""}${currentTab == "Opinion" ? "What's your Opinion?" : ""
+            }${currentTab == "Appreciation" ? "Write your Appreciation?" : ""}`}
         />
       </form>
       <div className="flex justify-end">
@@ -100,14 +111,13 @@ const CreateComment: React.FC<{
               );
             }
             submitComment();
-            changeISCommenting(false);
           }}
         >
           {currentTab == "Question"
             ? "Ask"
             : currentTab == "Appreciation"
-            ? "Appreciate"
-            : "Comment"}
+              ? "Appreciate"
+              : "Comment"}
         </button>
       </div>
     </div>

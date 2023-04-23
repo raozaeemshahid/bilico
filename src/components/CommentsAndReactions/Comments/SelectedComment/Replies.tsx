@@ -10,6 +10,11 @@ import FetchMoreInfiniteComponent from "../../../FetchMoreInfiniteQueryComponent
 import type { OrderOfDataByTime } from "../../../../lib/common/names";
 import zodReply from "../../../../lib/zod/zodReply";
 
+import type { Moment } from "moment";
+import moment from "moment";
+
+let lastCommentedAt: Moment | undefined = undefined;
+
 const Replies: React.FC<{
   selectedComment: SelectedComment;
   changeSelectedComment: Dispatch<SetStateAction<SelectedComment | undefined>>;
@@ -40,9 +45,9 @@ const Replies: React.FC<{
               })
             ),
             {
-              error: "Couldn't Delete Reply",
+              error: "Couldn't Delete ",
               pending: "Deleting Reply",
-              success: "Reply Deleted",
+              success: "Deleted",
             }
           )
           .then(() => {
@@ -58,7 +63,14 @@ const Replies: React.FC<{
   };
 
   const submitReply = () => {
-    if (replyCommentApi.isLoading) return;
+    if (replyCommentApi.isLoading) return void toast.error("Wait");
+    if (lastCommentedAt) {
+      const diffLastComment = moment().diff(lastCommentedAt, "seconds");
+      if (diffLastComment < 10) {
+        return void toast.error(`Wait ${10 - diffLastComment} Seconds`);
+      }
+    }
+    lastCommentedAt = moment();
     changeReply("");
     void toast.promise(
       replyCommentApi
