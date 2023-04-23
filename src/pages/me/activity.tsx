@@ -29,8 +29,6 @@ const ActivityLog: NextPage = () => {
         void signOut();
         return void router.push(PagesLinks.getLoginLink());
       }
-      if (data.incompleteProfile)
-        return void router.push(PagesLinks.EDIT_ACCOUNT_LINK);
       if (data.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
     },
   });

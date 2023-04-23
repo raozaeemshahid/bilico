@@ -29,8 +29,6 @@ const Deactivate: NextPage = () => {
       if (user.deactivated)
         return void router.push(PagesLinks.DEACTIVATED_LINK);
       if (user.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
-      if (user.incompleteProfile)
-        return void router.push(PagesLinks.EDIT_ACCOUNT_LINK);
       if (user.notFound) {
         void signOut();
         void router.push(PagesLinks.getLoginLink());

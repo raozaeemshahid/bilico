@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import PagesLinks from "../../lib/PagesLink";
@@ -19,6 +19,16 @@ const Account = () => {
 
   const userInfo = api.me.info.useQuery(undefined, {
     enabled: status === "authenticated" && router.isReady,
+    onSuccess(data) {
+      if (data.banned) return void router.push(PagesLinks.BANNED_LINK);
+      if (data.deactivated)
+        return void router.push(PagesLinks.DEACTIVATED_LINK);
+      if (data.notFound) {
+        void signOut();
+        return void router.push(PagesLinks.getLoginLink());
+      }
+      if (data.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
+    },
   });
 
   if (!userInfo.data || !userInfo.data.success)

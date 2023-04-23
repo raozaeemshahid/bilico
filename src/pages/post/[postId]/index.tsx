@@ -10,7 +10,7 @@ import { api } from "../../../utils/api";
 import { signOut } from "next-auth/react";
 import { z } from "zod";
 import FailedFullBodyComponent from "../../../components/FailedFullBodyComponent";
-import Post from '../../../components/Post'
+import Post from "../../../components/Post";
 
 const Profile: NextPage = () => {
   const router = useRouter();
@@ -34,8 +34,6 @@ const Profile: NextPage = () => {
         void signOut();
         return void router.push(PagesLinks.getLoginLink());
       }
-      if (data.incompleteProfile)
-        return void router.push(PagesLinks.EDIT_ACCOUNT_LINK);
       if (data.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
     },
   });
@@ -82,7 +80,6 @@ const Profile: NextPage = () => {
     return <LoadingFullScreen text="Getting Things Ready" />;
   if (getPost.data.notFound)
     return <FailedFullBodyComponent text="User not found" />;
-
 
   return (
     <>

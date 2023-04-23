@@ -30,8 +30,6 @@ const Delete: NextPage = () => {
       if (user.deactivated)
         return void router.push(PagesLinks.DEACTIVATED_LINK);
       if (user.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
-      if (user.incompleteProfile)
-        return void router.push(PagesLinks.EDIT_ACCOUNT_LINK);
       if (user.notFound) {
         void signOut();
         void router.push(PagesLinks.getLoginLink());
@@ -57,16 +55,14 @@ const Delete: NextPage = () => {
       text: "Delete your account?",
       confirmText: "Delete",
       confirm: () => {
-        void toast
-          .promise(deleteMeApi.mutateAsync(), {
-            error: "Couldn't Delete Account",
-            pending: "Deleting Account",
-            success: "Account Deleted",
-          })
-          .then(() => {
-            void signOut();
-            void router.push(PagesLinks.getLoginLink());
-          });
+        void toast.promise(deleteMeApi.mutateAsync(), {
+          error: "Couldn't Delete Account",
+          pending: "Deleting Account",
+          success: "Account Deleted",
+        });
+        void signOut().then(() => {
+          void router.push(PagesLinks.getLoginLink());
+        });
       },
     });
   };

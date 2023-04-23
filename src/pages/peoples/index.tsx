@@ -23,13 +23,12 @@ const MyProfile: NextPage = () => {
     enabled: status === "authenticated" && router.isReady,
     onSuccess(data) {
       if (data.banned) return void router.push(PagesLinks.BANNED_LINK);
-      if (data.deactivated) return void router.push(PagesLinks.DEACTIVATED_LINK);
+      if (data.deactivated)
+        return void router.push(PagesLinks.DEACTIVATED_LINK);
       if (data.notFound) {
         void signOut();
         return void router.push(PagesLinks.getLoginLink());
       }
-      if (data.incompleteProfile)
-        return void router.push(PagesLinks.EDIT_ACCOUNT_LINK);
       if (data.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
     },
   });
