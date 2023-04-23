@@ -10,6 +10,7 @@ import { api } from "../utils/api";
 import "../styles/globals.css";
 import Head from "next/head";
 import Modal from "../components/Modal";
+import { Analytics } from "@vercel/analytics/react";
 
 interface Modal {
   text: string;
@@ -22,7 +23,12 @@ interface Modal {
 export const ModalContext = createContext<{
   modal: Modal | undefined;
   changeModal: (newModal: Modal | undefined) => void;
-}>({ changeModal(newModal) { newModal }, modal: undefined });
+}>({
+  changeModal(newModal) {
+    newModal;
+  },
+  modal: undefined,
+});
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -54,6 +60,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         pauseOnHover={true}
         theme="dark"
       />
+      <Analytics />
     </SessionProvider>
   );
 };

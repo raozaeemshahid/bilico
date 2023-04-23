@@ -17,6 +17,7 @@
     "@trpc/next": "^10.8.1",
     "@trpc/react-query": "^10.8.1",
     "@trpc/server": "^10.8.1",
+    "@vercel/analytics": "^1.0.0",
     "bad-words": "^3.0.4",
     "countries-list": "^2.6.1",
     "framer-motion": "^8.4.3",
