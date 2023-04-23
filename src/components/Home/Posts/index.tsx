@@ -32,9 +32,9 @@ const Posts: React.FC<{ postsInTab: PostsInTab }> = ({ postsInTab }) => {
               utils.publicApi.getHomePosts.invalidate({ postsIn: postsInTab })
             ),
           {
-            error: "Couldn't Delete Post",
+            error: "Couldn't Delete",
             pending: "Deleting Post",
-            success: "Post Deleted Successfully",
+            success: "Deleted",
           }
         );
       },

@@ -58,7 +58,7 @@ const Delete: NextPage = () => {
         void toast.promise(deleteMeApi.mutateAsync(), {
           error: "Couldn't Delete Account",
           pending: "Deleting Account",
-          success: "Account Deleted",
+          success: "Deleted",
         });
         void signOut().then(() => {
           void router.push(PagesLinks.getLoginLink());

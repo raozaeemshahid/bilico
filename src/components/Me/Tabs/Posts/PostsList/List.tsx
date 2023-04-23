@@ -33,9 +33,9 @@ const PostsListComponent: React.FC<{ order: OrderOfDataByTime }> = ({
             .mutateAsync({ postId })
             .then(() => utils.me.getPosts.invalidate({ order })),
           {
-            error: "Couldn't Delete Post",
+            error: "Couldn't Delete",
             pending: "Deleting Post",
-            success: "Post Deleted Successfully",
+            success: "Deleted",
           }
         );
       },

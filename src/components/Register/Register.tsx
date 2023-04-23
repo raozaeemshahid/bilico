@@ -109,9 +109,9 @@ const Register: React.FC = () => {
         dateOfBirth: info.dateOfBirth,
       }),
       {
-        error: "Couldn't Register You",
+        error: "Couldn't Register",
         pending: "Registering",
-        success: "Registered Successfully",
+        success: "Registered",
       }
     );
   };

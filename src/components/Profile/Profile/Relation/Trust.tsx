@@ -64,8 +64,8 @@ const Trust: React.FC<{
                         utils.publicApi.getProfile.invalidate({ userId })
                       ),
                     {
-                      success: "Trust Removed",
-                      error: "Couldn't Remove Trust",
+                      success: "Removed",
+                      error: "Couldn't Remove",
                       pending: "Removing Trust",
                     }
                   );

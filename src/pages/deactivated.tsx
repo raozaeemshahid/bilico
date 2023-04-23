@@ -37,7 +37,7 @@ const Deactivated: NextPage = () => {
       .promise(reactivateApi.mutateAsync(), {
         error: "Couldn't Reactivate",
         pending: "Reactivating Account",
-        success: "Account Reactivated",
+        success: "Reactivated",
       })
       .then(() => void router.push(PagesLinks.HOME_Link));
   };

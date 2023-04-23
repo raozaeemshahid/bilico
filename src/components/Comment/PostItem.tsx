@@ -55,9 +55,9 @@ const Post: React.FC<{
             void router.push(PagesLinks.HOME_Link);
           }),
           {
-            error: "Couldn't Delete Post",
+            error: "Couldn't Delete",
             pending: "Deleting Post",
-            success: "Post Deleted Successfully",
+            success: "Deleted",
           }
         );
       },

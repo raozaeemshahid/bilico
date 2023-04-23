@@ -97,9 +97,9 @@ const EditBody: React.FC = () => {
         removedSkills,
       }),
       {
-        error: "Couldn't Save Changed",
+        error: "Couldn't Save",
         pending: "Saving Changes",
-        success: "Changes Saved",
+        success: "Saved",
       }
     );
   };

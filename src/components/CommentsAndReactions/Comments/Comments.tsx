@@ -57,9 +57,9 @@ const CommentsComponent: React.FC<{
               ])
             ),
             {
-              error: "Couldn't Delete Comment",
+              error: "Couldn't Delete",
               pending: "Deleting Comment",
-              success: "Comment Deleted Successfully",
+              success: "Deleted",
             }
           )
           .then(() => {

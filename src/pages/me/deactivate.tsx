@@ -58,7 +58,7 @@ const Deactivate: NextPage = () => {
           .promise(deactivateApi.mutateAsync(), {
             error: "Couldn't Deactivated Account",
             pending: "Deactivating Account",
-            success: "Account Deactivated",
+            success: "Deactivated",
           })
           .then(() => {
             void signOut();
