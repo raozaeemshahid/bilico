@@ -54,20 +54,20 @@ const SelectedCommentComponent: React.FC<{
               </Link>
             )}
           </div>
-          <div className="p-2 flex flex-col gap-1">
-            <div className="flex w-fit items-center gap-1 text-sm hover:underline">
-              <Link
-                href={PagesLinks.getProfileLink(selectedComment.CreatedBy.id)}
-                className="w-min"
-              >
+          <div className="flex flex-col gap-1 p-2">
+            <Link
+              href={PagesLinks.getProfileLink(selectedComment.CreatedBy.id)}
+              className="w-min"
+            >
+              <div className="flex w-fit items-center gap-1 text-sm hover:underline">
                 <h3 className="whitespace-nowrap font-semibold">
                   {selectedComment.CreatedBy.name}
                 </h3>
                 <h3>
                   {selectedComment.CreatedBy.isVerified && <MdVerified />}
                 </h3>
-              </Link>
-            </div>
+              </div>
+            </Link>
             <h4 className="flex flex-col gap-2 text-sm text-gray-100 opacity-95">
               {selectedComment.Comment.split("\n").map((paragaraph) => {
                 if (paragaraph.length == 0) return null;
