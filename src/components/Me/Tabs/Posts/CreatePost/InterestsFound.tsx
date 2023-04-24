@@ -10,9 +10,7 @@ const InterestFound: React.FC<{
   interestsFoundInPost: Interest[];
   changeInterestsFound: Dispatch<SetStateAction<Interest[]>>;
 }> = ({ postBody, changeInterestsFound, interestsFoundInPost }) => {
-  const allInterests = api.me.getAllInterestsAndSkills.useQuery({
-    includeSkill: false,
-  });
+  const allInterests = api.me.getAllInterestsAndSkills.useQuery();
   useEffect(() => {
     if (!allInterests.isSuccess) return;
     const loweredPostBody = postBody.toLowerCase();

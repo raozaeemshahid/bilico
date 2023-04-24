@@ -1,27 +1,42 @@
 import { protectedProcedure } from "../../trpc";
-import { z } from "zod";
 import type { Interest, Skill } from "@prisma/client";
+import RedisClient from "../../../../utils/RedisClient";
 
-export const getAllInterestsAndSkills = protectedProcedure
-  .input(
-    z
-      .object({
-        includeSkill: z.boolean().default(true),
-        includeInterests: z.boolean().default(true),
-      })
-      .default({includeInterests: true, includeSkill: true})
-  )
-  .query(async ({ ctx, input }) => {
-    const interests: Interest[] =
-      input && input.includeInterests
-        ? await ctx.prisma.interest.findMany()
-        : [];
-    const skills: Skill[] =
-      input && input.includeSkill ? await ctx.prisma.skill.findMany() : [];
+interface InterestsAndSkill {
+  success: boolean;
+  interests: Interest[];
+  skills: Skill[];
+}
 
-    return {
+const RedisCacheSet = async ({ data }: { data: InterestsAndSkill }) => {
+  const expirationTime = 60 * 60 * 24;
+  await RedisClient.setEx(
+    `trpc:me.getAllInterestsAndSkills`,
+    expirationTime,
+    JSON.stringify(data)
+  );
+};
+const RedisCacheGet = async () => {
+  const data = await RedisClient.get(`trpc:me.getAllInterestsAndSkills`);
+  if (data) return JSON.parse(data) as InterestsAndSkill;
+};
+
+export const getAllInterestsAndSkills = protectedProcedure.query(
+  async ({ ctx }) => {
+    const cachedData = await RedisCacheGet();
+    if (cachedData) {
+      return cachedData;
+    }
+
+    const interests: Interest[] = await ctx.prisma.interest.findMany();
+    const skills: Skill[] = await ctx.prisma.skill.findMany();
+
+    const interestsAndSkill: InterestsAndSkill = {
       success: true,
       interests,
       skills,
     };
-  });
+    await RedisCacheSet({ data: interestsAndSkill });
+    return interestsAndSkill;
+  }
+);
