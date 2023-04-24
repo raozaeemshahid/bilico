@@ -70,7 +70,7 @@ export const confirmRegistration = protectedProcedure
           ForUser: { connect: { id: ctx.session.user.id } },
           byUserId: ctx.session.user.id,
           byUserImage: ctx.session.user.image,
-          byUserName: ctx.session.user.name,
+          byUserName: input.name,
         },
       });
     })();
