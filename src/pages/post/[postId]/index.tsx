@@ -79,7 +79,7 @@ const Profile: NextPage = () => {
   if (!postId || !getPost.data)
     return <LoadingFullScreen text="Getting Things Ready" />;
   if (getPost.data.notFound)
-    return <FailedFullBodyComponent text="User not found" />;
+    return <FailedFullBodyComponent text="Post not found" />;
 
   return (
     <>

@@ -29,9 +29,6 @@ const MyProfile: NextPage = () => {
         void signOut();
         return void router.push(PagesLinks.getLoginLink());
       }
-      if (data.incompleteProfile) {
-        return void router.push(PagesLinks.EDIT_ACCOUNT_LINK);
-      }
       if (data.notRegistered) return void router.push(PagesLinks.REGISTER_LINK);
     },
   });
@@ -40,7 +37,7 @@ const MyProfile: NextPage = () => {
     return <LoadingFullScreen text="Signing You In" />;
 
   if (!userInfo.data) return <LoadingFullScreen text="Loading Data" />;
-  if (!userInfo.data.success || userInfo.data.incompleteProfile)
+  if (!userInfo.data.success)
     return <LoadingFullScreen text="Getting Things Ready" />;
   if (userInfo.data.name !== userSession.user.name) {
     void signOut();

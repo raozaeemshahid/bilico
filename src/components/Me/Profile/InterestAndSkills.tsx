@@ -14,9 +14,26 @@ const InterestAndSKill: React.FC = () => {
   if (!userData.data || !userData.data.success)
     return <Loading text="Loading Data" />;
 
+  const data = userData.data;
+  if (data.Interests.length == 0 && data.Skills.length == 0)
+    return (
+      <>
+        <div className="w-full rounded-lg border-2 border-b-0 border-gray-400 bg-gray-800 p-3">
+          <div className="flex justify-center">
+            <Link
+              href={PagesLinks.EDIT_ACCOUNT_LINK}
+              className="rounded-lg bg-blue-600 p-1 px-2 hover:bg-blue-500"
+            >
+              Add Interests and Skills
+            </Link>
+          </div>
+        </div>
+      </>
+    );
+
   return (
     <>
-      <div className="w-full rounded-lg bg-gray-800 border-2 border-b-0 border-gray-400 p-3">
+      <div className="w-full rounded-lg border-2 border-b-0 border-gray-400 bg-gray-800 p-3">
         <div className="flex justify-end">
           <Link href={PagesLinks.EDIT_ACCOUNT_LINK} className="">
             <FiEdit3 className="text-sm hover:scale-110 active:scale-90" />
@@ -28,7 +45,7 @@ const InterestAndSKill: React.FC = () => {
             <div className="ml-3 mt-1 flex flex-wrap gap-1">
               {userData.data.Interests.map((interest) => (
                 <h4
-                  className="rounded-md shadow-sm shadow-gray-800 bg-green-600 p-1 px-3 text-sm font-semibold"
+                  className="rounded-md bg-green-600 p-1 px-3 text-sm font-semibold shadow-sm shadow-gray-800"
                   key={interest.id}
                 >
                   {interest.title}
@@ -44,7 +61,7 @@ const InterestAndSKill: React.FC = () => {
             <div className="ml-3 mt-1 flex flex-wrap gap-1">
               {userData.data.Skills.map((skill) => (
                 <h4
-                  className="rounded-md bg-cyan-600 shadow-sm shadow-gray-800 p-1  px-3 text-sm font-semibold"
+                  className="rounded-md bg-cyan-600 p-1 px-3 text-sm font-semibold shadow-sm shadow-gray-800"
                   key={skill.id}
                 >
                   {skill.title}

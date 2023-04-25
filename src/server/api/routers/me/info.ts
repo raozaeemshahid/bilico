@@ -5,7 +5,6 @@ import RedisClient from "../../../../utils/RedisClient";
 import { protectedProcedure } from "../../trpc";
 
 interface Info {
-  success: boolean;
   newNotifications: number;
   newMessages: number;
   newRequests: number;
@@ -34,7 +33,14 @@ const RedisCacheGet = async ({ userId }: { userId: string }) => {
 export const info = protectedProcedure.query(async ({ ctx }) => {
   const cachedInfo = await RedisCacheGet({ userId: ctx.session.user.id });
   if (cachedInfo) {
-    return { ...cachedInfo };
+    const info = cachedInfo;
+    return {
+      success: true,
+      newNotifications: info.newNotifications,
+      newMessages: info.newMessages,
+      newRequests: info.newRequests,
+      name: info.name,
+    };
   }
   const user = await ctx.prisma.user.findUnique({
     where: {
@@ -50,7 +56,6 @@ export const info = protectedProcedure.query(async ({ ctx }) => {
           },
           MessagesReceive: { where: { isSeen: { equals: false } } },
           Notifications: { where: { isSeen: { equals: false } } },
-          Interests: true,
         },
       },
       emailVerified: true,
@@ -68,23 +73,19 @@ export const info = protectedProcedure.query(async ({ ctx }) => {
   }
   if (user.isDeactivated) return { deactivated: true };
   if (!user.emailVerified) return { notRegistered: true };
-  if (user._count.Interests === 0)
-    return {
-      incompleteProfile: true,
-      success: true,
-      newNotifications: user._count.Notifications,
-      newMessages: user._count.MessagesReceive,
-      newRequests: user._count.ConnectionRequestsReceive,
-      name: user.name,
-    };
 
   const info: Info = {
-    success: true,
     newNotifications: user._count.Notifications,
     newMessages: user._count.MessagesReceive,
     newRequests: user._count.ConnectionRequestsReceive,
     name: user.name,
   };
   await RedisCacheSet({ userId: ctx.session.user.id, data: info });
-  return { ...info };
+  return {
+    success: true,
+    newNotifications: info.newNotifications,
+    newMessages: info.newMessages,
+    newRequests: info.newRequests,
+    name: info.name,
+  };
 });
