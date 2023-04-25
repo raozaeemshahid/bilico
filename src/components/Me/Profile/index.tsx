@@ -35,7 +35,12 @@ const Profile: React.FC = () => {
     <>
       <div className="flex flex-col">
         <MyProfileDropDown />
-        <ProfileHead />
+        <ProfileHead
+          isVerified={userData.data.isVerified}
+          name={userData.data.name}
+          image={userData.data.image}
+          bio={userData.data.Bio}
+        />
         <div className="flex flex-col gap-3 xs:mx-2">
           <div className="flex flex-wrap  gap-3 sm:flex-nowrap">
             <Numbers changeShowList={changeShowList} />

@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
 import { api } from "../../../utils/api";
-import { useSession } from "next-auth/react";
-import Loading from "../../Loading";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
 import zodBio from "../../../lib/zod/zodBio";
@@ -17,43 +15,34 @@ const MdVerified = dynamic(() =>
   import("react-icons/md").then((icons) => icons.MdVerified)
 );
 
-const ProfileHead: React.FC = () => {
-  const { status } = useSession();
-
-  const userData = api.me.data.useQuery(undefined, {
-    enabled: status == "authenticated",
-    onSuccess(data) {
-      if (data.Bio) changeBio(data.Bio);
-      else changeIsBioEditing(true);
-    },
-  });
+const ProfileHead: React.FC<{
+  bio: string | null;
+  image: string | null;
+  name: string;
+  isVerified: boolean;
+}> = ({ bio, image, name, isVerified }) => {
   const updateBio = api.me.updateBio.useMutation();
 
-  const [Bio, changeBio] = useState<string>("");
-  const [isBioEditing, changeIsBioEditing] = useState(false);
-
-
-  if (!userData.data || !userData.data.success)
-    return <Loading text="Loading Data" />;
-  const data = userData.data;
+  const [Bio, changeBio] = useState<string>(bio ?? "");
+  const [isBioEditing, changeIsBioEditing] = useState(!bio);
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-4 rounded-lg p-2  sm:flex-nowrap">
-      {!!data.image && (
+      {!!image && (
         <Image
           alt="Profile Pic"
           width={72}
           height={72}
-          src={data.image}
+          src={image}
           className="rounded-full border-2 border-gray-200 bg-white"
         />
       )}
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2 text-2xl">
-          <h1 className=" text-gray-200">{data.name}</h1>
-          {data.isVerified && <MdVerified />}
+          <h1 className=" text-gray-200">{name}</h1>
+          {isVerified && <MdVerified />}
         </div>
-        
+
         {isBioEditing ? (
           <form
             onSubmit={(e) => {
@@ -63,13 +52,15 @@ const ProfileHead: React.FC = () => {
                 updateBio.mutate({ bio: Bio });
                 changeIsBioEditing(false);
               } else {
-                parsedBio.error.errors.forEach((err) => toast.error(err.message))
+                parsedBio.error.errors.forEach((err) =>
+                  toast.error(err.message)
+                );
               }
             }}
           >
             <div className="flex">
               <input
-                className="focus:shadow-outline w-full appearance-none rounded bg-gray-700 py-[1.5] px-3 text-sm leading-tight text-white  shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded bg-gray-700 px-3 py-[1.5] text-sm leading-tight text-white  shadow focus:outline-none"
                 type="text"
                 value={Bio}
                 placeholder="Edit Your Bio..."
