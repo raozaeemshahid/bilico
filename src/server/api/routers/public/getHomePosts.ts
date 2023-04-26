@@ -7,10 +7,12 @@ export const getHomePosts = protectedProcedure
     z.object({
       limit: z.number().min(1).max(100).nullish(),
       cursor: z.string().nullish(), // <-- "cursor" needs to exist, but can be any type
-      postsIn: z.union([
-        z.literal<PostsInTab>("Public"),
-        z.literal<PostsInTab>("Following"),
-      ]),
+      postsIn: z
+        .union([
+          z.literal<PostsInTab>("Public"),
+          z.literal<PostsInTab>("Following"),
+        ])
+        .default("Public"),
     })
   )
   .query(async ({ input, ctx }) => {

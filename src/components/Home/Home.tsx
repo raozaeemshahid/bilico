@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { useState } from "react";
 import Tabs from "../Tabs";
 import HomePosts from "./Posts";
+import CreatePost from './CreatePost'
 
 export type PostsInTab = "Public" | "Following";
 
@@ -20,6 +21,7 @@ const Home: NextPage = () => {
             tabList={tabList}
           />
         </div>
+        <CreatePost />
         <div className="my-4 md:mx-4">
           <HomePosts postsInTab={currentTab} />
         </div>
