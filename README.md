@@ -8,7 +8,7 @@ Clone the repo and install dependencies by
 ```console
 git clone https://github.com/raozaeemshahid/bilico 
 cd bilico
-yarn
+npm i
 ```
 
 Create a `.env` as given in `.env_example` and add the 
