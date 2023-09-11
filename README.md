@@ -1,28 +1,27 @@
-# Create T3 App
+# Bilico
+A Social Media For Professionals
+https://bilico.vercel.app/
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## How to run locally
 
-## What's next? How do I make an app with this?
+Clone the repo and install dependencies by
+```console
+git clone https://github.com/raozaeemshahid/bilico 
+cd bilico
+yarn
+```
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Create a `.env` as given in `.env_example` and add the 
+Mysql database connection url: Database can be empty. Prisma will generate tables. A Redis database url for catching. Google Client Key and secret, nextauth key which you can generate any random key, and a nextauth url which will be `http://localhost:3000` if you use the default. then run the following
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+```console
+npx prisma db push
+```
+This command will generate all the required tables in your database, and you're ready to go. Simply run
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+```console
+yarn run dev
+```
 
-## Learn More
+You'll get your app up and running at local server
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
