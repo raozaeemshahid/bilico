@@ -42,6 +42,7 @@ const RedisCacheSet = async ({
   data: Profile;
 }) => {
   const expirationTime = 60 * 30;
+  if (!RedisClient.isReady) return;
   await RedisClient.setEx(
     generateRedisCacheId(userId),
     expirationTime,
@@ -49,6 +50,7 @@ const RedisCacheSet = async ({
   );
 };
 const RedisCacheGet = async ({ userId }: { userId: string }) => {
+  if (!RedisClient.isReady) return;
   const data = await RedisClient.get(generateRedisCacheId(userId));
   if (data) return JSON.parse(data) as Profile;
 };

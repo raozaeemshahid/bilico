@@ -10,6 +10,7 @@ interface InterestsAndSkill {
 
 const RedisCacheSet = async ({ data }: { data: InterestsAndSkill }) => {
   const expirationTime = 60 * 60 * 24;
+  if (!RedisClient.isReady) return;
   await RedisClient.setEx(
     `trpc:me.getAllInterestsAndSkills`,
     expirationTime,
@@ -17,6 +18,7 @@ const RedisCacheSet = async ({ data }: { data: InterestsAndSkill }) => {
   );
 };
 const RedisCacheGet = async () => {
+  if (!RedisClient.isReady) return;
   const data = await RedisClient.get(`trpc:me.getAllInterestsAndSkills`);
   if (data) return JSON.parse(data) as InterestsAndSkill;
 };

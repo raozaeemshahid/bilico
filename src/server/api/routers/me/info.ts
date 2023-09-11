@@ -19,6 +19,7 @@ const RedisCacheSet = async ({
   data: Info;
 }) => {
   const expirationTime = 60 * 5;
+  if (!RedisClient.isReady) return;
   await RedisClient.setEx(
     `trpc:me.info:${userId}`,
     expirationTime,
@@ -26,6 +27,7 @@ const RedisCacheSet = async ({
   );
 };
 const RedisCacheGet = async ({ userId }: { userId: string }) => {
+  if (!RedisClient.isReady) return;
   const data = await RedisClient.get(`trpc:me.info:${userId}`);
   if (data) return JSON.parse(data) as Info;
 };
